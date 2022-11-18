@@ -10,6 +10,7 @@ using McbEdu.Mentorias.ShopDemo.Domain.Models.Entities;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateProduct.Inputs;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ENUMs;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ValueObjects;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateRangeProduct;
 
@@ -62,6 +63,21 @@ public class CreateRangeProductHandler : HandlerBase<CreateRangeProductResponse,
         foreach (var productStandard in productsStandardList)
         {
             productsDataTransferList.Add(_adapterProductStandardToProductDTO.Adapt(productStandard));
+        }
+
+        var anyProductExistsInDatabase = false;
+        foreach (var product in productsDataTransferList)
+        {
+            if (await _productExtendsRepository.VerifyEntityExistsAsync(product.Code))
+            {
+                _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Produto", $"O produto {product.Code} já está presente no banco de dados!"));
+                anyProductExistsInDatabase = true;
+            }
+        }
+
+        if (anyProductExistsInDatabase)
+        {
+            return new CreateRangeProductResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "É necessário importar uma lista de clientes válida!");
         }
 
         await _productExtendsRepository.AddRangeAsync(productsDataTransferList);
