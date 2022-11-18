@@ -20,6 +20,7 @@ using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateProduct;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateProduct.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateRangeCustomer;
+using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateRangeProduct;
 using Microsoft.EntityFrameworkCore;
 
 namespace McbEdu.Mentorias.ShopDemo.WebApi;
@@ -54,6 +55,7 @@ public class Program
         builder.Services.AddTransient<HandlerBase<CreateProductResponse, CreateProductRequest>, CreateProductHandler>();
         builder.Services.AddTransient<HandlerBase<CreateCustomerResponse, CreateCustomerRequest>, CreateCustomerHandler>();
         builder.Services.AddTransient<HandlerBase<CreateRangeCustomerResponse, CreateRangeCustomerRequest>, CreateRangeCustomerHandler>();
+        builder.Services.AddTransient<HandlerBase<CreateRangeProductResponse, CreateRangeProductRequest>, CreateRangeProductHandler>();
 
         var app = builder.Build();
         app.UseSwagger();
