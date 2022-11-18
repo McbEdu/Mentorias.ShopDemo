@@ -10,4 +10,8 @@
     <ProjectReference Include="..\McbEdu.Mentorias.ShopDemo.Application\McbEdu.Mentorias.ShopDemo.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Handlers\CreateRangeProduct\" />
+  </ItemGroup>
+
 </Project>
