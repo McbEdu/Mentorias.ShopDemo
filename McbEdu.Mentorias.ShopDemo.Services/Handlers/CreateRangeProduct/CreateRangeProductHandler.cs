@@ -38,7 +38,7 @@ public class CreateRangeProductHandler : HandlerBase<CreateRangeProductResponse,
     {
         var productsStandardList = new List<ProductStandard>();
 
-        if (productsStandardList.Count < 1)
+        if (request.InputModels.Count < 1)
         {
             _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Lista de Produtos", "É necessário enviar uma lista de produtos válida!"));
             return new CreateRangeProductResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "É necessário exibir uma lista de produtos para realizar a importação em lote.");
