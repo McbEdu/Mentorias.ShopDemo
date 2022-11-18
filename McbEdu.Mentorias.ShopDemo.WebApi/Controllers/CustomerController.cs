@@ -2,6 +2,7 @@
 using McbEdu.Mentorias.ShopDemo.Domain.Models.Entities.Notification.Consumer;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ENUMs;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer;
+using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateRangeCustomer;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer.Inputs;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -25,8 +26,13 @@ public class CustomerController : ControllerBase
 
     [HttpPost]
     [Route("CreateRange")]
-    public async Task<IActionResult> CreateRangeAsync()
+    public async Task<IActionResult> CreateRangeAsync(
+        [FromBody][Required] List<CreateCustomerInputModel> model,
+        [FromServices] HandlerBase<CreateRangeCustomerResponse, CreateRangeCustomerRequest> handler,
+        [FromServices] NotifiableConsumerStandard notifiableConsumer)
     {
-        return StatusCode(500);
+        var response = await handler.Handle(new CreateRangeCustomerRequest(DateTime.Now, TypeVerbRequest.HttpPost, model));
+        response.AddNotification(notifiableConsumer);
+        return StatusCode(response.HttpResponse.Status, response);
     }
 }

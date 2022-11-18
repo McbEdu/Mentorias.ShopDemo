@@ -7,15 +7,8 @@ namespace McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer;
 
 public class CreateCustomerResponse : ResponseBase
 {
-    public NotifiableBase Notifiable { get; private set; } = new NotifiableStandard();
-
     public CreateCustomerResponse(HttpResponse httpResponse, DateTime requestedOn, string responseMessage)
         : base(httpResponse, requestedOn, responseMessage)
     {
-    }
-
-    public void AddNotification(NotifiableConsumerStandard notifiableConsumerStandard)
-    {
-        Notifiable = notifiableConsumerStandard.Notifiable;
     }
 }
