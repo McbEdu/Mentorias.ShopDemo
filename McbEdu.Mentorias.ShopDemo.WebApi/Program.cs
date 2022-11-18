@@ -40,9 +40,9 @@ public class Program
         builder.Services.AddScoped<NotifiableBase, NotifiableStandard>();
         builder.Services.AddTransient<NotifiablePublisherStandard>();
         builder.Services.AddTransient<NotifiableConsumerStandard>();
-        builder.Services.AddTransient<IAdapter<CustomerStandard, CreateCustomerInputModel>, AdapterCreateCustomerInputModelToCustomerStandard>();
-        builder.Services.AddTransient<IAdapter<List<NotificationItemBase>, List<ValidationFailure>>, AdapterValidationFailureListToNotificationItemList>();
-        builder.Services.AddTransient<IAdapter<Customer, CustomerStandard>, AdapterCustomerStandardToCustomerDTO>();
+        builder.Services.AddScoped<IAdapter<CustomerStandard, CreateCustomerInputModel>, AdapterCreateCustomerInputModelToCustomerStandard>();
+        builder.Services.AddScoped<IAdapter<List<NotificationItemBase>, List<ValidationFailure>>, AdapterValidationFailureListToNotificationItemList>();
+        builder.Services.AddScoped<IAdapter<Customer, CustomerStandard>, AdapterCustomerStandardToCustomerDTO>();
         builder.Services.AddScoped<AbstractValidator<CustomerBase>, CustomerValidator>();
         builder.Services.AddTransient<HandlerBase<CreateCustomerResponse, CreateCustomerRequest>, CreateCustomerHandler>();
         builder.Services.AddTransient<HandlerBase<CreateRangeCustomerResponse, CreateRangeCustomerRequest>, CreateRangeCustomerHandler>();
