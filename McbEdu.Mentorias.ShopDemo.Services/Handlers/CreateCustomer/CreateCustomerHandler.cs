@@ -15,14 +15,14 @@ namespace McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer;
 
 public class CreateCustomerHandler : HandlerBase<CreateCustomerResponse, CreateCustomerRequest>
 {
-    private readonly IExtendsRepository<Customer> _customerExtendsRepository;
-    private readonly AbstractValidator<CustomerBase> _customerValidator;
-    private readonly IAdapter<List<NotificationItemBase>, List<ValidationFailure>> _adapterNotifications;
-    private readonly IAdapter<CustomerStandard, CreateCustomerInputModel> _adapterCustomer;
-    private readonly IAdapter<Customer, CustomerStandard> _adapterCustomerDataTransfer;
-    private readonly NotifiablePublisherStandard _notifiablePublisherStandard;
+    protected readonly IExtendsRepository<Customer> _customerExtendsRepository;
+    protected readonly AbstractValidator<CustomerBase> _customerValidator;
+    protected readonly IAdapter<List<NotificationItemBase>, List<ValidationFailure>> _adapterNotifications;
+    protected readonly IAdapter<CustomerStandard, CreateCustomerInputModel> _adapterCustomer;
+    protected readonly IAdapter<Customer, CustomerStandard> _adapterCustomerDataTransfer;
+    protected readonly NotifiablePublisherStandard _notifiablePublisherStandard;
 
-    public CreateCustomerHandler(IExtendsRepository<Customer> customerExtendsRepository, AbstractValidator<CustomerBase> customerValidator,
+    protected CreateCustomerHandler(IExtendsRepository<Customer> customerExtendsRepository, AbstractValidator<CustomerBase> customerValidator,
         IAdapter<CustomerStandard, CreateCustomerInputModel> adapter, NotifiablePublisherStandard notifiablePublisherStandard,
         IAdapter<Customer, CustomerStandard> adapterCustomerDataTransfer, IAdapter<List<NotificationItemBase>, List<ValidationFailure>> adapterNotifications)
     {
@@ -34,7 +34,7 @@ public class CreateCustomerHandler : HandlerBase<CreateCustomerResponse, CreateC
         _adapterNotifications = adapterNotifications;
     }
 
-    public override async Task<CreateCustomerResponse> Handle(CreateCustomerRequest request)
+    public virtual async Task<CreateCustomerResponse> Handle(CreateCustomerRequest request)
     {
         var customer = _adapterCustomer.Adapt(request.InputModel);
 
