@@ -17,6 +17,7 @@ using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Extensions;
 using McbEdu.Mentorias.ShopDemo.Services.Adapters;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer.Inputs;
+using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateProduct;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateProduct.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateRangeCustomer;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +39,7 @@ public class Program
         builder.Services.AddDbContext<DataContext>(options => options.UseSqlite($@"Data Source=Ecommerce.db", b => b.MigrationsAssembly("McbEdu.Mentorias.ShopDemo.Infrascructure")));
         builder.Services.AddScoped<DataContext>();
         builder.Services.AddScoped<IExtendsRepository<Customer>, ExtendsCustomerRepository>();
+        builder.Services.AddScoped<IExtendsRepository<Product>, ExtendsProductRepository>();
 
         builder.Services.AddScoped<NotifiableBase, NotifiableStandard>();
         builder.Services.AddTransient<NotifiablePublisherStandard>();
@@ -48,6 +50,8 @@ public class Program
         builder.Services.AddScoped<IAdapter<Product, ProductStandard>, AdapterProductStandardToProductDTO>();
         builder.Services.AddScoped<IAdapter<ProductStandard, CreateProductInputModel>, AdapterCreateProductInputModelToProductStandard>();
         builder.Services.AddScoped<AbstractValidator<CustomerBase>, CustomerValidator>();
+        builder.Services.AddScoped<AbstractValidator<ProductBase>, ProductValidator>();
+        builder.Services.AddTransient<HandlerBase<CreateProductResponse, CreateProductRequest>, CreateProductHandler>();
         builder.Services.AddTransient<HandlerBase<CreateCustomerResponse, CreateCustomerRequest>, CreateCustomerHandler>();
         builder.Services.AddTransient<HandlerBase<CreateRangeCustomerResponse, CreateRangeCustomerRequest>, CreateRangeCustomerHandler>();
 
