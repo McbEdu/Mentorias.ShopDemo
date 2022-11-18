@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateProduct.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateProduct;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ENUMs;
-using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer;
+using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateRangeProduct;
 
 namespace McbEdu.Mentorias.ShopDemo.WebApi.Controllers;
 
@@ -29,11 +29,11 @@ public class ProductController : ControllerBase
     [Route("CreateRange")]
     public async Task<IActionResult> CreateRangeAsync(
         [FromBody][Required] List<CreateProductInputModel> model,
-        [FromServices] HandlerBase<CreateProductResponse, CreateProductRequest> handler,
+        [FromServices] HandlerBase<CreateRangeProductResponse, CreateRangeProductRequest> handler,
         [FromServices] NotifiableConsumerStandard notifiableConsumer
         )
     {
-        var response = await handler.Handle(new CreateProductRequest(DateTime.Now, TypeVerbRequest.HttpPost, model));
+        var response = await handler.Handle(new CreateRangeProductRequest(DateTime.Now, TypeVerbRequest.HttpPost, model));
         response.AddNotification(notifiableConsumer);
         return StatusCode(response.HttpResponse.Status, response);
     }
