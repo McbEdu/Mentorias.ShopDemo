@@ -24,4 +24,17 @@ public class ProductController : ControllerBase
         response.AddNotification(notifiableConsumer);
         return StatusCode(response.HttpResponse.Status, response);
     }
+
+    [HttpPost]
+    [Route("CreateRange")]
+    public async Task<IActionResult> CreateRangeAsync(
+        [FromBody][Required] List<CreateProductInputModel> model,
+        [FromServices] HandlerBase<CreateProductResponse, CreateProductRequest> handler,
+        [FromServices] NotifiableConsumerStandard notifiableConsumer
+        )
+    {
+        var response = await handler.Handle(new CreateProductRequest(DateTime.Now, TypeVerbRequest.HttpPost, model));
+        response.AddNotification(notifiableConsumer);
+        return StatusCode(response.HttpResponse.Status, response);
+    }
 }
