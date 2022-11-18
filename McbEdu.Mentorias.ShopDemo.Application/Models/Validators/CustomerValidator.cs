@@ -11,7 +11,7 @@ public class CustomerValidator : AbstractValidator<CustomerBase>
 
         RuleFor(c => c.Name).NotEmpty().NotNull().WithMessage("O nome do cliente não pode ser nulo ou vazio.");
         RuleFor(c => c.Name.Length).GreaterThan(2).WithMessage("O nome do cliente deve ter três caracteres ou mais.");
-        RuleFor(c => c.Name.Length).LessThan(30).WithMessage("O nome do cliente deve ter menos que 30 caracteres.");
+        RuleFor(c => c.Name.Length).LessThan(51).WithMessage("O nome do cliente deve ter menos que 51 caracteres.");
         RuleFor(c => c.Name).Custom((information, context) =>
         {
             foreach (var character in information)
@@ -26,7 +26,7 @@ public class CustomerValidator : AbstractValidator<CustomerBase>
 
         RuleFor(c => c.Surname).NotEmpty().NotNull().WithMessage("O sobrenome do cliente não pode ser nulo ou vazio.");
         RuleFor(c => c.Surname.Length).GreaterThan(3).WithMessage("O sobrenome do cliente deve ter quatro caracteres ou mais.");
-        RuleFor(c => c.Surname.Length).LessThan(50).WithMessage("O sobrenome do cliente deve ter menos que 50 caracteres.");
+        RuleFor(c => c.Surname.Length).LessThan(151).WithMessage("O sobrenome do cliente deve ter menos que 151 caracteres.");
         RuleFor(c => c.Surname).Custom((information, context) =>
         {
             foreach (var character in information)
@@ -39,6 +39,7 @@ public class CustomerValidator : AbstractValidator<CustomerBase>
             }
         });
 
+        RuleFor(c => c.Email.Length).LessThan(151).WithMessage("O sobrenome do cliente deve ter menos que 151 caracteres.");
         RuleFor(c => c.Email).EmailAddress().WithMessage("O email precisa estar em um formato válido!");
 
         RuleFor(c => c.Birthday).Custom((information, context) =>

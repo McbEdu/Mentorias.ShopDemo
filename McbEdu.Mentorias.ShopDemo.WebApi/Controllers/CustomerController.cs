@@ -13,14 +13,20 @@ public class CustomerController : ControllerBase
 {
     [HttpPost]
     [Route("Create")]
-    public async Task<IActionResult> Create(
+    public async Task<IActionResult> CreateAsy(
         [FromBody][Required] CreateCustomerInputModel model,
         [FromServices] HandlerBase<CreateCustomerResponse, CreateCustomerRequest> handler,
-        [FromServices] NotifiableConsumerStandard notifiableConsumer
-        )
+        [FromServices] NotifiableConsumerStandard notifiableConsumer)
     {
         var response = await handler.Handle(new CreateCustomerRequest(DateTime.Now, TypeVerbRequest.HttpPost, model));
         response.AddNotification(notifiableConsumer);
         return StatusCode(response.HttpResponse.Status, response);
+    }
+
+    [HttpPost]
+    [Route("CreateRange")]
+    public async Task<IActionResult> CreateRangeAsync()
+    {
+        return StatusCode(500);
     }
 }

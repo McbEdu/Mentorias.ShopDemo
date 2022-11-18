@@ -17,6 +17,7 @@ using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Extensions;
 using McbEdu.Mentorias.ShopDemo.Services.Adapters;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer.Inputs;
+using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateRangeCustomer;
 using Microsoft.EntityFrameworkCore;
 
 namespace McbEdu.Mentorias.ShopDemo.WebApi;
@@ -44,6 +45,7 @@ public class Program
         builder.Services.AddTransient<IAdapter<Customer, CustomerStandard>, AdapterCustomerStandardToCustomerDTO>();
         builder.Services.AddScoped<AbstractValidator<CustomerBase>, CustomerValidator>();
         builder.Services.AddTransient<HandlerBase<CreateCustomerResponse, CreateCustomerRequest>, CreateCustomerHandler>();
+        builder.Services.AddTransient<HandlerBase<CreateRangeCustomerResponse, CreateRangeCustomerRequest>, CreateRangeCustomerHandler>();
 
         var app = builder.Build();
         app.UseSwagger();
