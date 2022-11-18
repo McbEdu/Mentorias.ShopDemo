@@ -40,5 +40,13 @@ public class CustomerValidator : AbstractValidator<CustomerBase>
         });
 
         RuleFor(c => c.Email).EmailAddress().WithMessage("O email precisa estar em um formato válido!");
+
+        RuleFor(c => c.Birthday).Custom((information, context) =>
+        {
+            if (information > DateTime.Now || information == DateTime.UnixEpoch)
+            {
+                context.AddFailure($"A data de aniversário do cliente necessita ser válida!");
+            }
+        });
     }
 }
