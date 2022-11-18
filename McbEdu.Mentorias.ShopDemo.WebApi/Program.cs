@@ -17,6 +17,7 @@ using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Extensions;
 using McbEdu.Mentorias.ShopDemo.Services.Adapters;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer.Inputs;
+using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateProduct.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateRangeCustomer;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,9 +42,11 @@ public class Program
         builder.Services.AddScoped<NotifiableBase, NotifiableStandard>();
         builder.Services.AddTransient<NotifiablePublisherStandard>();
         builder.Services.AddTransient<NotifiableConsumerStandard>();
-        builder.Services.AddScoped<IAdapter<CustomerStandard, CreateCustomerInputModel>, AdapterCreateCustomerInputModelToCustomerStandard>();
         builder.Services.AddScoped<IAdapter<List<NotificationItemBase>, List<ValidationFailure>>, AdapterValidationFailureListToNotificationItemList>();
+        builder.Services.AddScoped<IAdapter<CustomerStandard, CreateCustomerInputModel>, AdapterCreateCustomerInputModelToCustomerStandard>();
         builder.Services.AddScoped<IAdapter<Customer, CustomerStandard>, AdapterCustomerStandardToCustomerDTO>();
+        builder.Services.AddScoped<IAdapter<Product, ProductStandard>, AdapterProductStandardToProductDTO>();
+        builder.Services.AddScoped<IAdapter<ProductStandard, CreateProductInputModel>, AdapterCreateProductInputModelToProductStandard>();
         builder.Services.AddScoped<AbstractValidator<CustomerBase>, CustomerValidator>();
         builder.Services.AddTransient<HandlerBase<CreateCustomerResponse, CreateCustomerRequest>, CreateCustomerHandler>();
         builder.Services.AddTransient<HandlerBase<CreateRangeCustomerResponse, CreateRangeCustomerRequest>, CreateRangeCustomerHandler>();
