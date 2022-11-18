@@ -42,6 +42,7 @@ public class CreateProductHandler : HandlerBase<CreateProductResponse, CreatePro
 
         if (validation.IsValid == false)
         {
+            _notifiablePublisherStandard.AddNotifications(_adapterNotifications.Adapt(validation.Errors));
             return new CreateProductResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "O produto é inválido!");
         }
 
