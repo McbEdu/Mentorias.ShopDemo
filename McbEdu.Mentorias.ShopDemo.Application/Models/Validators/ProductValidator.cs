@@ -10,7 +10,8 @@ public class ProductValidator : AbstractValidator<ProductBase>
 
     public ProductValidator()
     {
-        RuleFor(p => p.Code.Length).LessThanOrEqualTo(CodeMaxLength).WithMessage($"O código do produto necessita ter igual ou menos que {CodeMaxLength} caracteres.");
-        RuleFor(p => p.Description.Length).LessThanOrEqualTo(DescriptionMaxLength).WithMessage($"A descrição do produto necessita ter menos que {DescriptionMaxLength} caracteres.");
+
+        RuleFor(p => p.Code.Length).LessThanOrEqualTo(CodeMaxLength).WithMessage(c => $"O código do produto {c.Code} com descrição {c.Description} necessita ter igual ou menos que {CodeMaxLength} caracteres.");
+        RuleFor(p => p.Description.Length).LessThanOrEqualTo(DescriptionMaxLength).WithMessage(c => $"A descrição do produto com código {c.Code} necessita ter menos que {DescriptionMaxLength} caracteres.");
     }
 }
