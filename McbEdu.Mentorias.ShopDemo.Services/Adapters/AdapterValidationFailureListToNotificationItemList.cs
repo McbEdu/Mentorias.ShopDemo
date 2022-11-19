@@ -4,7 +4,7 @@ using McbEdu.Mentorias.ShopDemo.Domain.Models.Entities.Notification.Items;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Adapters;
 
-public class AdapterValidationFailureListToNotificationItemList : IAdapter<List<NotificationItemBase>, List<ValidationFailure>>
+public sealed class AdapterValidationFailureListToNotificationItemList : IAdapter<List<NotificationItemBase>, List<ValidationFailure>>
 {
     public List<NotificationItemBase> Adapt(List<ValidationFailure> adapter)
     {

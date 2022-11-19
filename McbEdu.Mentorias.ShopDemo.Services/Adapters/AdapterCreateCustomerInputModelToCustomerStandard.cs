@@ -4,7 +4,7 @@ using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer.Inputs;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Adapters;
 
-public class AdapterCreateCustomerInputModelToCustomerStandard : IAdapter<CustomerStandard, CreateCustomerInputModel>
+public sealed class AdapterCreateCustomerInputModelToCustomerStandard : IAdapter<CustomerStandard, CreateCustomerInputModel>
 {
     public CustomerStandard Adapt(CreateCustomerInputModel adapter)
     {

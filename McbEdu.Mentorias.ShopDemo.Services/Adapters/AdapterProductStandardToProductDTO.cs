@@ -4,7 +4,7 @@ using McbEdu.Mentorias.ShopDemo.Domain.Models.Entities;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Adapters;
 
-public class AdapterProductStandardToProductDTO : IAdapter<Product, ProductStandard>
+public sealed class AdapterProductStandardToProductDTO : IAdapter<Product, ProductStandard>
 {
     public Product Adapt(ProductStandard adapter)
     {
