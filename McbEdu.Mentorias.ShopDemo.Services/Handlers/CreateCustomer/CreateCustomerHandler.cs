@@ -35,7 +35,7 @@ public class CreateCustomerHandler : HandlerBase<CreateCustomerResponse, CreateC
         _adapterNotifications = adapterNotifications;
     }
 
-    public virtual async Task<CreateCustomerResponse> Handle(CreateCustomerRequest request)
+    public override async Task<CreateCustomerResponse> Handle(CreateCustomerRequest request)
     {
         var customer = _adapterCustomer.Adapt(request.InputModel);
 
