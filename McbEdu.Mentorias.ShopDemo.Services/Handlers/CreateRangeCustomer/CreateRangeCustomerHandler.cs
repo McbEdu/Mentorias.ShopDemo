@@ -11,6 +11,7 @@ using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer.Inputs;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ValueObjects;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ENUMs;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer;
+using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Domain.Notification.Publisher;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateRangeCustomer;
 
