@@ -14,4 +14,9 @@ public abstract class NotificationItemBase
         Message = message;
         TypeNotification = typeNotification;
     }
+
+    public TypeNotification GetNotificationType()
+    {
+        return TypeNotification;
+    }
 }

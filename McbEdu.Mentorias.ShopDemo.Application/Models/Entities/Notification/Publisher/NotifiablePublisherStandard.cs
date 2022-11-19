@@ -5,7 +5,7 @@ namespace McbEdu.Mentorias.ShopDemo.Domain.Models.Entities.Notification.Publishe
 
 public class NotifiablePublisherStandard
 {
-    private NotifiableBase Notifiable { get; }
+    private NotifiableBase Notifiable { get; init; }
 
     public NotifiablePublisherStandard(NotifiableBase notifiable)
     {
