@@ -11,7 +11,6 @@ using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer.Inputs;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ValueObjects;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ENUMs;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer;
-using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Domain.Notification.Publisher;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateRangeCustomer;
 
@@ -65,6 +64,21 @@ public class CreateRangeCustomerHandler : HandlerBase<CreateRangeCustomerRespons
         {
             var customerDtoAdaptee = _adapterCustomerDataTransfer.Adapt(customerStandard);
             customersDtoList.Add(customerDtoAdaptee);
+        }
+
+        var existsAnyCustomerInDatabase = false;
+        foreach (var customer in customersDtoList)
+        {
+            if (await _customerExtendsRepository.VerifyEntityExistsAsync(customer.Email))
+            {
+                existsAnyCustomerInDatabase = true;
+                _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Cliente", $"O cliente {customer.Name} {customer.Surname} já está importado."));
+            }
+        }
+
+        if (existsAnyCustomerInDatabase)
+        {
+            return new CreateRangeCustomerResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "É necessário importar uma lista de clientes válida!");
         }
 
         await _customerExtendsRepository.AddRangeAsync(customersDtoList);
