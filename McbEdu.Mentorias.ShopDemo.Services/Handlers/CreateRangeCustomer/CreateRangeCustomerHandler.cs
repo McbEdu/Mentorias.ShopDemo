@@ -11,6 +11,7 @@ using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer.Inputs;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ValueObjects;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ENUMs;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer;
+using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Domain.Notification.Publisher;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateRangeCustomer;
 
@@ -21,7 +22,7 @@ public class CreateRangeCustomerHandler : HandlerBase<CreateRangeCustomerRespons
     private readonly IAdapter<List<NotificationItemBase>, List<ValidationFailure>> _adapterNotifications;
     private readonly IAdapter<CustomerStandard, CreateCustomerInputModel> _adapterCustomer;
     private readonly IAdapter<Customer, CustomerStandard> _adapterCustomerDataTransfer;
-    private readonly NotifiablePublisherStandard _notifiablePublisherStandard;
+    private readonly INotificationPublisher _notifiablePublisherStandard;
 
     public CreateRangeCustomerHandler(IExtendsRepository<Customer> customerExtendsRepository, AbstractValidator<CustomerBase> customerValidator,
         IAdapter<CustomerStandard, CreateCustomerInputModel> adapter, NotifiablePublisherStandard notifiablePublisherStandard,

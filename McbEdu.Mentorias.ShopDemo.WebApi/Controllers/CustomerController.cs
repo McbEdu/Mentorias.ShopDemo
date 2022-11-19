@@ -6,6 +6,7 @@ using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateRangeCustomer;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer.Inputs;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Domain.Notification.Consumer;
 
 namespace McbEdu.Mentorias.ShopDemo.WebApi.Controllers;
 
@@ -17,7 +18,7 @@ public class CustomerController : ControllerBase
     public async Task<IActionResult> CreateAsy(
         [FromBody][Required] CreateCustomerInputModel model,
         [FromServices] HandlerBase<CreateCustomerResponse, CreateCustomerRequest> handler,
-        [FromServices] NotifiableConsumerStandard notifiableConsumer)
+        [FromServices] INotificationConsumer notifiableConsumer)
     {
         var response = await handler.Handle(new CreateCustomerRequest(DateTime.Now, TypeVerbRequest.HttpPost, model));
         response.AddNotification(notifiableConsumer);
@@ -29,7 +30,7 @@ public class CustomerController : ControllerBase
     public async Task<IActionResult> CreateRangeAsync(
         [FromBody][Required] List<CreateCustomerInputModel> model,
         [FromServices] HandlerBase<CreateRangeCustomerResponse, CreateRangeCustomerRequest> handler,
-        [FromServices] NotifiableConsumerStandard notifiableConsumer)
+        [FromServices] INotificationConsumer notifiableConsumer)
     {
         var response = await handler.Handle(new CreateRangeCustomerRequest(DateTime.Now, TypeVerbRequest.HttpPost, model));
         response.AddNotification(notifiableConsumer);

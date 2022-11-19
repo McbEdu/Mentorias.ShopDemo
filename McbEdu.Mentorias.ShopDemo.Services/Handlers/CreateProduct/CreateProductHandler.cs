@@ -10,6 +10,7 @@ using McbEdu.Mentorias.ShopDemo.Domain.Models.Entities;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateProduct.Inputs;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ValueObjects;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ENUMs;
+using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Domain.Notification.Publisher;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateProduct;
 
@@ -18,7 +19,7 @@ public class CreateProductHandler : HandlerBase<CreateProductResponse, CreatePro
     private readonly IExtendsRepository<Product> _productExtendsRepository;
     private readonly AbstractValidator<ProductBase> _productValidator;
     private readonly IAdapter<List<NotificationItemBase>, List<ValidationFailure>> _adapterNotifications;
-    private readonly NotifiablePublisherStandard _notifiablePublisherStandard;
+    private readonly INotificationPublisher _notifiablePublisherStandard;
     private readonly IAdapter<ProductStandard, CreateProductInputModel> _adapterProductInputModelToStandard;
     private readonly IAdapter<Product, ProductStandard> _adapterProductStandardToProductDTO;
 

@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Domain.Notification.Publisher;
 using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Infrascructure.Repositories.Extensions;
 using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Services.Adapters;
 using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Services.Handlers;
@@ -20,7 +21,7 @@ public class CreateCustomerHandler : HandlerBase<CreateCustomerResponse, CreateC
     private readonly IAdapter<List<NotificationItemBase>, List<ValidationFailure>> _adapterNotifications;
     private readonly IAdapter<CustomerStandard, CreateCustomerInputModel> _adapterCustomer;
     private readonly IAdapter<Customer, CustomerStandard> _adapterCustomerDataTransfer;
-    private readonly NotifiablePublisherStandard _notifiablePublisherStandard;
+    private readonly INotificationPublisher _notifiablePublisherStandard;
 
     public CreateCustomerHandler(IExtendsRepository<Customer> customerExtendsRepository, AbstractValidator<CustomerBase> customerValidator,
         IAdapter<CustomerStandard, CreateCustomerInputModel> adapter, NotifiablePublisherStandard notifiablePublisherStandard,

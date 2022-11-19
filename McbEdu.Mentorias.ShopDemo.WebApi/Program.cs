@@ -1,5 +1,7 @@
 using FluentValidation;
 using FluentValidation.Results;
+using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Domain.Notification.Consumer;
+using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Domain.Notification.Publisher;
 using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Infrascructure.Mappings;
 using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Infrascructure.Repositories.Extensions;
 using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Services.Adapters;
@@ -43,8 +45,8 @@ public class Program
         builder.Services.AddScoped<IExtendsRepository<Product>, ExtendsProductRepository>();
 
         builder.Services.AddScoped<NotifiableBase, NotifiableStandard>();
-        builder.Services.AddTransient<NotifiablePublisherStandard>();
-        builder.Services.AddTransient<NotifiableConsumerStandard>();
+        builder.Services.AddTransient<INotificationPublisher, NotifiablePublisherStandard>();
+        builder.Services.AddTransient<INotificationConsumer, NotifiableConsumerStandard>();
         builder.Services.AddScoped<IAdapter<List<NotificationItemBase>, List<ValidationFailure>>, AdapterValidationFailureListToNotificationItemList>();
         builder.Services.AddScoped<IAdapter<CustomerStandard, CreateCustomerInputModel>, AdapterCreateCustomerInputModelToCustomerStandard>();
         builder.Services.AddScoped<IAdapter<Customer, CustomerStandard>, AdapterCustomerStandardToCustomerDTO>();

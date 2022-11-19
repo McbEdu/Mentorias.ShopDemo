@@ -1,4 +1,5 @@
-﻿using McbEdu.Mentorias.ShopDemo.Domain.Models.Entities.Notification.Consumer;
+﻿using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Domain.Notification.Consumer;
+using McbEdu.Mentorias.ShopDemo.Domain.Models.Entities.Notification.Consumer;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.Entities.Notification.Content;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ValueObjects;
 using System.Text.Json.Serialization;
@@ -25,8 +26,8 @@ public abstract class ResponseBase
 
     public NotifiableBase Notifiable { get; private set; } = new NotifiableStandard();
 
-    public void AddNotification(NotifiableConsumerStandard notifiableConsumerStandard)
+    public void AddNotification(INotificationConsumer notifiableConsumerStandard)
     {
-        Notifiable = notifiableConsumerStandard.Notifiable;
+        Notifiable = notifiableConsumerStandard.GetNotifiable();
     }
 }
