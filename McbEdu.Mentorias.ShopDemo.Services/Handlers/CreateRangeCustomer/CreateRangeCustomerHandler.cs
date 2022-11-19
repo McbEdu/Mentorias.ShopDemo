@@ -25,7 +25,7 @@ public class CreateRangeCustomerHandler : HandlerBase<CreateRangeCustomerRespons
     private readonly INotificationPublisher _notifiablePublisherStandard;
 
     public CreateRangeCustomerHandler(IExtendsRepository<Customer> customerExtendsRepository, AbstractValidator<CustomerBase> customerValidator,
-        IAdapter<CustomerStandard, CreateCustomerInputModel> adapter, NotifiablePublisherStandard notifiablePublisherStandard,
+        IAdapter<CustomerStandard, CreateCustomerInputModel> adapter, INotificationPublisher notifiablePublisherStandard,
         IAdapter<Customer, CustomerStandard> adapterCustomerDataTransfer, IAdapter<List<NotificationItemBase>, List<ValidationFailure>> adapterNotifications)
     {
         _customerExtendsRepository = customerExtendsRepository;

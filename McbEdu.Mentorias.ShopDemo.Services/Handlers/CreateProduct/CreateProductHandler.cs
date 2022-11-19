@@ -24,7 +24,7 @@ public class CreateProductHandler : HandlerBase<CreateProductResponse, CreatePro
     private readonly IAdapter<Product, ProductStandard> _adapterProductStandardToProductDTO;
 
     public CreateProductHandler(IExtendsRepository<Product> productExtendsRepository, AbstractValidator<ProductBase> productValidator,
-        IAdapter<List<NotificationItemBase>, List<ValidationFailure>> adapterNotifications, NotifiablePublisherStandard notifiablePublisherStandard,
+        IAdapter<List<NotificationItemBase>, List<ValidationFailure>> adapterNotifications, INotificationPublisher notifiablePublisherStandard,
         IAdapter<ProductStandard, CreateProductInputModel> adapterProductInputModelToStandard, IAdapter<Product, ProductStandard> adapterProductStandardToProductDTO)
     {
         _productExtendsRepository = productExtendsRepository;

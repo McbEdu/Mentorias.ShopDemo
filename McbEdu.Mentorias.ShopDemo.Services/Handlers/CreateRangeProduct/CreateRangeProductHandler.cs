@@ -24,7 +24,7 @@ public class CreateRangeProductHandler : HandlerBase<CreateRangeProductResponse,
     private readonly IAdapter<Product, ProductStandard> _adapterProductStandardToProductDTO;
 
     public CreateRangeProductHandler(IExtendsRepository<Product> productExtendsRepository, AbstractValidator<ProductBase> productValidator,
-        IAdapter<List<NotificationItemBase>, List<ValidationFailure>> adapterNotifications, NotifiablePublisherStandard notifiablePublisherStandard,
+        IAdapter<List<NotificationItemBase>, List<ValidationFailure>> adapterNotifications, INotificationPublisher notifiablePublisherStandard,
         IAdapter<ProductStandard, CreateProductInputModel> adapterProductInputModelToStandard, IAdapter<Product, ProductStandard> adapterProductStandardToProductDTO)
     {
         _productExtendsRepository = productExtendsRepository;

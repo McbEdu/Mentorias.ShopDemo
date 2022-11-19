@@ -7,7 +7,6 @@ using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Services.Handlers;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.DTOs;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.Entities;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.Entities.Notification.Items;
-using McbEdu.Mentorias.ShopDemo.Domain.Models.Entities.Notification.Publisher;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ENUMs;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ValueObjects;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer.Inputs;
@@ -23,8 +22,8 @@ public class CreateCustomerHandler : HandlerBase<CreateCustomerResponse, CreateC
     private readonly IAdapter<Customer, CustomerStandard> _adapterCustomerDataTransfer;
     private readonly INotificationPublisher _notifiablePublisherStandard;
 
-    protected CreateCustomerHandler(IExtendsRepository<Customer> customerExtendsRepository, AbstractValidator<CustomerBase> customerValidator,
-        IAdapter<CustomerStandard, CreateCustomerInputModel> adapter, NotifiablePublisherStandard notifiablePublisherStandard,
+    public CreateCustomerHandler(IExtendsRepository<Customer> customerExtendsRepository, AbstractValidator<CustomerBase> customerValidator,
+        IAdapter<CustomerStandard, CreateCustomerInputModel> adapter, INotificationPublisher notifiablePublisherStandard,
         IAdapter<Customer, CustomerStandard> adapterCustomerDataTransfer, IAdapter<List<NotificationItemBase>, List<ValidationFailure>> adapterNotifications)
     {
         _customerExtendsRepository = customerExtendsRepository;
