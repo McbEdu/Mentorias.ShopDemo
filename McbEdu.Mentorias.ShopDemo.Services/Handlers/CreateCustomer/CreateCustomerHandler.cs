@@ -16,21 +16,12 @@ namespace McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer;
 
 public class CreateCustomerHandler : HandlerBase<CreateCustomerResponse, CreateCustomerRequest>
 {
-<<<<<<< HEAD
     private readonly IExtendsRepository<Customer> _customerExtendsRepository;
     private readonly AbstractValidator<CustomerBase> _customerValidator;
     private readonly IAdapter<List<NotificationItemBase>, List<ValidationFailure>> _adapterNotifications;
     private readonly IAdapter<CustomerStandard, CreateCustomerInputModel> _adapterCustomer;
     private readonly IAdapter<Customer, CustomerStandard> _adapterCustomerDataTransfer;
     private readonly INotificationPublisher _notifiablePublisherStandard;
-=======
-    protected readonly IExtendsRepository<Customer> _customerExtendsRepository;
-    protected readonly AbstractValidator<CustomerBase> _customerValidator;
-    protected readonly IAdapter<List<NotificationItemBase>, List<ValidationFailure>> _adapterNotifications;
-    protected readonly IAdapter<CustomerStandard, CreateCustomerInputModel> _adapterCustomer;
-    protected readonly IAdapter<Customer, CustomerStandard> _adapterCustomerDataTransfer;
-    protected readonly NotifiablePublisherStandard _notifiablePublisherStandard;
->>>>>>> 04b9d5b7b41930eacd32abaaeea8e9754d2d9fab
 
     protected CreateCustomerHandler(IExtendsRepository<Customer> customerExtendsRepository, AbstractValidator<CustomerBase> customerValidator,
         IAdapter<CustomerStandard, CreateCustomerInputModel> adapter, NotifiablePublisherStandard notifiablePublisherStandard,
