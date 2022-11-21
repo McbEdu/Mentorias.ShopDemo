@@ -7,11 +7,8 @@ public class CreateCustomerInputModel
     public string Email { get; set; }
     public DateTime Birthday { get; set; }
 
-    public CreateCustomerInputModel(string name, string surname, string email, DateTime birthday)
+    public CreateCustomerInputModel()
     {
-        Name = name;
-        Surname = surname;
-        Email = email;
-        Birthday = birthday;
+        Name = Surname = Email = string.Empty;
     }
 }

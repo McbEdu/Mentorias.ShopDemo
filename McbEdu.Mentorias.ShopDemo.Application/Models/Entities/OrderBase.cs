@@ -8,15 +8,17 @@ public abstract class OrderBase
     public string Code { get; private set; }
     public DateTime RequestedOn { get; init; }
     public CustomerBase Customer { get; private set; }
+    public List<ItemBase> Items { get; private set; }
     public TypeOrder TypeOrder { get; init; }
 
-    protected OrderBase(Guid identifier, string code, DateTime requestedOn, CustomerBase customer, TypeOrder typeOrder)
+    protected OrderBase(Guid identifier, string code, DateTime requestedOn, CustomerBase customer, List<ItemBase> items, TypeOrder typeOrder)
     {
         Identifier = identifier;
         Code = code;
         RequestedOn = requestedOn;
         Customer = customer;
         TypeOrder = typeOrder;
+        Items = items;
     }
 
     public void ChangeCode(string code)
