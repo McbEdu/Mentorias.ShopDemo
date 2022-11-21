@@ -39,6 +39,8 @@ public class Program
 
         builder.Services.AddSingleton<IBaseMapping<Customer>, CustomerBaseMapping>();
         builder.Services.AddSingleton<IBaseMapping<Product>, ProductBaseMapping>();
+        builder.Services.AddSingleton<IBaseMapping<Item>, ItemBaseMapping>();
+        builder.Services.AddSingleton<IBaseMapping<Order>, OrderBaseMapping>();
         builder.Services.AddDbContext<DataContext>(options => options.UseSqlite($@"Data Source=Ecommerce.db", b => b.MigrationsAssembly("McbEdu.Mentorias.ShopDemo.Infrascructure")));
         builder.Services.AddScoped<DataContext>();
         builder.Services.AddScoped<IExtendsRepository<Customer>, ExtendsCustomerRepository>();

@@ -8,9 +8,13 @@ public class DataContext : DbContext
 {
     public DbSet<Customer> Customers { get; protected set; }
     public DbSet<Product> Products { get; protected set; }
+    public DbSet<Item> Items { get; protected set; }
+    public DbSet<Order> Orders { get; protected set; }
 
     private IBaseMapping<Customer> CustomerBaseMapping { get; }
     private IBaseMapping<Product> ProductBaseMapping { get; }
+    private IBaseMapping<Order> OrderBaseMapping { get; }
+    private IBaseMapping<Item> ItemBaseMapping { get; }
 
     public DataContext(DbContextOptions options, IBaseMapping<Customer> customerBaseMapping, IBaseMapping<Product> productBaseMapping) : base(options)
     {
@@ -22,6 +26,8 @@ public class DataContext : DbContext
     {
         CustomerBaseMapping.CreateBaseMapping(modelBuilder.Entity<Customer>());
         ProductBaseMapping.CreateBaseMapping(modelBuilder.Entity<Product>());
+        OrderBaseMapping.CreateBaseMapping(modelBuilder.Entity<Order>());
+        ItemBaseMapping.CreateBaseMapping(modelBuilder.Entity<Item>());
 
         base.OnModelCreating(modelBuilder);
     }
