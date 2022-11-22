@@ -22,13 +22,15 @@ public class CreateOrderHandler : HandlerBase<CreateOrderResponse, CreateOrderRe
     private readonly INotificationPublisher _notifiablePublisherStandard;
     private readonly AbstractValidator<OrderBase> _orderValidator;
     private readonly IAdapter<List<NotificationItemBase>, List<ValidationFailure>> _adapterNotifications;
+    private readonly IExtendsRepository<Customer> _customerExtendsRepository;
 
     public CreateOrderHandler(
         IExtendsRepository<Order> orderExtendsRepository,
         IAdapter<OrderStandard, CreateOrderInputModel> adapterOrder,
         INotificationPublisher notifiablePublisherStandard,
         AbstractValidator<OrderBase> orderValidator,
-        IAdapter<List<NotificationItemBase>, List<ValidationFailure>> adapterNotifications
+        IAdapter<List<NotificationItemBase>, List<ValidationFailure>> adapterNotifications,
+        IExtendsRepository<Customer> customerExtendsRepository
         )
     {
         _orderExtendsRepository = orderExtendsRepository;
@@ -36,6 +38,7 @@ public class CreateOrderHandler : HandlerBase<CreateOrderResponse, CreateOrderRe
         _notifiablePublisherStandard = notifiablePublisherStandard;
         _orderValidator = orderValidator;
         _adapterNotifications = adapterNotifications;
+        _customerExtendsRepository = customerExtendsRepository;
     }
 
     public override async Task<CreateOrderResponse> Handle(CreateOrderRequest request)
@@ -54,6 +57,15 @@ public class CreateOrderHandler : HandlerBase<CreateOrderResponse, CreateOrderRe
         {
             _notifiablePublisherStandard.AddNotifications(_adapterNotifications.Adapt(validation.Errors));
             return new CreateOrderResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "Pedido inválido.");
+        }
+
+        if (await _customerExtendsRepository.VerifyEntityExistsAsync(orderStandard.Customer.Email) == true)
+        {
+            
+        }
+        else
+        {
+
         }
 
         throw new NotImplementedException();
