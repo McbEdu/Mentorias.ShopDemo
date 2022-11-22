@@ -1,4 +1,5 @@
-﻿using FluentValidation.Results;
+﻿using FluentValidation;
+using FluentValidation.Results;
 using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Domain.Notification.Publisher;
 using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Infrascructure.Repositories.Extensions;
 using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Services.Adapters;
@@ -19,16 +20,22 @@ public class CreateOrderHandler : HandlerBase<CreateOrderResponse, CreateOrderRe
     private readonly IExtendsRepository<Order> _orderExtendsRepository;
     private readonly IAdapter<OrderStandard, CreateOrderInputModel> _adapterOrder;
     private readonly INotificationPublisher _notifiablePublisherStandard;
+    private readonly AbstractValidator<OrderBase> _orderValidator;
+    private readonly IAdapter<List<NotificationItemBase>, List<ValidationFailure>> _adapterNotifications;
 
     public CreateOrderHandler(
         IExtendsRepository<Order> orderExtendsRepository,
         IAdapter<OrderStandard, CreateOrderInputModel> adapterOrder,
-        INotificationPublisher notifiablePublisherStandard
+        INotificationPublisher notifiablePublisherStandard,
+        AbstractValidator<OrderBase> orderValidator,
+        IAdapter<List<NotificationItemBase>, List<ValidationFailure>> adapterNotifications
         )
     {
         _orderExtendsRepository = orderExtendsRepository;
         _adapterOrder = adapterOrder;
         _notifiablePublisherStandard = notifiablePublisherStandard;
+        _orderValidator = orderValidator;
+        _adapterNotifications = adapterNotifications;
     }
 
     public override async Task<CreateOrderResponse> Handle(CreateOrderRequest request)
@@ -39,6 +46,14 @@ public class CreateOrderHandler : HandlerBase<CreateOrderResponse, CreateOrderRe
         {
             _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", "Esse pedido já consta no banco de dados."));
             return new CreateOrderResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "Pedido presente no banco de dados.");
+        }
+
+        var validation = _orderValidator.Validate(orderStandard);
+
+        if (validation.IsValid == false)
+        {
+            _notifiablePublisherStandard.AddNotifications(_adapterNotifications.Adapt(validation.Errors));
+            return new CreateOrderResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "Pedido inválido.");
         }
 
         throw new NotImplementedException();
