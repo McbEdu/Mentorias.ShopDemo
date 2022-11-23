@@ -93,7 +93,7 @@ public class CreateOrderHandler : HandlerBase<CreateOrderResponse, CreateOrderRe
                 customer!.Email != request.Order.Customer.Email
                 )
             {
-                _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", "Dados do cliente já existem, no entanto, com dados diferentes."));
+                _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", "Dados do cliente já existem, no entanto, com dados diferentes. A requisição foi realizada normalmente."));
             }
         }
         else
@@ -119,7 +119,7 @@ public class CreateOrderHandler : HandlerBase<CreateOrderResponse, CreateOrderRe
                 if (product!.Description != item.Product.Description ||
                     product!.Code != item.Product.Code)
                 {
-                    _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", "Dados do produto já existem, no entanto, com dados diferentes."));
+                    _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", "Dados do produto já existem, no entanto, com dados diferentes. A requisição foi realizada normalmente."));
                 }
             }
             else
