@@ -6,7 +6,7 @@ namespace McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateOrder;
 
 public class CreateOrderRequest : RequestBase
 {
-    public CreateOrderInputModel Order { get; init; }
+    public CreateOrderInputModel Order { get; }
 
     public CreateOrderRequest(DateTime requestedOn, TypeVerbRequest typeVerbRequest, CreateOrderInputModel order) : base(requestedOn, typeVerbRequest)
     {

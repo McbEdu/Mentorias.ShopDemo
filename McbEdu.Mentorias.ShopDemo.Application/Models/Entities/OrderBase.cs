@@ -7,11 +7,11 @@ public abstract class OrderBase
     public Guid Identifier { get; init; }
     public string Code { get; private set; }
     public DateTime RequestedOn { get; init; }
-    public CustomerBase Customer { get; private set; }
-    public List<ItemBase> Items { get; private set; }
+    public CustomerStandard Customer { get; private set; }
+    public List<ItemStandard> Items { get; private set; }
     public TypeOrder TypeOrder { get; init; }
 
-    protected OrderBase(Guid identifier, string code, DateTime requestedOn, CustomerBase customer, List<ItemBase> items, TypeOrder typeOrder)
+    protected OrderBase(Guid identifier, string code, DateTime requestedOn, CustomerStandard customer, List<ItemStandard> items, TypeOrder typeOrder)
     {
         Identifier = identifier;
         Code = code;

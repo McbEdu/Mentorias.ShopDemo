@@ -3,8 +3,6 @@ using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Services.Handlers;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ENUMs;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateOrder;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateOrder.Inputs;
-using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateProduct.Inputs;
-using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateProduct;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 

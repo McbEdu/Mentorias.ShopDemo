@@ -4,16 +4,16 @@ using McbEdu.Mentorias.ShopDemo.Domain.Models.Entities;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Adapters;
 
-public class AdapterListItemsStandardToListItemDto : IAdapter<List<Item>, List<ItemBase>>
+public class AdapterListItemsStandardToListItemDto : IAdapter<List<Item>, List<ItemStandard>>
 {
-    private readonly IAdapter<Item, ItemBase> _adapterListItems;
+    private readonly IAdapter<Item, ItemStandard> _adapterListItems;
 
-    public AdapterListItemsStandardToListItemDto(IAdapter<Item, ItemBase> adapterListItems)
+    public AdapterListItemsStandardToListItemDto(IAdapter<Item, ItemStandard> adapterListItems)
     {
         _adapterListItems = adapterListItems;
     }
 
-    public List<Item> Adapt(List<ItemBase> adapter)
+    public List<Item> Adapt(List<ItemStandard> adapter)
     {
         var adapteeList = new List<Item>();
 

@@ -8,11 +8,11 @@ namespace McbEdu.Mentorias.ShopDemo.Services.Adapters;
 public class AdapterCreateOrderInputModelToOrderStandard : IAdapter<OrderStandard, CreateOrderInputModel>
 {
     private readonly IAdapter<CustomerStandard, CreateCustomerInputModel> _adapterCustomer;
-    private readonly IAdapter<List<ItemBase>, List<CreateItemInputModel>> _adapterItems;
+    private readonly IAdapter<List<ItemStandard>, List<CreateItemInputModel>> _adapterItems;
 
     public AdapterCreateOrderInputModelToOrderStandard(
         IAdapter<CustomerStandard, CreateCustomerInputModel> adapterCustomer,
-        IAdapter<List<ItemBase>, List<CreateItemInputModel>> adapterItems)
+        IAdapter<List<ItemStandard>, List<CreateItemInputModel>> adapterItems)
     {
         _adapterCustomer = adapterCustomer;
         _adapterItems = adapterItems;

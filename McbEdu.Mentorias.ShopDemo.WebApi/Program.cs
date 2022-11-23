@@ -47,6 +47,7 @@ public class Program
         builder.Services.AddScoped<DataContext>();
         builder.Services.AddScoped<IExtendsRepository<Customer>, ExtendsCustomerRepository>();
         builder.Services.AddScoped<IExtendsRepository<Product>, ExtendsProductRepository>();
+        builder.Services.AddScoped<IExtendsRepository<Order>, ExtendsOrderRepository>();
 
         builder.Services.AddScoped<NotifiableBase, NotifiableStandard>();
         builder.Services.AddTransient<INotificationPublisher, NotifiablePublisherStandard>();
@@ -57,10 +58,10 @@ public class Program
         builder.Services.AddScoped<IAdapter<Product, ProductStandard>, AdapterProductStandardToProductDTO>();
         builder.Services.AddScoped<IAdapter<ProductStandard, CreateProductInputModel>, AdapterCreateProductInputModelToProductStandard>();
         builder.Services.AddScoped<IAdapter<ItemStandard, CreateItemInputModel>, AdapterCreateItemInputModelToItemStandard>();
-        builder.Services.AddScoped<IAdapter<List<ItemBase>, List<CreateItemInputModel>>, AdapterListCreateItemInputModelToListItemStandard>();
-        builder.Services.AddScoped<IAdapter<OrderStandard, CreateOrderInputModel>, AdapterCreateOrderInputModelToOrderStandard>();
+        builder.Services.AddScoped<IAdapter<List<ItemStandard>, List<CreateItemInputModel>>, AdapterListCreateItemInputModelToListItemStandard>();
         builder.Services.AddScoped<IAdapter<Item, ItemStandard>, AdapterItemStandardToItem>();
-        builder.Services.AddScoped<IAdapter<List<Item>, List<ItemBase>>, AdapterListItemsStandardToListItemDto>();
+        builder.Services.AddScoped<IAdapter<List<Item>, List<ItemStandard>>, AdapterListItemsStandardToListItemDto>();
+        builder.Services.AddScoped<IAdapter<OrderStandard, CreateOrderInputModel>, AdapterCreateOrderInputModelToOrderStandard>();
         builder.Services.AddScoped<IAdapter<Order, OrderStandard>, AdapterOrderStandardToOrderDTO>();
         builder.Services.AddScoped<AbstractValidator<CustomerBase>, CustomerValidator>();
         builder.Services.AddScoped<AbstractValidator<ProductBase>, ProductValidator>();

@@ -4,7 +4,7 @@ using McbEdu.Mentorias.ShopDemo.Domain.Models.Entities;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Adapters;
 
-public sealed class AdapterCustomerStandardToCustomerDTO : IAdapter<Customer, CustomerStandard>
+public sealed class AdapterCustomerStandardToCustomerDTO : IAdapter<Customer, CustomerStandard> 
 {
     public Customer Adapt(CustomerStandard adapter)
     {

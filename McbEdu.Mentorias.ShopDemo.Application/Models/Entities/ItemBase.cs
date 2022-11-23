@@ -13,6 +13,8 @@ public abstract class ItemBase
 
     protected ItemBase(int sequence, ProductBase product, string description, int quantity, decimal unitaryValue, TypeItem typeItem)
     {
+        Console.WriteLine(description);
+        Console.WriteLine(quantity.ToString());
         Sequence = sequence;
         Product = product;
         Description = description;

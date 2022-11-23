@@ -11,6 +11,11 @@ public class ExtendsProductRepository : ProductRepository, IExtendsRepository<Pr
 
     }
 
+    public Task<Product?> GetAsync(string information)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<bool> VerifyEntityExistsAsync(string information)
     {
         if (_dataContext.Products is null) return false;

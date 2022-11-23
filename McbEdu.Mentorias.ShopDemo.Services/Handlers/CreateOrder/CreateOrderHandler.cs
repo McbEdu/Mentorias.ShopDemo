@@ -62,7 +62,7 @@ public class CreateOrderHandler : HandlerBase<CreateOrderResponse, CreateOrderRe
         _adapterProduct = adapterProduct;
         _adapterProductDto = adapterProductDto;
         _productValidator = productValidator;
-        _adapterOrder = adapterOrder;
+        _adapterOrderDto = adapterOrderDto;
     }
 
     public override async Task<CreateOrderResponse> Handle(CreateOrderRequest request)

@@ -16,10 +16,13 @@ public class DataContext : DbContext
     private IBaseMapping<Order> OrderBaseMapping { get; }
     private IBaseMapping<Item> ItemBaseMapping { get; }
 
-    public DataContext(DbContextOptions options, IBaseMapping<Customer> customerBaseMapping, IBaseMapping<Product> productBaseMapping) : base(options)
+    public DataContext(DbContextOptions options, IBaseMapping<Customer> customerBaseMapping, IBaseMapping<Product> productBaseMapping,
+        IBaseMapping<Order> orderBaseMapping, IBaseMapping<Item> itemBaseMapping) : base(options)
     {
         CustomerBaseMapping = customerBaseMapping;
         ProductBaseMapping = productBaseMapping;
+        OrderBaseMapping = orderBaseMapping;
+        ItemBaseMapping = itemBaseMapping;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -6,11 +6,11 @@ namespace McbEdu.Mentorias.ShopDemo.Services.Adapters;
 
 public class AdapterOrderStandardToOrderDTO : IAdapter<Order, OrderStandard>
 {
-    private readonly IAdapter<Customer, CustomerBase> _adapterCustomer;
-    private readonly IAdapter<List<Item>, List<ItemBase>> _adapterItems;
+    private readonly IAdapter<Customer, CustomerStandard> _adapterCustomer;
+    private readonly IAdapter<List<Item>, List<ItemStandard>> _adapterItems;
 
-    public AdapterOrderStandardToOrderDTO(IAdapter<Customer, CustomerBase> adapterCustomer,
-        IAdapter<List<Item>, List<ItemBase>> adapterItems)
+    public AdapterOrderStandardToOrderDTO(IAdapter<Customer, CustomerStandard> adapterCustomer,
+        IAdapter<List<Item>, List<ItemStandard>> adapterItems)
     {
         _adapterCustomer = adapterCustomer;
         _adapterItems = adapterItems;   

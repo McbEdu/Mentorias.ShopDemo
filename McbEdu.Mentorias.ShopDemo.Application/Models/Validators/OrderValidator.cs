@@ -8,10 +8,15 @@ public class OrderValidator : AbstractValidator<OrderBase>
     public OrderValidator()
     {
         RuleFor(p => p.Code.Length).LessThanOrEqualTo(150).WithMessage(p => $"O código do pedido deve conter até 150 caracteres.");
-        RuleFor(p => p.Items.Count).LessThanOrEqualTo(0).WithMessage(p => $"O pedido deve conter pelo menos um item.");
         RuleFor(p => p.Items).Custom((information, context) =>
         {
             var informationArray = information.ToArray();
+
+            if (informationArray.Length < 1)
+            {
+                context.AddFailure("Pedido", $"O pedido tem que conter pelo menos um item.");
+            }
+
             for(int i = 0; i < informationArray.Length; i++)
             {
                 if (informationArray[i].Sequence != i + 1)
@@ -24,7 +29,7 @@ public class OrderValidator : AbstractValidator<OrderBase>
                     context.AddFailure("Pedido", $"O item de descrição igual a {informationArray[i].Description} não quantidade válida.");
                 }
 
-                if (informationArray[i].UnitaryValue >= 0)
+                if (informationArray[i].UnitaryValue <= 0)
                 {
                     context.AddFailure("Pedido", $"O item de descrição igual a {informationArray[i].Description} não possui um valor unitário válido.");
                 }

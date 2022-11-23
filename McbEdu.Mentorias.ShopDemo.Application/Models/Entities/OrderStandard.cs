@@ -4,7 +4,7 @@ namespace McbEdu.Mentorias.ShopDemo.Domain.Models.Entities;
 
 public class OrderStandard : OrderBase
 {
-    public OrderStandard(Guid identifier, string code, DateTime requestedOn, CustomerBase customer, List<ItemBase> items) : base(identifier, code, requestedOn, customer, items, TypeOrder.Standard)
+    public OrderStandard(Guid identifier, string code, DateTime requestedOn, CustomerStandard customer, List<ItemStandard> items) : base(identifier, code, requestedOn, customer, items, TypeOrder.Standard)
     {
     }
 }

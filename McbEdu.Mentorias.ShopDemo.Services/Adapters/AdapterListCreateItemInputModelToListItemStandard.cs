@@ -4,7 +4,7 @@ using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateOrder.Inputs;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Adapters;
 
-public class AdapterListCreateItemInputModelToListItemStandard : IAdapter<List<ItemBase>, List<CreateItemInputModel>>
+public class AdapterListCreateItemInputModelToListItemStandard : IAdapter<List<ItemStandard>, List<CreateItemInputModel>>
 {
     private readonly IAdapter<ItemStandard, CreateItemInputModel> _adapterItem;
 
@@ -13,9 +13,9 @@ public class AdapterListCreateItemInputModelToListItemStandard : IAdapter<List<I
         _adapterItem = adapterItem;
     }
 
-    public List<ItemBase> Adapt(List<CreateItemInputModel> adapter)
+    public List<ItemStandard> Adapt(List<CreateItemInputModel> adapter)
     {
-        var itemsStandard = new List<ItemBase>();
+        var itemsStandard = new List<ItemStandard>();
 
         foreach (var adaptant in adapter)
         {

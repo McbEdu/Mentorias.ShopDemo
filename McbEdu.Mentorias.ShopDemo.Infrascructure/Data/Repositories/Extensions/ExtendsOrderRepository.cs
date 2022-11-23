@@ -10,6 +10,11 @@ public class ExtendsOrderRepository : OrderRepository, IExtendsRepository<Order>
     {
     }
 
+    public Task<Order?> GetAsync(string information)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<bool> VerifyEntityExistsAsync(string information)
     {
         return await _dataContext.Orders.AnyAsync(p => p.Code == information);
