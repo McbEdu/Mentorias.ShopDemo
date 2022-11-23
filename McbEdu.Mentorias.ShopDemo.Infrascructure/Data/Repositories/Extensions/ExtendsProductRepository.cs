@@ -13,7 +13,9 @@ public class ExtendsProductRepository : ProductRepository, IExtendsRepository<Pr
 
     public Task<Product?> GetAsync(string information)
     {
-        throw new NotImplementedException();
+        if (_dataContext.Products is null) return null;
+
+        return await _dataContext.Products.Where(p => p.Code == information).FirstAsync();
     }
 
     public async Task<bool> VerifyEntityExistsAsync(string information)
