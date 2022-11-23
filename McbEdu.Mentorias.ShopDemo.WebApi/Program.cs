@@ -19,6 +19,7 @@ using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Extensions;
 using McbEdu.Mentorias.ShopDemo.Services.Adapters;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer.Inputs;
+using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateOrder;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateOrder.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateProduct;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateProduct.Inputs;
@@ -58,12 +59,17 @@ public class Program
         builder.Services.AddScoped<IAdapter<ItemStandard, CreateItemInputModel>, AdapterCreateItemInputModelToItemStandard>();
         builder.Services.AddScoped<IAdapter<List<ItemBase>, List<CreateItemInputModel>>, AdapterListCreateItemInputModelToListItemStandard>();
         builder.Services.AddScoped<IAdapter<OrderStandard, CreateOrderInputModel>, AdapterCreateOrderInputModelToOrderStandard>();
+        builder.Services.AddScoped<IAdapter<Item, ItemStandard>, AdapterItemStandardToItem>();
+        builder.Services.AddScoped<IAdapter<List<Item>, List<ItemBase>>, AdapterListItemsStandardToListItemDto>();
+        builder.Services.AddScoped<IAdapter<Order, OrderStandard>, AdapterOrderStandardToOrderDTO>();
         builder.Services.AddScoped<AbstractValidator<CustomerBase>, CustomerValidator>();
         builder.Services.AddScoped<AbstractValidator<ProductBase>, ProductValidator>();
+        builder.Services.AddScoped<AbstractValidator<OrderBase>, OrderValidator>();
         builder.Services.AddTransient<HandlerBase<CreateProductResponse, CreateProductRequest>, CreateProductHandler>();
         builder.Services.AddTransient<HandlerBase<CreateCustomerResponse, CreateCustomerRequest>, CreateCustomerHandler>();
         builder.Services.AddTransient<HandlerBase<CreateRangeCustomerResponse, CreateRangeCustomerRequest>, CreateRangeCustomerHandler>();
         builder.Services.AddTransient<HandlerBase<CreateRangeProductResponse, CreateRangeProductRequest>, CreateRangeProductHandler>();
+        builder.Services.AddTransient<HandlerBase<CreateOrderResponse, CreateOrderRequest>, CreateOrderHandler>();
 
         var app = builder.Build();
         app.UseSwagger();

@@ -12,6 +12,13 @@ public class ExtendsCustomerRepository : CustomerRepository, IExtendsRepository<
 
     }
 
+    public async Task<Customer?> GetAsync(string information)
+    {
+        if (_dataContext.Customers is null) return null;
+
+        return await _dataContext.Customers.FindAsync(information);
+    }
+
     public async Task<bool> VerifyEntityExistsAsync(string information)
     {
         if (_dataContext.Customers is null) return false;
