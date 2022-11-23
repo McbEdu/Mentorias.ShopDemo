@@ -19,7 +19,7 @@ public class OrderValidator : AbstractValidator<OrderBase>
 
             for(int i = 0; i < informationArray.Length; i++)
             {
-                if (informationArray[i].Sequence != i + 1)
+                if (informationArray.Where(p => p.Sequence == (i + 1)).Any() == false)
                 {
                     context.AddFailure("Pedido", $"O item de descrição igual a {informationArray[i].Description} não possui valor sequencial válido.");
                 }
