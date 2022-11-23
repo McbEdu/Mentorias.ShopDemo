@@ -11,7 +11,7 @@ public class ExtendsProductRepository : ProductRepository, IExtendsRepository<Pr
 
     }
 
-    public Task<Product?> GetAsync(string information)
+    public async Task<Product?> GetAsync(string information)
     {
         if (_dataContext.Products is null) return null;
 
