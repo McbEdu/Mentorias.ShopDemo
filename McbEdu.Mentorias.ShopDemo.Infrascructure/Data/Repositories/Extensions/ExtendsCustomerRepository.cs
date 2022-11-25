@@ -21,9 +21,9 @@ public class ExtendsCustomerRepository : CustomerRepository, IExtendsRepository<
 
     public async Task<bool> VerifyEntityExistsAsync(string information)
     {
-        if (_dataContext.Customers is null) return false;
-
-        return await _dataContext.Customers.Where(p => p.Email == information).AnyAsync();
+        var customer = await _dataContext.Customers.Where(p => p.Email == information).FirstAsync();
+        if (customer == null) return false;
+        return true;
     }
 
     public async Task<bool> VerifyEntityExistsAsync(Guid identifier)

@@ -11,6 +11,7 @@ using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateProduct.Inputs;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ValueObjects;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ENUMs;
 using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Domain.Notification.Publisher;
+using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateProduct;
 
@@ -37,6 +38,12 @@ public class CreateProductHandler : HandlerBase<CreateProductResponse, CreatePro
 
     public async override Task<CreateProductResponse> Handle(CreateProductRequest request)
     {
+        if (request.InputModel == null)
+        {
+            _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", "O pedido de requisição é inválido."));
+            return new CreateProductResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "As credenciais do cliente não são válidas.");
+        }
+
         var productAdaptee = _adapterProductInputModelToStandard.Adapt(request.InputModel);
 
         var validation = _productValidator.Validate(productAdaptee);

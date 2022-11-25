@@ -9,7 +9,7 @@ public class CreateOrderInputModel
     [Required]
     public string Code { get; set; }
     [Required]
-    public DateTime RequestedOn { get; set; }
+    public DateTime OrderDate { get; set; }
     [Required]
     public CreateCustomerInputModel Customer { get; set; }
     [Required]

@@ -20,9 +20,7 @@ public class ExtendsProductRepository : ProductRepository, IExtendsRepository<Pr
 
     public async Task<bool> VerifyEntityExistsAsync(string information)
     {
-        if (_dataContext.Products is null) return false;
-
-        return await _dataContext.Products.AnyAsync(p => p.Code == information);
+        return await _dataContext.Products.Where(p => p.Code == information).AnyAsync();
     }
 
     public async Task<bool> VerifyEntityExistsAsync(Guid identifier)

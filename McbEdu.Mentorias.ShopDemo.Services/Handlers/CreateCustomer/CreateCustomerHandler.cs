@@ -36,6 +36,12 @@ public class CreateCustomerHandler : HandlerBase<CreateCustomerResponse, CreateC
 
     public override async Task<CreateCustomerResponse> Handle(CreateCustomerRequest request)
     {
+        if (request.InputModel == null)
+        {
+            _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", "O pedido de requisição é inválido."));
+            return new CreateCustomerResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "As credenciais do cliente não são válidas.");
+        }
+
         var customer = _adapterCustomer.Adapt(request.InputModel);
 
         var validation = _customerValidator.Validate(customer);
@@ -49,7 +55,7 @@ public class CreateCustomerHandler : HandlerBase<CreateCustomerResponse, CreateC
 
         if (await _customerExtendsRepository.VerifyEntityExistsAsync(customer.Email) == true)
         {
-            _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Email", "Email já existe no banco de dados"));
+            _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Email", "As credenciais já estão presentes no banco de dados."));
             return new CreateCustomerResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "As credenciais do cliente já estão presente no banco de dados.");
         }
 

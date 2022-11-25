@@ -9,6 +9,7 @@ using McbEdu.Mentorias.ShopDemo.Domain.Models.Entities;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.Entities.Notification.Items;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ENUMs;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ValueObjects;
+using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateOrder.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateProduct.Inputs;
@@ -67,11 +68,17 @@ public class CreateOrderHandler : HandlerBase<CreateOrderResponse, CreateOrderRe
 
     public override async Task<CreateOrderResponse> Handle(CreateOrderRequest request)
     {
+        if (request.Order == null)
+        {
+            _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", "O pedido de requisição é inválido."));
+            return new CreateOrderResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "As credenciais do cliente não são válidas.");
+        }
+
         var orderStandard = _adapterOrder.Adapt(request.Order);
 
         if (await _orderExtendsRepository.VerifyEntityExistsAsync(orderStandard.Code) == true)
         {
-            _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", "Esse pedido já consta no banco de dados."));
+            _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", "Os dados do pedido já estão presente no banco de dados."));
             return new CreateOrderResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "Pedido presente no banco de dados.");
         }
 
@@ -93,7 +100,7 @@ public class CreateOrderHandler : HandlerBase<CreateOrderResponse, CreateOrderRe
                 customer!.Email != request.Order.Customer.Email
                 )
             {
-                _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", "Dados do cliente já existem, no entanto, com dados diferentes. A requisição foi realizada normalmente."));
+                _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", "Credenciais do cliente já existente, no entanto, com dados diferentes."));
             }
         }
         else
@@ -110,6 +117,7 @@ public class CreateOrderHandler : HandlerBase<CreateOrderResponse, CreateOrderRe
             await _customerExtendsRepository.AddAsync(_adapterCustomerDto.Adapt(adaptedCustomer));
         }
 
+        bool allItensIsValid = true;
         foreach (var item in request.Order.Items)
         {
             if (await _productExtendsRepository.VerifyEntityExistsAsync(item.Product.Code) == true)
@@ -129,13 +137,24 @@ public class CreateOrderHandler : HandlerBase<CreateOrderResponse, CreateOrderRe
 
                 if (validationProduct.IsValid == false)
                 {
-                    validationProduct.Errors.Add(new ValidationFailure("Pedido",$"O produto de código {item.Product.Code} é inválido para ser adicionado no banco de dados."));
-                    _notifiablePublisherStandard.AddNotifications(_adapterNotifications.Adapt(validationProduct.Errors));
+                    validationProduct.Errors.Add(new ValidationFailure("Pedido",$"Produto do Item {item.Sequence}. é inválido para ser adicionado no banco de dados."));
+                    var notifications = _adapterNotifications.Adapt(validationProduct.Errors);
+                    var newNotifications = new List<NotificationItemBase>();
+                    foreach (var notification in notifications)
+                    {
+                        newNotifications.Add(new NotificationItemStandard("", $"Item {item.Sequence}. {notification.Message}"));
+                    }
+
+                    _notifiablePublisherStandard.AddNotifications(newNotifications);
+                    allItensIsValid = false;
                     return new CreateOrderResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "Pedido inválido.");
                 }
-
-                await _productExtendsRepository.AddAsync(_adapterProductDto.Adapt(adaptedProduct));
             }
+        }
+
+        if (allItensIsValid == false)
+        {
+            return new CreateOrderResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "Pedido inválido.");
         }
 
         var order = _adapterOrderDto.Adapt(orderStandard);

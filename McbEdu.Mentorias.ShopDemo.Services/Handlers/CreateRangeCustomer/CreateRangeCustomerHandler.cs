@@ -38,6 +38,12 @@ public class CreateRangeCustomerHandler : HandlerBase<CreateRangeCustomerRespons
 
     public async override Task<CreateRangeCustomerResponse> Handle(CreateRangeCustomerRequest request)
     {
+        if (request.CreateRangeCustomer == null)
+        {
+            _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", "O pedido de requisição é inválido."));
+            return new CreateRangeCustomerResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "As credenciais do cliente não são válidas.");
+        }
+
         var customersStandardList = new List<CustomerStandard>();
 
         if (request.CreateRangeCustomer.Count < 1) 

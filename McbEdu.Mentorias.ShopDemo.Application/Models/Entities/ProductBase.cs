@@ -4,7 +4,7 @@ namespace McbEdu.Mentorias.ShopDemo.Domain.Models.Entities;
 
 public abstract class ProductBase
 {
-    public Guid Identifier { get; }
+    public Guid Identifier { get; set; }
     public string Code { get; private set; }
     public string Description { get; private set; }
     public TypeProduct TypeProduct { get; }

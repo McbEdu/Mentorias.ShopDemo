@@ -4,7 +4,7 @@ namespace McbEdu.Mentorias.ShopDemo.Domain.Models.Entities;
 
 public abstract class CustomerBase
 {
-    public Guid Identifier { get; }
+    public Guid Identifier { get; set; }
     public string Name { get; private set; }
     public string Surname { get; private set; }
     public string Email { get; private set; }

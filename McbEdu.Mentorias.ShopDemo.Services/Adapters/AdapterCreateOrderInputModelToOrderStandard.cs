@@ -20,6 +20,6 @@ public class AdapterCreateOrderInputModelToOrderStandard : IAdapter<OrderStandar
 
     public OrderStandard Adapt(CreateOrderInputModel adapter)
     {
-        return new OrderStandard(Guid.NewGuid(), adapter.Code, adapter.RequestedOn, _adapterCustomer.Adapt(adapter.Customer), _adapterItems.Adapt(adapter.Items));
+        return new OrderStandard(Guid.NewGuid(), adapter.Code, adapter.OrderDate, _adapterCustomer.Adapt(adapter.Customer), _adapterItems.Adapt(adapter.Items));
     }
 }
