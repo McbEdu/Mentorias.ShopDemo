@@ -16,12 +16,12 @@ public class ExtendsCustomerRepository : CustomerRepository, IExtendsRepository<
     {
         if (_dataContext.Customers is null) return null;
 
-        return await _dataContext.Customers.Where(p => p.Email == information).FirstAsync();
+        return await _dataContext.Customers.Where(p => p.Email == information).FirstOrDefaultAsync();
     }
 
     public async Task<bool> VerifyEntityExistsAsync(string information)
     {
-        var customer = await _dataContext.Customers.Where(p => p.Email == information).FirstAsync();
+        var customer = await _dataContext.Customers.Where(p => p.Email == information).FirstOrDefaultAsync();
         if (customer == null) return false;
         return true;
     }

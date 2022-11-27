@@ -59,7 +59,15 @@ public class CreateRangeProductHandler : HandlerBase<CreateRangeProductResponse,
 
             if (validation.IsValid == false)
             {
-                _notifiablePublisherStandard.AddNotifications(_adapterNotifications.Adapt(validation.Errors));
+
+                var newValidationErrors = new List<ValidationFailure>();
+
+                foreach (var validationError in validation.Errors)
+                {
+                    newValidationErrors.Add(new ValidationFailure(validationError.PropertyName, $"Produto {productAdaptee.Code}. {validationError.ErrorMessage}"));
+                }
+
+                _notifiablePublisherStandard.AddNotifications(_adapterNotifications.Adapt(newValidationErrors));
                 return new CreateRangeProductResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "É necessário importar uma lista de clientes válida!");
             }
 

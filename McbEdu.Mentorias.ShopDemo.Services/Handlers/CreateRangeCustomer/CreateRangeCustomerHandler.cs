@@ -59,7 +59,14 @@ public class CreateRangeCustomerHandler : HandlerBase<CreateRangeCustomerRespons
             
             if (validation.IsValid == false)
             {
-                _notifiablePublisherStandard.AddNotifications(_adapterNotifications.Adapt(validation.Errors));
+                var newValidationErrors = new List<ValidationFailure>();
+
+                foreach (var validationFailure in validation.Errors)
+                {
+                    newValidationErrors.Add(new ValidationFailure(validationFailure.PropertyName, $"Cliente {adaptee.Name}. {validationFailure.ErrorMessage}"));
+                }
+
+                _notifiablePublisherStandard.AddNotifications(_adapterNotifications.Adapt(newValidationErrors));
                 return new CreateRangeCustomerResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "É necessário exibir uma lista de clientes!");
             }
 
@@ -79,7 +86,7 @@ public class CreateRangeCustomerHandler : HandlerBase<CreateRangeCustomerRespons
             if (await _customerExtendsRepository.VerifyEntityExistsAsync(customer.Email))
             {
                 existsAnyCustomerInDatabase = true;
-                _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Cliente", $"O cliente {customer.Name} {customer.Surname} já está importado."));
+                _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Cliente", $"O cliente com email {customer.Email} já está importado."));
             }
         }
 

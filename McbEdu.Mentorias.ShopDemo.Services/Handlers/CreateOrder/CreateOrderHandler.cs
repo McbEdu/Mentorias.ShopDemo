@@ -7,157 +7,103 @@ using McbEdu.Mentorias.ShopDemo.Domain.Contracts.Services.Handlers;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.DTOs;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.Entities;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.Entities.Notification.Items;
+using McbEdu.Mentorias.ShopDemo.Domain.Models.Entities.Notification.Publisher;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ENUMs;
 using McbEdu.Mentorias.ShopDemo.Domain.Models.ValueObjects;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer;
-using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateCustomer.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateOrder.Inputs;
-using McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateProduct.Inputs;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Handlers.CreateOrder;
 
 public class CreateOrderHandler : HandlerBase<CreateOrderResponse, CreateOrderRequest>
 {
-    private readonly IExtendsRepository<Order> _orderExtendsRepository;
-    private readonly IAdapter<OrderStandard, CreateOrderInputModel> _adapterOrder;
     private readonly INotificationPublisher _notifiablePublisherStandard;
+    private readonly IAdapter<OrderStandard, CreateOrderInputModel> _adapterInputOrderToOrderStandard;
     private readonly AbstractValidator<OrderBase> _orderValidator;
     private readonly IAdapter<List<NotificationItemBase>, List<ValidationFailure>> _adapterNotifications;
-    private readonly IExtendsRepository<Customer> _customerExtendsRepository;
+    private readonly IExtendsRepository<Order> _orderExtendsRepository;
     private readonly IExtendsRepository<Product> _productExtendsRepository;
-    private readonly AbstractValidator<CustomerBase> _customerValidator;
-    private readonly AbstractValidator<ProductBase> _productValidator;
-    private readonly IAdapter<CustomerStandard, CreateCustomerInputModel> _adapterCustomer;
-    private readonly IAdapter<Customer, CustomerStandard> _adapterCustomerDto;
-    private readonly IAdapter<ProductStandard, CreateProductInputModel> _adapterProduct;
-    private readonly IAdapter<Product, ProductStandard> _adapterProductDto;
-    private readonly IAdapter<Order, OrderStandard> _adapterOrderDto;
+    private readonly IExtendsRepository<Customer> _customerExtendsRepository;
+    private readonly IAdapter<Order, OrderStandard> _adapterOrderStandardToOrder;
 
     public CreateOrderHandler(
-        IExtendsRepository<Order> orderExtendsRepository,
-        IAdapter<OrderStandard, CreateOrderInputModel> adapterOrder,
         INotificationPublisher notifiablePublisherStandard,
+        IAdapter<OrderStandard, CreateOrderInputModel> adapterInputOrderToOrderStandard,
+        IAdapter<Order, OrderStandard> adapterOrderStandardToOrder,
         AbstractValidator<OrderBase> orderValidator,
         IAdapter<List<NotificationItemBase>, List<ValidationFailure>> adapterNotifications,
-        IExtendsRepository<Customer> customerExtendsRepository,
-        AbstractValidator<CustomerBase> customerValidator,
-        AbstractValidator<ProductBase> productValidator,
-        IAdapter<CustomerStandard, CreateCustomerInputModel> adapterCustomer,
-        IAdapter<Customer, CustomerStandard> adapterCustomerDto,
+        IExtendsRepository<Order> orderExtendsRepository,
         IExtendsRepository<Product> productExtendsRepository,
-        IAdapter<ProductStandard, CreateProductInputModel> adapterProduct,
-        IAdapter<Product, ProductStandard> adapterProductDto,
-        IAdapter<Order, OrderStandard> adapterOrderDto
-        )
+        IExtendsRepository<Customer> customerExtendsRepository)
     {
-        _orderExtendsRepository = orderExtendsRepository;
-        _adapterOrder = adapterOrder;
         _notifiablePublisherStandard = notifiablePublisherStandard;
+        _adapterInputOrderToOrderStandard = adapterInputOrderToOrderStandard;
         _orderValidator = orderValidator;
         _adapterNotifications = adapterNotifications;
-        _customerExtendsRepository = customerExtendsRepository;
-        _customerValidator = customerValidator;
-        _adapterCustomer = adapterCustomer;
-        _adapterCustomerDto = adapterCustomerDto;
+        _orderExtendsRepository = orderExtendsRepository;
         _productExtendsRepository = productExtendsRepository;
-        _adapterProduct = adapterProduct;
-        _adapterProductDto = adapterProductDto;
-        _productValidator = productValidator;
-        _adapterOrderDto = adapterOrderDto;
+        _customerExtendsRepository = customerExtendsRepository;
+        _adapterOrderStandardToOrder = adapterOrderStandardToOrder;
     }
 
     public override async Task<CreateOrderResponse> Handle(CreateOrderRequest request)
     {
+        // Validações
         if (request.Order == null)
         {
             _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", "O pedido de requisição é inválido."));
-            return new CreateOrderResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "As credenciais do cliente não são válidas.");
+            return new CreateOrderResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "O input de pedido não é valido.");
         }
 
-        var orderStandard = _adapterOrder.Adapt(request.Order);
-
-        if (await _orderExtendsRepository.VerifyEntityExistsAsync(orderStandard.Code) == true)
-        {
-            _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", "Os dados do pedido já estão presente no banco de dados."));
-            return new CreateOrderResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "Pedido presente no banco de dados.");
-        }
+        var orderStandard = _adapterInputOrderToOrderStandard.Adapt(request.Order);
 
         var validation = _orderValidator.Validate(orderStandard);
 
         if (validation.IsValid == false)
         {
             _notifiablePublisherStandard.AddNotifications(_adapterNotifications.Adapt(validation.Errors));
-            return new CreateOrderResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "Pedido inválido.");
+            return new CreateOrderResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "O input de pedido não é valido.");
         }
 
-        if (await _customerExtendsRepository.VerifyEntityExistsAsync(orderStandard.Customer.Email) == true)
+        if (await _orderExtendsRepository.VerifyEntityExistsAsync(orderStandard.Code) == true)
         {
-            var customer = await _customerExtendsRepository.GetAsync(orderStandard.Customer.Email);
-
-            if (customer!.Name != request.Order.Customer.Name ||
-                customer!.Surname != request.Order.Customer.Surname ||
-                customer!.Birthday != request.Order.Customer.Birthday ||
-                customer!.Email != request.Order.Customer.Email
-                )
-            {
-                _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", "Credenciais do cliente já existente, no entanto, com dados diferentes."));
-            }
+            _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", "O pedido já existe."));
+            return new CreateOrderResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "O input de pedido não é valido.");
         }
-        else
-        {
-            var adaptedCustomer = _adapterCustomer.Adapt(request.Order.Customer);
-            var validationCustomer = _customerValidator.Validate(adaptedCustomer);
 
-            if (validationCustomer.IsValid == false)
+        var order = _adapterOrderStandardToOrder.Adapt(orderStandard);
+
+        // Customer
+        if (await _customerExtendsRepository.VerifyEntityExistsAsync(order.Customer.Email) == true)
+        {
+            Customer customerInformationIfNeedsToGetInTheDatabase = (await _customerExtendsRepository.GetAsync(orderStandard.Customer.Email))!;
+
+            if (order.Customer.Name != customerInformationIfNeedsToGetInTheDatabase!.Name ||
+                order.Customer.Surname != customerInformationIfNeedsToGetInTheDatabase!.Surname ||
+                order.Customer.Birthday != customerInformationIfNeedsToGetInTheDatabase!.Birthday )
             {
-                _notifiablePublisherStandard.AddNotifications(_adapterNotifications.Adapt(validationCustomer.Errors));
-                return new CreateOrderResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "Pedido inválido.");
+                _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", "O cliente já existe, no entanto com dados diferentes."));
             }
 
-            await _customerExtendsRepository.AddAsync(_adapterCustomerDto.Adapt(adaptedCustomer));
+            order.Customer = customerInformationIfNeedsToGetInTheDatabase;
         }
 
-        bool allItensIsValid = true;
-        foreach (var item in request.Order.Items)
+        // Products Items
+        foreach (var item in order.Items)
         {
             if (await _productExtendsRepository.VerifyEntityExistsAsync(item.Product.Code) == true)
             {
-                var product = await _productExtendsRepository.GetAsync(item.Product.Code);
+                Product productInformationIfNeedsToGetInTheDatabase = (await _productExtendsRepository.GetAsync(item.Product.Code))!;
 
-                if (product!.Description != item.Product.Description ||
-                    product!.Code != item.Product.Code)
+                if (item.Product.Description != productInformationIfNeedsToGetInTheDatabase.Description)
                 {
-                    _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", "Dados do produto já existem, no entanto, com dados diferentes. A requisição foi realizada normalmente."));
+                    _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Pedido", $"O produto {item.Product.Code} já existe, no entanto com dados diferentes."));
                 }
-            }
-            else
-            {
-                var adaptedProduct = _adapterProduct.Adapt(item.Product);
-                var validationProduct = _productValidator.Validate(adaptedProduct);
 
-                if (validationProduct.IsValid == false)
-                {
-                    validationProduct.Errors.Add(new ValidationFailure("Pedido",$"Produto do Item {item.Sequence}. é inválido para ser adicionado no banco de dados."));
-                    var notifications = _adapterNotifications.Adapt(validationProduct.Errors);
-                    var newNotifications = new List<NotificationItemBase>();
-                    foreach (var notification in notifications)
-                    {
-                        newNotifications.Add(new NotificationItemStandard("", $"Item {item.Sequence}. {notification.Message}"));
-                    }
-
-                    _notifiablePublisherStandard.AddNotifications(newNotifications);
-                    allItensIsValid = false;
-                    return new CreateOrderResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "Pedido inválido.");
-                }
+                item.Product = productInformationIfNeedsToGetInTheDatabase;
             }
         }
 
-        if (allItensIsValid == false)
-        {
-            return new CreateOrderResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "Pedido inválido.");
-        }
-
-        var order = _adapterOrderDto.Adapt(orderStandard);
         await _orderExtendsRepository.AddAsync(order);
 
         return new CreateOrderResponse(new HttpResponse(TypeHttpStatusCodeResponse.Ok), request.RequestedOn, "Pedido realizado com sucesso.");

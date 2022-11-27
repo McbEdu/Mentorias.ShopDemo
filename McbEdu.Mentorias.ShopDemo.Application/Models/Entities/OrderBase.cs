@@ -25,4 +25,9 @@ public abstract class OrderBase
     {
         Code = code;
     }
+
+    public void ChangeCustomer(CustomerStandard customer)
+    {
+        Customer = customer;
+    }
 }

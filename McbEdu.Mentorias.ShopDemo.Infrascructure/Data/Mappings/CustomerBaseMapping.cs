@@ -9,5 +9,7 @@ public class CustomerBaseMapping : IBaseMapping<Customer>
     public void CreateBaseMapping(EntityTypeBuilder<Customer> entity)
     {
         entity.HasKey(p => p.Identifier);
+
+        entity.Property(p => p.Birthday);
     }
 }

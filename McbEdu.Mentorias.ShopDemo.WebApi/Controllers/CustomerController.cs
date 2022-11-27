@@ -22,6 +22,12 @@ public class CustomerController : ControllerBase
     {
         var response = await handler.Handle(new CreateCustomerRequest(DateTime.Now, TypeVerbRequest.HttpPost, model));
         response.AddNotification(notifiableConsumer);
+
+        if (response.HttpResponse.Status == 200 || response.HttpResponse.Status == 201)
+        {
+            return StatusCode(response.HttpResponse.Status);
+        }
+
         return StatusCode(response.HttpResponse.Status, response);
     }
 
@@ -34,6 +40,12 @@ public class CustomerController : ControllerBase
     {
         var response = await handler.Handle(new CreateRangeCustomerRequest(DateTime.Now, TypeVerbRequest.HttpPost, model));
         response.AddNotification(notifiableConsumer);
+
+        if (response.HttpResponse.Status == 200 || response.HttpResponse.Status == 201)
+        {
+            return StatusCode(response.HttpResponse.Status);
+        }
+
         return StatusCode(response.HttpResponse.Status, response);
     }
 }

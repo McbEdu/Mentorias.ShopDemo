@@ -23,6 +23,12 @@ public class ProductController : ControllerBase
     {
         var response = await handler.Handle(new CreateProductRequest(DateTime.Now, TypeVerbRequest.HttpPost, model));
         response.AddNotification(notifiableConsumer);
+
+        if (response.HttpResponse.Status == 200 || response.HttpResponse.Status == 201)
+        {
+            return StatusCode(response.HttpResponse.Status);
+        }
+
         return StatusCode(response.HttpResponse.Status, response);
     }
 
@@ -36,6 +42,12 @@ public class ProductController : ControllerBase
     {
         var response = await handler.Handle(new CreateRangeProductRequest(DateTime.Now, TypeVerbRequest.HttpPost, model));
         response.AddNotification(notifiableConsumer);
+
+        if (response.HttpResponse.Status == 200 || response.HttpResponse.Status == 201)
+        {
+            return StatusCode(response.HttpResponse.Status);
+        }
+
         return StatusCode(response.HttpResponse.Status, response);
     }
 }

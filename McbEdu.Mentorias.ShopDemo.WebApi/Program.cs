@@ -63,6 +63,7 @@ public class Program
         builder.Services.AddScoped<IAdapter<List<Item>, List<ItemStandard>>, AdapterListItemsStandardToListItemDto>();
         builder.Services.AddScoped<IAdapter<OrderStandard, CreateOrderInputModel>, AdapterCreateOrderInputModelToOrderStandard>();
         builder.Services.AddScoped<IAdapter<Order, OrderStandard>, AdapterOrderStandardToOrderDTO>();
+        builder.Services.AddScoped<IAdapter<CustomerStandard, Customer>, AdapterCustomerDTOToCustomerStandard>();
         builder.Services.AddScoped<AbstractValidator<CustomerBase>, CustomerValidator>();
         builder.Services.AddScoped<AbstractValidator<ProductBase>, ProductValidator>();
         builder.Services.AddScoped<AbstractValidator<OrderBase>, OrderValidator>();

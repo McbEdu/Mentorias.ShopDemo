@@ -16,6 +16,13 @@ public class OrderValidator : AbstractValidator<OrderBase>
             {
                 context.AddFailure("", "A data do pedido precisa ser válida!");
             }
+            else
+            {
+                if (dateTimeParsed > DateTime.Now)
+                {
+                    context.AddFailure("", "A data do pedido não pode ser futura.");
+                }
+            }
         });
 
 
