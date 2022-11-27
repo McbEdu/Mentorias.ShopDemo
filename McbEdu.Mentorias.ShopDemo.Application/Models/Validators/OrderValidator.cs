@@ -30,6 +30,8 @@ public class OrderValidator : AbstractValidator<OrderBase>
         {
             var informationArray = information.ToArray();
 
+
+
             if (informationArray.Length < 1)
             {
                 context.AddFailure("Pedido", $"O pedido tem que conter pelo menos um item.");
@@ -45,6 +47,16 @@ public class OrderValidator : AbstractValidator<OrderBase>
                 if (informationArray.Where(p => p.Sequence < 0).Any() == true)
                 {
                     context.AddFailure("Pedido", $"Os itens precisam ter valor sequencial válido.");
+                }
+
+                if (informationArray[i].Product.Code.Length > 150)
+                {
+                    context.AddFailure("Pedido", $"O produto do item de sequência {informationArray[i].Sequence} precisa conter código com até 150 caracteres.");
+                }
+
+                if (informationArray[i].Product.Description.Length > 500)
+                {
+                    context.AddFailure("Pedido", $"O produto do item de sequência {informationArray[i].Sequence} precisa conter uma descrição com até 500 caracteres.");
                 }
             }
 

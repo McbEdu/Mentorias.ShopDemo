@@ -25,12 +25,14 @@ public class CreateOrderHandler : HandlerBase<CreateOrderResponse, CreateOrderRe
     private readonly IExtendsRepository<Product> _productExtendsRepository;
     private readonly IExtendsRepository<Customer> _customerExtendsRepository;
     private readonly IAdapter<Order, OrderStandard> _adapterOrderStandardToOrder;
+    private readonly AbstractValidator<CustomerBase> _customerValidator;
 
     public CreateOrderHandler(
         INotificationPublisher notifiablePublisherStandard,
         IAdapter<OrderStandard, CreateOrderInputModel> adapterInputOrderToOrderStandard,
         IAdapter<Order, OrderStandard> adapterOrderStandardToOrder,
         AbstractValidator<OrderBase> orderValidator,
+        AbstractValidator<CustomerBase> customerValidator,
         IAdapter<List<NotificationItemBase>, List<ValidationFailure>> adapterNotifications,
         IExtendsRepository<Order> orderExtendsRepository,
         IExtendsRepository<Product> productExtendsRepository,
@@ -44,6 +46,7 @@ public class CreateOrderHandler : HandlerBase<CreateOrderResponse, CreateOrderRe
         _productExtendsRepository = productExtendsRepository;
         _customerExtendsRepository = customerExtendsRepository;
         _adapterOrderStandardToOrder = adapterOrderStandardToOrder;
+        _customerValidator = customerValidator;
     }
 
     public override async Task<CreateOrderResponse> Handle(CreateOrderRequest request)
@@ -87,6 +90,16 @@ public class CreateOrderHandler : HandlerBase<CreateOrderResponse, CreateOrderRe
 
             order.Customer = customerInformationIfNeedsToGetInTheDatabase;
         }
+        else
+        {
+            var customerValidation = _customerValidator.Validate(orderStandard.Customer);
+
+            if (customerValidation.IsValid == false)
+            {
+                _notifiablePublisherStandard.AddNotifications(_adapterNotifications.Adapt(customerValidation.Errors));
+                return new CreateOrderResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "O input de pedido não é valido.");
+            }
+        }
 
         // Products Items
         foreach (var item in order.Items)
@@ -101,6 +114,10 @@ public class CreateOrderHandler : HandlerBase<CreateOrderResponse, CreateOrderRe
                 }
 
                 item.Product = productInformationIfNeedsToGetInTheDatabase;
+            }
+            else
+            {
+
             }
         }
 
