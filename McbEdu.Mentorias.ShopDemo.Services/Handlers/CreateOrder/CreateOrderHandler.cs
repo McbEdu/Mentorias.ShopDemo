@@ -115,10 +115,6 @@ public class CreateOrderHandler : HandlerBase<CreateOrderResponse, CreateOrderRe
 
                 item.Product = productInformationIfNeedsToGetInTheDatabase;
             }
-            else
-            {
-
-            }
         }
 
         await _orderExtendsRepository.AddAsync(order);

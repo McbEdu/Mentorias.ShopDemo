@@ -51,7 +51,8 @@ public class CreateRangeCustomerHandler : HandlerBase<CreateRangeCustomerRespons
             _notifiablePublisherStandard.AddNotification(new NotificationItemStandard("Lista de Clientes", "É necessário enviar uma lista de clientes válida!"));
             return new CreateRangeCustomerResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "É necessário exibir uma lista de clientes!");
         }
-        
+
+        bool allCustomerIsValid = true;
         foreach (var customerInput in request.CreateRangeCustomer)
         {
             var adaptee = _adapterCustomer.Adapt(customerInput);
@@ -67,10 +68,15 @@ public class CreateRangeCustomerHandler : HandlerBase<CreateRangeCustomerRespons
                 }
 
                 _notifiablePublisherStandard.AddNotifications(_adapterNotifications.Adapt(newValidationErrors));
-                return new CreateRangeCustomerResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "É necessário exibir uma lista de clientes!");
+                allCustomerIsValid = false;
             }
 
             customersStandardList.Add(adaptee);
+        }
+
+        if (allCustomerIsValid == true)
+        {
+            return new CreateRangeCustomerResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "É necessário exibir uma lista de clientes!");
         }
 
         var customersDtoList = new List<Customer>();

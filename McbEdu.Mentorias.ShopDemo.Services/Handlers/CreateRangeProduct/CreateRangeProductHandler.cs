@@ -52,6 +52,7 @@ public class CreateRangeProductHandler : HandlerBase<CreateRangeProductResponse,
             return new CreateRangeProductResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "É necessário exibir uma lista de produtos para realizar a importação em lote.");
         }
 
+        bool allProductsIsValid = true;
         foreach (var productInput in request.InputModels)
         {
             var productAdaptee = _adapterProductInputModelToStandard.Adapt(productInput);
@@ -66,12 +67,16 @@ public class CreateRangeProductHandler : HandlerBase<CreateRangeProductResponse,
                 {
                     newValidationErrors.Add(new ValidationFailure(validationError.PropertyName, $"Produto {productAdaptee.Code}. {validationError.ErrorMessage}"));
                 }
-
+                allProductsIsValid = false;
                 _notifiablePublisherStandard.AddNotifications(_adapterNotifications.Adapt(newValidationErrors));
-                return new CreateRangeProductResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "É necessário importar uma lista de clientes válida!");
             }
 
             productsStandardList.Add(productAdaptee);
+        }
+
+        if (allProductsIsValid == false)
+        {
+            return new CreateRangeProductResponse(new HttpResponse(TypeHttpStatusCodeResponse.BadRequest), request.RequestedOn, "É necessário importar uma lista de clientes válida!");
         }
 
         var productsDataTransferList = new List<Product>();
