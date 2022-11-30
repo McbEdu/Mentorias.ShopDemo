@@ -17,6 +17,7 @@ public class CustomerController : CustomControllerBase
     }
 
     [HttpPost]
+    [Route("[action]")]
     public Task<IActionResult> Import(
         [FromServices] IUseCase<ImportCustomerUseCaseInput> useCase,
         [FromBody] ImportCustomerPayload importCustomerPayload,
@@ -24,5 +25,23 @@ public class CustomerController : CustomControllerBase
         )
     {
         return RunUseCaseAsync<ImportCustomerUseCaseInput>(useCase, adapter.Adapt(importCustomerPayload), 201, 422);
+    }
+
+    [HttpPost]
+    [Route("[action]")]
+    public Task<IActionResult> ImportRange(
+        [FromServices] IUseCase<List<ImportCustomerUseCaseInput>> useCase,
+        [FromBody] List<ImportCustomerPayload> importCustomerPayload,
+        [FromServices] IAdapter<ImportCustomerPayload, ImportCustomerUseCaseInput> adapter
+        )
+    {
+        var inputs = new List<ImportCustomerUseCaseInput>();
+
+        foreach (var item in importCustomerPayload)
+        {
+            inputs.Add(adapter.Adapt(item));
+        }
+
+        return RunUseCaseAsync<List<ImportCustomerUseCaseInput>>(useCase, inputs, 201, 422);
     }
 }

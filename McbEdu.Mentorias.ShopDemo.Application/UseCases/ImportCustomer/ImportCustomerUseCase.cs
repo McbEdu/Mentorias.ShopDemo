@@ -24,10 +24,16 @@ public class ImportCustomerUseCase : IUseCase<ImportCustomerUseCaseInput>
 
     public async Task<bool> ExecuteAsync(ImportCustomerUseCaseInput useCaseInput)
     {
-        if (await _customerService.VerifyCustomerIsRegistered(_adapter.Adapt(useCaseInput)) == false)
+        var adapted = _adapter.Adapt(useCaseInput);
+
+        if (await _customerService.VerifyCustomerIsRegistered(adapted) == false)
         {
-            await _customerService.ImportCustomerAsync(_adapter.Adapt(useCaseInput));
-            return true;
+            if (await _customerService.VerifyCustomerIsValid(adapted) == true)
+            {
+                await _customerService.ImportCustomerAsync(adapted);
+                return true;
+            }
+            return false;
         }
         else
         {

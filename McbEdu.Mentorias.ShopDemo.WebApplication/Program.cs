@@ -10,6 +10,7 @@ using McbEdu.Mentorias.ShopDemo.Application.UseCases.Abstractions;
 using McbEdu.Mentorias.ShopDemo.Application.UseCases.Adapters;
 using McbEdu.Mentorias.ShopDemo.Application.UseCases.ImportCustomer;
 using McbEdu.Mentorias.ShopDemo.Application.UseCases.ImportCustomer.Inputs;
+using McbEdu.Mentorias.ShopDemo.Application.UseCases.ImportRangeCustomer;
 using McbEdu.Mentorias.ShopDemo.Domain.DTOs;
 using McbEdu.Mentorias.ShopDemo.Domain.Entities;
 using McbEdu.Mentorias.ShopDemo.Domain.Validators;
@@ -43,12 +44,14 @@ public class Program
         builder.Services.AddSingleton<IAdapter<List<NotificationItem>, List<ValidationFailure>>, AdapterValidationFailureToNotificationItem>();
         builder.Services.AddSingleton<IAdapter<CustomerStandard, Customer>, AdapterCustomerStandardToCustomer>();
         builder.Services.AddSingleton<AbstractValidator<CustomerStandard>, CustomerValidator>();
+        builder.Services.AddSingleton<AbstractValidator<List<CustomerStandard>>, CustomerRangeValidator>();
         builder.Services.AddScoped<NotifiableContainerBase<NotificationItem>, NotifiableContainer>();
         builder.Services.AddTransient<INotificationConsumer<NotificationItem>, NotificationConsumer>();
         builder.Services.AddTransient<INotificationPublisher<NotificationItem>, NotificationPublisher>();
         builder.Services.AddScoped<IExtendsCustomerRepository, CustomerRepository>();
         builder.Services.AddScoped<ICustomerService, CustomerService>();
         builder.Services.AddScoped<IUseCase<ImportCustomerUseCaseInput>, ImportCustomerUseCase>();
+        builder.Services.AddScoped<IUseCase<List<ImportCustomerUseCaseInput>>, ImportRangeCustomerUseCase>();
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
