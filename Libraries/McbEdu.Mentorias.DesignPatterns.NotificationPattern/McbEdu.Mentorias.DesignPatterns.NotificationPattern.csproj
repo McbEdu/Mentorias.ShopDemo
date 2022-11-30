@@ -7,8 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Validators\" />
-    <Folder Include="Services\Abstractions\" />
+    <ProjectReference Include="..\McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions\McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

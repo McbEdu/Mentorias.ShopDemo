@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\McbEdu.Mentorias.General.Infrascructure.Abstractions\McbEdu.Mentorias.General.Infrascructure.Abstractions.csproj" />
+    <ProjectReference Include="..\McbEdu.Mentorias.ShopDemo.Domain\McbEdu.Mentorias.ShopDemo.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
