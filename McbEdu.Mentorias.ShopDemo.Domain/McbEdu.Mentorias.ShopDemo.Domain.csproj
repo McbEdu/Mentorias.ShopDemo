@@ -7,8 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Validators\" />
-    <Folder Include="Services\Abstractions\" />
+    <PackageReference Include="FluentValidation" Version="11.4.0" />
   </ItemGroup>
 
 </Project>

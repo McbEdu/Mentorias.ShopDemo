@@ -6,4 +6,30 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\libraries\McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions\McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions.csproj" />
+    <ProjectReference Include="..\libraries\McbEdu.Mentorias.DesignPatterns.NotificationPattern\McbEdu.Mentorias.DesignPatterns.NotificationPattern.csproj" />
+    <ProjectReference Include="..\McbEdu.Mentorias.ShopDemo.Infrascructure.Data\McbEdu.Mentorias.ShopDemo.Infrascructure.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\Admin\Desktop\mentorias.shopdemo\McbEdu.Mentorias.ShopDemo.Services\Customers\Adapters\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Customers\Adapters\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\Admin\Desktop\mentorias.shopdemo\McbEdu.Mentorias.ShopDemo.Services\Customers\Adapters\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\Admin\Desktop\mentorias.shopdemo\McbEdu.Mentorias.ShopDemo.Services\Customers\Adapters\.editorconfig" />
+  </ItemGroup>
+
 </Project>

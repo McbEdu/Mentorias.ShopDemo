@@ -26,9 +26,18 @@ public class CustomControllerBase : ControllerBase
         return response ? StatusCode(statusCodeSuccess, CreateResponse()) : StatusCode(statusCodeError, CreateResponse());
     }
 
-    private List<string> CreateResponse()
+    private List<string>? CreateResponse()
     {
+
+
         var messages = new List<string>();
+
+        var notifications = _notificationConsumer.GetNotificationItems();
+
+        if (notifications.Count == 0)
+        {
+            return null;
+        }
 
         foreach(var item in _notificationConsumer.GetNotificationItems())
         {

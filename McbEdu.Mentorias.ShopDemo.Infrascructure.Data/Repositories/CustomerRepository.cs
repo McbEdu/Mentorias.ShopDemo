@@ -35,6 +35,11 @@ public class CustomerRepository : IExtendsCustomerRepository
         return _dataContext.Customers.ToList();
     }
 
+    public Task<Customer?> GetByEmail(string email)
+    {
+        throw new NotImplementedException();
+    }
+
     public Customer? GetByIdentifier(Guid identifier)
     {
         return _dataContext.Customers.Where(p => p.Identifier == identifier).FirstOrDefault();

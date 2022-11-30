@@ -12,7 +12,7 @@ namespace McbEdu.Mentorias.ShopDemo.WebApi.Controllers;
 [Route("api/[controller]")]
 public class CustomerController : CustomControllerBase
 {
-    protected CustomerController([FromServices] INotificationConsumer<NotificationItem> notificationConsumer) : base(notificationConsumer)
+    public CustomerController([FromServices] INotificationConsumer<NotificationItem> notificationConsumer) : base(notificationConsumer)
     {
     }
 

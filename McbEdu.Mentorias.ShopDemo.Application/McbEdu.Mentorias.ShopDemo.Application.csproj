@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\libraries\McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions\McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions.csproj" />
     <ProjectReference Include="..\McbEdu.Mentorias.ShopDemo.Domain\McbEdu.Mentorias.ShopDemo.Domain.csproj" />
+    <ProjectReference Include="..\McbEdu.Mentorias.ShopDemo.Services\McbEdu.Mentorias.ShopDemo.Services.csproj" />
   </ItemGroup>
 
 </Project>

@@ -8,12 +8,22 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\libraries\McbEdu.Mentorias.DesignPatterns.NotificationPattern\McbEdu.Mentorias.DesignPatterns.NotificationPattern.csproj" />
     <ProjectReference Include="..\McbEdu.Mentorias.ShopDemo.Application\McbEdu.Mentorias.ShopDemo.Application.csproj" />
+    <ProjectReference Include="..\McbEdu.Mentorias.ShopDemo.Services\McbEdu.Mentorias.ShopDemo.Services.csproj" />
   </ItemGroup>
 
 </Project>
