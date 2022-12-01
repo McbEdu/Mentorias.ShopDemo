@@ -32,4 +32,8 @@
     <EditorConfigFiles Remove="C:\Users\Admin\Desktop\mentorias.shopdemo\McbEdu.Mentorias.ShopDemo.Services\Customers\Adapters\.editorconfig" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Orders\Adapters\" />
+  </ItemGroup>
+
 </Project>

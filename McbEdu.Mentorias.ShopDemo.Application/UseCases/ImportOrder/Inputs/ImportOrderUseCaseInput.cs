@@ -5,7 +5,15 @@ namespace McbEdu.Mentorias.ShopDemo.Application.UseCases.ImportOrder.Inputs;
 public class ImportOrderUseCaseInput
 {
     public string Code { get; init; }
-    public DateTime OrderTime { get; init; }
+    
+    private DateTime orderTime;
+
+    public DateTime OrderTime
+    {
+        get { return orderTime; }
+        set { orderTime = DateTime.SpecifyKind(value, DateTimeKind.Utc); }
+    }
+
     public ImportCustomerUseCaseInput Customer { get; init; }
     public List<ImportItemUseCaseInput> Items { get; init; }
 
