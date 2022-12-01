@@ -1,37 +1,20 @@
-package com.mcbmentorias.shopdemo.domain.entities.user.validations;
+package com.mcbmentorias.shopdemo.domain.entities.customer.validations;
 
-import br.com.fluentvalidator.context.Error;
-import br.com.fluentvalidator.handler.HandlerInvalidField;
-import br.com.fluentvalidator.predicate.ComparablePredicate;
-import br.com.fluentvalidator.predicate.DatePredicate;
 import br.com.fluentvalidator.predicate.LocalDatePredicate;
 import br.com.fluentvalidator.predicate.StringPredicate;
-import com.mcbmentorias.shopdemo.domain.entities.Customer;
+import com.mcbmentorias.shopdemo.core.patterns.validator.BaseValidator;
+import com.mcbmentorias.shopdemo.domain.entities.customer.inputs.CreateNewCustomerInput;
 
-import br.com.fluentvalidator.AbstractValidator;
-import com.mcbmentorias.shopdemo.domain.entities.user.inputs.CreateNewCustomerInput;
-
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.OffsetTime;
-import java.time.ZoneId;
-import java.util.Collection;
-import java.util.TimeZone;
-
-import static br.com.fluentvalidator.predicate.CollectionPredicate.empty;
 import static br.com.fluentvalidator.predicate.ObjectPredicate.nullValue;
 import static java.util.function.Predicate.not;
 
-public class CreateNewCustomerInputValidation {
-
-
-}
-
-class CreateUserValidationFluent extends AbstractValidator<CreateNewCustomerInput> {
+public class CreateNewCustomerInputValidation extends BaseValidator<CreateNewCustomerInput> {
 
     @Override
-    public void rules() {
-        ruleFor(CreateNewCustomerInput::getName)
+    protected void configureConcreteValidator(
+            final BaseValidator<CreateNewCustomerInput>.FluentValidatorWrapper<CreateNewCustomerInput> wrapper
+    ) {
+        wrapper.ruleFor(CreateNewCustomerInput::getName)
                 .must(not(StringPredicate.stringEmptyOrNull()))
                 .withMessage("Name is required!")
                 .withFieldName("name")
@@ -40,7 +23,7 @@ class CreateUserValidationFluent extends AbstractValidator<CreateNewCustomerInpu
                 .withMessage("Name cannot be biggest than 50 character.")
                 .withFieldName("name");
 
-        ruleFor(CreateNewCustomerInput::getLastName)
+        wrapper.ruleFor(CreateNewCustomerInput::getLastName)
                 .must(not(StringPredicate.stringEmptyOrNull()))
                 .withMessage("LastName is required!")
                 .withFieldName("lastName")
@@ -49,7 +32,7 @@ class CreateUserValidationFluent extends AbstractValidator<CreateNewCustomerInpu
                 .withMessage("LastName cannot be biggest than 50 character.")
                 .withFieldName("lastName");
 
-        ruleFor(CreateNewCustomerInput::getBirthDate)
+        wrapper.ruleFor(CreateNewCustomerInput::getBirthDate)
                 .must(not(nullValue()))
                 .withMessage("BirthDate is required!")
                 .withFieldName("BirthDate")
@@ -58,7 +41,7 @@ class CreateUserValidationFluent extends AbstractValidator<CreateNewCustomerInpu
                 .withMessage("BirthDate must be before or equal today.")
                 .withFieldName("BirthDate");
 
-        ruleFor(CreateNewCustomerInput::getEmail)
+        wrapper.ruleFor(CreateNewCustomerInput::getEmail)
                 .must(not(StringPredicate.stringEmptyOrNull()))
                 .withMessage("Email is required!")
                 .withFieldName("email")

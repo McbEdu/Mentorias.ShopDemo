@@ -1,30 +1,28 @@
 package com.mcbmentorias.shopdemo.application.usecases;
 
-import com.mcbmentorias.shopdemo.application.dtos.inputmodel.ImportUserInputModel;
+import com.mcbmentorias.shopdemo.application.dtos.inputmodel.ImportCustomerInputModel;
 import com.mcbmentorias.shopdemo.core.usecases.BaseUseCaseWithParams;
+import com.mcbmentorias.shopdemo.domain.factories.CreateNewCustomerInputFactory;
 import com.mcbmentorias.shopdemo.domain.services.interfaces.IUserService;
 
-import java.time.LocalDate;
-import java.util.Collection;
-
-public class ImportUsersUseCase extends BaseUseCaseWithParams<Collection<ImportUserInputModel>, Void> {
+public class ImportUsersUseCase extends BaseUseCaseWithParams<ImportCustomerInputModel, Void> {
 
     private final IUserService service;
 
-    public ImportUsersUseCase(final IUserService service) {
+    private final CreateNewCustomerInputFactory factory;
+
+    public ImportUsersUseCase(
+            final IUserService service,
+            final CreateNewCustomerInputFactory factory
+    ) {
         this.service = service;
+        this.factory = factory;
     }
 
     @Override
-    public Void execute(final Collection<ImportUserInputModel> inputs) {
-        inputs.forEach(input -> {
-            this.service.create(
-                    input.getNome(),
-                    input.getLastName(),
-                    input.getBirthDate(),
-                    input.getEmail()
-            );
-        });
+    public Void execute(final ImportCustomerInputModel inputModel) {
+        final var domainInput = this.factory.create(inputModel);
+        this.service.create(domainInput);
         return null;
     }
 }

@@ -1,9 +1,8 @@
-package com.mcbmentorias.shopdemo.domain.entities;
+package com.mcbmentorias.shopdemo.domain.entities.customer;
 
 import com.mcbmentorias.shopdemo.core.interfaces.IAggregateRoot;
-import com.mcbmentorias.shopdemo.domain.entities.user.inputs.CreateNewCustomerInput;
-import com.mcbmentorias.shopdemo.domain.entities.user.validations.CreateNewCustomerInputValidation;
-import jakarta.persistence.Entity;
+import com.mcbmentorias.shopdemo.domain.entities.customer.inputs.CreateNewCustomerInput;
+import com.mcbmentorias.shopdemo.domain.entities.customer.validations.CreateNewCustomerInputValidation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,14 +30,13 @@ public class Customer implements IAggregateRoot {
     public void create(
         final CreateNewCustomerInput input
     ) {
-
-        this.validation.validate();
+        this.validation.validate(input);
 
         this.id = UUID.randomUUID();
-        this.name = name;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.email = email;
+        this.name = input.getName();
+        this.lastName = input.getLastName();
+        this.birthDate = input.getBirthDate();
+        this.email = input.getEmail();
     }
 
     public void fill(

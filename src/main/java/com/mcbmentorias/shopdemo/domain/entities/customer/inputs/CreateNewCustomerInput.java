@@ -1,12 +1,13 @@
-package com.mcbmentorias.shopdemo.domain.entities.user.inputs;
+package com.mcbmentorias.shopdemo.domain.entities.customer.inputs;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
 
 @Getter
-@Builder
+@AllArgsConstructor
 public class CreateNewCustomerInput {
 
     private final String name;

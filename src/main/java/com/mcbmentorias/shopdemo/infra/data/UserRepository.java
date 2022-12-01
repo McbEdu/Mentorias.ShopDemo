@@ -1,6 +1,6 @@
 package com.mcbmentorias.shopdemo.infra.data;
 
-import com.mcbmentorias.shopdemo.domain.entities.Customer;
+import com.mcbmentorias.shopdemo.domain.entities.customer.Customer;
 import com.mcbmentorias.shopdemo.infra.data.adapters.UserRepositoryAdapter;
 import com.mcbmentorias.shopdemo.infra.data.interfaces.IUserRepository;
 import org.springframework.stereotype.Repository;

@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
-public class ImportUserInputModel {
+public class ImportCustomerInputModel {
 
     private String nome;
 
@@ -17,7 +17,7 @@ public class ImportUserInputModel {
 
     private String email;
 
-    public ImportUserInputModel() {
+    public ImportCustomerInputModel() {
         this.nome = "";
         this.lastName = "";
         this.email = "";

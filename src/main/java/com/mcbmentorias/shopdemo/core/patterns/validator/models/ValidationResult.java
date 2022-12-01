@@ -4,6 +4,7 @@ import com.mcbmentorias.shopdemo.core.patterns.validator.enums.ValidationTypeMes
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 
 public final class ValidationResult {
@@ -18,6 +19,10 @@ public final class ValidationResult {
         this.messages = messages;
     }
 
+    public Collection<ValidationMessage> getMessages() {
+        return Collections.unmodifiableCollection(this.messages);
+    }
+
     public Boolean isValid() {
         return !this.hasMessage() || !this.hasError();
     }
@@ -27,7 +32,9 @@ public final class ValidationResult {
     }
 
     public Boolean hasError() {
-        return this.messages.stream().findAny(message -> Objects.equals(message.getValidationTypeMessage(), ValidationTypeMessage.Error))
+        return this.getMessages().stream()
+                .filter(message -> Objects.equals(message.getValidationTypeMessage(), ValidationTypeMessage.Error))
+                .findAny()
                 .map(it -> Boolean.TRUE)
                 .orElse(Boolean.FALSE);
     }
