@@ -55,7 +55,15 @@ public class ImportRangeCustomerUseCase : IUseCase<List<ImportCustomerUseCaseInp
         }
         else
         {
-            _notificationPublisher.AddNotification(new NotificationItem("O cliente já possui uma importação!"));
+            _notificationPublisher.AddNotification(new NotificationItem("Os clientes já possuem importação!"));
+
+            var customerServiceListInput = new List<ImportCustomerServiceInput>();
+            foreach (var uniqueUseCaseInput in useCaseInput)
+            {
+                customerServiceListInput.Add(_adapter.Adapt(uniqueUseCaseInput));
+            }
+
+            await _customerService.VerifyListCustomerIsValid(customerServiceListInput);
             return false;
         }
     }
