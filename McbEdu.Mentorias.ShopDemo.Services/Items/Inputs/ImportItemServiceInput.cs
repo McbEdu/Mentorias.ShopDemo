@@ -1,6 +1,6 @@
 ﻿using McbEdu.Mentorias.ShopDemo.Services.Products.Inputs;
 
-namespace McbEdu.Mentorias.ShopDemo.Services.Orders.Inputs;
+namespace McbEdu.Mentorias.ShopDemo.Services.Items.Inputs;
 
 public class ImportItemServiceInput
 {

@@ -1,7 +1,7 @@
 ﻿using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
 using McbEdu.Mentorias.ShopDemo.Application.UseCases.ImportOrder.Inputs;
 using McbEdu.Mentorias.ShopDemo.Application.UseCases.ImportProduct.Inputs;
-using McbEdu.Mentorias.ShopDemo.Services.Orders.Inputs;
+using McbEdu.Mentorias.ShopDemo.Services.Items.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Products.Inputs;
 
 namespace McbEdu.Mentorias.ShopDemo.Application.UseCases.Adapters;

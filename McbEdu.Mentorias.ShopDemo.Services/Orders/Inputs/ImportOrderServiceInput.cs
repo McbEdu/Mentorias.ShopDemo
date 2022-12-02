@@ -1,4 +1,5 @@
 ﻿using McbEdu.Mentorias.ShopDemo.Services.Customers.Inputs;
+using McbEdu.Mentorias.ShopDemo.Services.Items.Inputs;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Orders.Inputs;
 
