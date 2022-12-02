@@ -35,6 +35,11 @@ public class CustomerService : ICustomerService
         _customerRangeValidator = customerRangeValidator;
     }
 
+    public async Task<Customer> GetCustomerAsync(ImportCustomerServiceInput input)
+    {
+        return await _customerRepository.GetByEmail(input.Email);
+    }
+
     public async Task<bool> ImportCustomerAsync(ImportCustomerServiceInput input)
     {
         var customerStandard = _adapter.Adapt(input);

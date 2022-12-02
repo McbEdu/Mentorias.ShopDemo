@@ -1,5 +1,6 @@
 ﻿using McbEdu.Mentorias.ShopDemo.Domain.DTOs;
 using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories;
 
@@ -35,9 +36,9 @@ public class CustomerRepository : IExtendsCustomerRepository
         return _dataContext.Customers.ToList();
     }
 
-    public Task<Customer?> GetByEmail(string email)
+    public async Task<Customer> GetByEmail(string email)
     {
-        throw new NotImplementedException();
+        return await _dataContext.Customers.Where(p => p.Email == email).FirstAsync();
     }
 
     public Customer? GetByIdentifier(Guid identifier)

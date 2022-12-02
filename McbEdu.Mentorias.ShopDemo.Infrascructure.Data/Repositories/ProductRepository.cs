@@ -34,9 +34,9 @@ public class ProductRepository : IExtendsProductRepository
         throw new NotImplementedException();
     }
 
-    public async Task<Product?> GetByCode(string code)
+    public async Task<Product> GetByCode(string code)
     {
-        return await _dataContext.Products.Where(p => p.Code == code).FirstOrDefaultAsync();
+        return await _dataContext.Products.Where(p => p.Code == code)!.FirstOrDefaultAsync();
     }
 
     public Product? GetByIdentifier(Guid identifier)

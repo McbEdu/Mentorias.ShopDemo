@@ -6,5 +6,5 @@ namespace McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Interfaces;
 public interface IExtendsCustomerRepository : IBaseRepository<Customer>
 {
     Task<bool> VerifyEntityExistsAsync(string email);
-    Task<Customer?> GetByEmail(string email);
+    Task<Customer> GetByEmail(string email);
 }

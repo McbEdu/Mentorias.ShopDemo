@@ -41,6 +41,11 @@ public class ProductService : IProductService
         _productRangeValidator = productRangeValidator;
     }
 
+    public async Task<Product> GetProductByCodeAsync(string code)
+    {
+        return await _productRepository.GetByCode(code);
+    }
+
     public async Task<bool> ImportProductAsync(ImportProductServiceInput input)
     {
         var productStandard = _adapter.Adapt(input);

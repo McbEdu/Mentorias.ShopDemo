@@ -9,6 +9,7 @@ using McbEdu.Mentorias.ShopDemo.Services.Products.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Services.Customers.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Domain.DTOs;
 using McbEdu.Mentorias.ShopDemo.Domain.Entities;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace McbEdu.Mentorias.ShopDemo.Application.UseCases.ImportOrder;
 
@@ -52,8 +53,26 @@ public class ImportOrderUseCase : IUseCase<ImportOrderUseCaseInput>
         if (await _customerService.VerifyCustomerIsRegistered(serviceAdaptedOrder.Customer) == true)
         {
             dataTransferAdaptedOrder.Customer = await _customerService.GetCustomerAsync(serviceAdaptedOrder.Customer);
+            if (serviceAdaptedOrder.Customer.Name != dataTransferAdaptedOrder.Customer.Name ||
+                serviceAdaptedOrder.Customer.Surname != dataTransferAdaptedOrder.Customer.Surname ||
+                serviceAdaptedOrder.Customer.BirthDate != dataTransferAdaptedOrder.Customer.BirthDate)
+            {
+                _notificationPublisher.AddNotification(new NotificationItem("O cliente já foi importado, no entanto com dados diferentes."));
+            }
         }
 
+        for (int i = 0; i < serviceAdaptedOrder.Items.Count; i++)
+        {
+            if (await _productService.VerifyProductIsRegisteredAsync(serviceAdaptedOrder.Items[i].Product) == true)
+            {
+                dataTransferAdaptedOrder.Items[i].Product = await _productService.GetProductByCodeAsync(serviceAdaptedOrder.Items[i].Product.Code);
+
+                if (dataTransferAdaptedOrder.Items[i].Product.Description != serviceAdaptedOrder.Items[i].Product.Description)
+                {
+                    _notificationPublisher.AddNotification(new NotificationItem($"O produto de código {serviceAdaptedOrder.Items[i].Product.Code} já foi importado, mas possui dados diferentes."));
+                }
+            }
+        }
 
         await _orderService.ImportOrderAsync(dataTransferAdaptedOrder);
         return true;

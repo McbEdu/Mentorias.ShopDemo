@@ -3,7 +3,6 @@ using FluentValidation.Results;
 using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Publisher;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern;
-using McbEdu.Mentorias.General.Infrascructure.Abstractions.Repositories;
 using McbEdu.Mentorias.ShopDemo.Domain.DTOs;
 using McbEdu.Mentorias.ShopDemo.Domain.Entities;
 using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Interfaces;
@@ -42,6 +41,11 @@ public class OrderService : IOrderService
         _orderRepository.AddAsync(_adapterOrderDataTransfer.Adapt(_adapterOrderStandard.Adapt(input)));
 
         return Task.FromResult(true);
+    }
+
+    public async Task ImportOrderAsync(Order input)
+    {
+        await _orderRepository.AddAsync(input);
     }
 
     public async Task<bool> VerifyOrderIsRegisteredAsync(ImportOrderServiceInput input)
