@@ -2,16 +2,16 @@ package com.mcbmentorias.shopdemo.domain.services;
 
 import com.mcbmentorias.shopdemo.domain.entities.customer.Customer;
 import com.mcbmentorias.shopdemo.domain.entities.customer.inputs.CreateNewCustomerInput;
-import com.mcbmentorias.shopdemo.domain.services.interfaces.IUserService;
-import com.mcbmentorias.shopdemo.infra.data.interfaces.IUserRepository;
+import com.mcbmentorias.shopdemo.domain.services.interfaces.ICustomerService;
+import com.mcbmentorias.shopdemo.infra.data.interfaces.ICustomerRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService implements IUserService {
+public class CustomerService implements ICustomerService {
 
-    private final IUserRepository repository;
+    private final ICustomerRepository repository;
 
-    public UserService(final IUserRepository repository) {
+    public CustomerService(final ICustomerRepository repository) {
         this.repository = repository;
     }
 

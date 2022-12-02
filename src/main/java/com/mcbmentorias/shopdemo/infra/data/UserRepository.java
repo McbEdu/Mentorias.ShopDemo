@@ -2,11 +2,11 @@ package com.mcbmentorias.shopdemo.infra.data;
 
 import com.mcbmentorias.shopdemo.domain.entities.customer.Customer;
 import com.mcbmentorias.shopdemo.infra.data.adapters.UserRepositoryAdapter;
-import com.mcbmentorias.shopdemo.infra.data.interfaces.IUserRepository;
+import com.mcbmentorias.shopdemo.infra.data.interfaces.ICustomerRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserRepository implements IUserRepository {
+public class UserRepository implements ICustomerRepository {
 
     private final UserRepositoryAdapter adapter;
 

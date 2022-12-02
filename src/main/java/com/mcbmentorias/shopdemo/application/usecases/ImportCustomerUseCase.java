@@ -3,16 +3,16 @@ package com.mcbmentorias.shopdemo.application.usecases;
 import com.mcbmentorias.shopdemo.application.dtos.inputmodel.ImportCustomerInputModel;
 import com.mcbmentorias.shopdemo.core.usecases.BaseUseCaseWithParams;
 import com.mcbmentorias.shopdemo.domain.factories.CreateNewCustomerInputFactory;
-import com.mcbmentorias.shopdemo.domain.services.interfaces.IUserService;
+import com.mcbmentorias.shopdemo.domain.services.interfaces.ICustomerService;
 
-public class ImportUsersUseCase extends BaseUseCaseWithParams<ImportCustomerInputModel, Void> {
+public class ImportCustomerUseCase extends BaseUseCaseWithParams<ImportCustomerInputModel, Void> {
 
-    private final IUserService service;
+    private final ICustomerService service;
 
     private final CreateNewCustomerInputFactory factory;
 
-    public ImportUsersUseCase(
-            final IUserService service,
+    public ImportCustomerUseCase(
+            final ICustomerService service,
             final CreateNewCustomerInputFactory factory
     ) {
         this.service = service;

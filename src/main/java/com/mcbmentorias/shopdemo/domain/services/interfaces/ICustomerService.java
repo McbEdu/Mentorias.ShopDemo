@@ -5,7 +5,7 @@ import com.mcbmentorias.shopdemo.domain.entities.customer.inputs.CreateNewCustom
 
 import java.time.LocalDate;
 
-public interface IUserService extends IService<Customer> {
+public interface ICustomerService extends IService<Customer> {
 
     Customer create(final CreateNewCustomerInput input);
 }
