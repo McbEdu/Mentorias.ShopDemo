@@ -13,17 +13,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "McbEdu.Mentorias.ShopDemo.W
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{A48FB313-4846-4EDF-B786-C5D572E134FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McbEdu.Mentorias.General.Infrascructure.Abstractions", "Libraries\McbEdu.Mentorias.General.Infrascructure.Abstractions\McbEdu.Mentorias.General.Infrascructure.Abstractions.csproj", "{6AAB664C-ABA0-414A-B56F-44E1F36C7760}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "McbEdu.Mentorias.General.Infrascructure.Abstractions", "Libraries\McbEdu.Mentorias.General.Infrascructure.Abstractions\McbEdu.Mentorias.General.Infrascructure.Abstractions.csproj", "{6AAB664C-ABA0-414A-B56F-44E1F36C7760}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McbEdu.Mentorias.General.Domain.Abstractions", "libraries\McbEdu.Mentorias.General.Domain.Abstractions\McbEdu.Mentorias.General.Domain.Abstractions.csproj", "{6EAC02E9-14AC-424B-B7EE-9A7F67E8E224}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "McbEdu.Mentorias.General.Domain.Abstractions", "libraries\McbEdu.Mentorias.General.Domain.Abstractions\McbEdu.Mentorias.General.Domain.Abstractions.csproj", "{6EAC02E9-14AC-424B-B7EE-9A7F67E8E224}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions", "libraries\McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions\McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.csproj", "{E63425D6-5033-46C7-8793-3872D5A4F0B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions", "libraries\McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions\McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.csproj", "{E63425D6-5033-46C7-8793-3872D5A4F0B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McbEdu.Mentorias.DesignPatterns.NotificationPattern", "libraries\McbEdu.Mentorias.DesignPatterns.NotificationPattern\McbEdu.Mentorias.DesignPatterns.NotificationPattern.csproj", "{8E5F4A03-D586-4C55-A276-7EBCFC15BB65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "McbEdu.Mentorias.DesignPatterns.NotificationPattern", "libraries\McbEdu.Mentorias.DesignPatterns.NotificationPattern\McbEdu.Mentorias.DesignPatterns.NotificationPattern.csproj", "{8E5F4A03-D586-4C55-A276-7EBCFC15BB65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions", "libraries\McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions\McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions.csproj", "{CC22CD19-B613-46A5-BA9D-ADE1316B99A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions", "libraries\McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions\McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions.csproj", "{CC22CD19-B613-46A5-BA9D-ADE1316B99A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McbEdu.Mentorias.ShopDemo.Services", "McbEdu.Mentorias.ShopDemo.Services\McbEdu.Mentorias.ShopDemo.Services.csproj", "{0DAE2828-9398-4E7B-9983-88FE7A7BA885}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "McbEdu.Mentorias.ShopDemo.Services", "McbEdu.Mentorias.ShopDemo.Services\McbEdu.Mentorias.ShopDemo.Services.csproj", "{0DAE2828-9398-4E7B-9983-88FE7A7BA885}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5A08DC5E-8670-4B33-B760-F45DF868667A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McbEdu.Mentorias.ShopDemo.Tests", "Tests\McbEdu.Mentorias.ShopDemo.Tests\McbEdu.Mentorias.ShopDemo.Tests.csproj", "{5BEA554E-D336-492C-B4BE-AD9C669D74D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +75,10 @@ Global
 		{0DAE2828-9398-4E7B-9983-88FE7A7BA885}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DAE2828-9398-4E7B-9983-88FE7A7BA885}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DAE2828-9398-4E7B-9983-88FE7A7BA885}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BEA554E-D336-492C-B4BE-AD9C669D74D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BEA554E-D336-492C-B4BE-AD9C669D74D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BEA554E-D336-492C-B4BE-AD9C669D74D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BEA554E-D336-492C-B4BE-AD9C669D74D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +89,7 @@ Global
 		{E63425D6-5033-46C7-8793-3872D5A4F0B5} = {A48FB313-4846-4EDF-B786-C5D572E134FB}
 		{8E5F4A03-D586-4C55-A276-7EBCFC15BB65} = {A48FB313-4846-4EDF-B786-C5D572E134FB}
 		{CC22CD19-B613-46A5-BA9D-ADE1316B99A7} = {A48FB313-4846-4EDF-B786-C5D572E134FB}
+		{5BEA554E-D336-492C-B4BE-AD9C669D74D2} = {5A08DC5E-8670-4B33-B760-F45DF868667A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7122F52D-99A1-4B80-8E16-C83F3ADB5CEF}
