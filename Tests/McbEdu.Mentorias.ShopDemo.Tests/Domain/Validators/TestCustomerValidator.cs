@@ -83,5 +83,4 @@ public class TestCustomerValidator
 
         Assert.True(validationResult.IsValid);
     }
-
 }
