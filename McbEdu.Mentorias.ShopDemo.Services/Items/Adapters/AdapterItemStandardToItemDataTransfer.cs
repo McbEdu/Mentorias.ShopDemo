@@ -10,7 +10,7 @@ public class AdapterItemStandardToItemDataTransfer : IAdapter<ItemStandard, Item
 
     public AdapterItemStandardToItemDataTransfer(IAdapter<Product, ProductStandard> adapterProduct)
     {
-
+        _adapterProduct = adapterProduct;
     }
 
     public ItemStandard Adapt(Item adapt)
@@ -20,6 +20,14 @@ public class AdapterItemStandardToItemDataTransfer : IAdapter<ItemStandard, Item
 
     public Item Adapt(ItemStandard adapter)
     {
-        throw new NotImplementedException();
+        return new Item()
+        {
+            Description = adapter.Description,
+            Identifier = adapter.Identifier,
+            Product = _adapterProduct.Adapt(adapter.ProductStandard),
+            Quantity = adapter.Quantity,
+            Sequence = adapter.Sequence,
+            UnitaryValue = adapter.UnitaryValue
+        };
     }
 }

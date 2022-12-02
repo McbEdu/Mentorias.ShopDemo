@@ -21,6 +21,6 @@ public class AdapterImportItemServiceInputToItemStandard : IAdapter<ImportItemSe
 
     public ItemStandard Adapt(ImportItemServiceInput adapter)
     {
-        return new ItemStandard(Guid.NewGuid(), adapter.Description, adapter.Sequence, adapter.Quantity, _adapterProduct.Adapt(adapter.Product));
+        return new ItemStandard(Guid.NewGuid(), adapter.Description, adapter.Sequence, adapter.Quantity, _adapterProduct.Adapt(adapter.Product), adapter.UnitaryValue);
     }
 }
