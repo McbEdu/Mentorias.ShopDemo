@@ -16,8 +16,4 @@
     <ProjectReference Include="..\McbEdu.Mentorias.ShopDemo.Infrascructure.Data\McbEdu.Mentorias.ShopDemo.Infrascructure.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Orders\Adapters\" />
-  </ItemGroup>
-
 </Project>
