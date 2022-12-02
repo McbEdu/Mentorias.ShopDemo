@@ -1,9 +1,9 @@
-﻿using McbEdu.Mentorias.General.Infrascructure.Abstractions.Repositories;
-using McbEdu.Mentorias.ShopDemo.Domain.DTOs;
+﻿using McbEdu.Mentorias.ShopDemo.Domain.DTOs;
+using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Interfaces;
 
 namespace McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories;
 
-public class OrderRepository : IBaseRepository<Order>
+public class OrderRepository : IExtendsOrderRepository
 {
     private readonly DataContext _dataContext;
 
@@ -46,5 +46,10 @@ public class OrderRepository : IBaseRepository<Order>
     public void UpdateRange(List<Order> entities)
     {
         throw new NotImplementedException();
+    }
+
+    public Task<bool> VerifyOrderIsRegisteredByCode(string code)
+    {
+        return Task.FromResult(_dataContext.Orders.Where(p => p.Code == code).Any());
     }
 }

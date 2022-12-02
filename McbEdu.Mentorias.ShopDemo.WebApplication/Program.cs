@@ -98,7 +98,7 @@ public class Program
         builder.Services.AddTransient<INotificationConsumer<NotificationItem>, NotificationConsumer>();
         builder.Services.AddTransient<INotificationPublisher<NotificationItem>, NotificationPublisher>();
 
-        builder.Services.AddScoped<IBaseRepository<Order>, OrderRepository>();
+        builder.Services.AddScoped<IExtendsOrderRepository, OrderRepository>();
         builder.Services.AddScoped<IBaseRepository<Item>, ItemRepository>();
         builder.Services.AddScoped<IExtendsCustomerRepository, CustomerRepository>();
         builder.Services.AddScoped<IExtendsProductRepository, ProductRepository>();
