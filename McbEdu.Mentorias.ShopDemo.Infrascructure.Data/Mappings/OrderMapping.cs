@@ -4,14 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Mappings;
 
-public class ItemMapping : BaseMapping<Item>
+public class OrderMapping : BaseMapping<Order>
 {
-    public void CreateMapping(EntityTypeBuilder<Item> entity)
+    public void CreateMapping(EntityTypeBuilder<Order> entity)
     {
         entity.HasKey(p => p.Identifier);
 
-        entity.HasOne(p => p.Product).WithMany(p => p.Items);
-
-        entity.HasOne(p => p.Order).WithMany(p => p.Items);
+        entity.HasOne(p => p.Customer).WithMany(p => p.Orders);
     }
 }
