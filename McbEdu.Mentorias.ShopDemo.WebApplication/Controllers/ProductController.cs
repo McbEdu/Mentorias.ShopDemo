@@ -1,4 +1,5 @@
-﻿using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
+﻿using FluentValidation.Results;
+using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Consumer;
 using McbEdu.Mentorias.ShopDemo.Application.UseCases.Abstractions;

@@ -17,9 +17,7 @@ public class ItemsValidator : AbstractValidator<List<ItemStandard>>
             bool hasErrorMessageWithNotValidSequencialValue = false;
             for (int i = 0; i < information.Length; i++)
             {
-
-
-                if (i + 1 < information.Length)
+                if ((i + 1) >= (information.Length - 1))
                 {
                     if (information.Where(p => p.Sequence == (i + 1)).Any() == false && hasErrorMessageWithNotValidSequencialValue == false)
                     {
@@ -34,8 +32,6 @@ public class ItemsValidator : AbstractValidator<List<ItemStandard>>
                     context.AddFailure($"O item de sequencial {information[i].Sequence}. {errorItem.ErrorMessage}");
                 }
             }
-
-            
         });
     }
 }

@@ -74,6 +74,66 @@ public class ImportOrderUseCase : IUseCase<ImportOrderUseCaseInput>
             }
         }
 
+
+        // Dois ou mais produtos iguais
+        bool hasAnyEqual = false;
+        var newListItems = new List<Item>();
+        for (int i = 0; i < dataTransferAdaptedOrder.Items.Count; i++)
+        {
+            var newListItemsThatHaveEqualProduct = new List<Item>();
+            if (i + 1 < dataTransferAdaptedOrder.Items.Count - 1)
+            {
+                for (int j = i + 1; j < dataTransferAdaptedOrder.Items.Count; j++)
+                {
+                    if (dataTransferAdaptedOrder.Items[i].Product.Code == dataTransferAdaptedOrder.Items[j].Product.Code)
+                    {
+                        if (newListItemsThatHaveEqualProduct.Where(p => p.Product.Identifier == dataTransferAdaptedOrder.Items[i].Product.Identifier).Any() == false)
+                        {
+                            newListItemsThatHaveEqualProduct.Add(dataTransferAdaptedOrder.Items[i]);
+                        }
+
+                        if (newListItemsThatHaveEqualProduct.Where(p => p.Product.Identifier == dataTransferAdaptedOrder.Items[j].Product.Identifier).Any() == false)
+                        {
+                            newListItemsThatHaveEqualProduct.Add(dataTransferAdaptedOrder.Items[j]);
+                        }
+
+                        hasAnyEqual = true;
+                    }
+                }
+            }
+
+            if (hasAnyEqual == false && newListItems.Where(p => p.Product.Code == dataTransferAdaptedOrder.Items[i].Product.Code).Any() == false)
+            {
+                newListItems.Add(dataTransferAdaptedOrder.Items[i]);
+            }
+            
+            if(hasAnyEqual == true)
+            {
+                var itemNew = new Item();
+                itemNew.Identifier = Guid.NewGuid();
+                Console.WriteLine($"\n Existem {newListItemsThatHaveEqualProduct.Count} \n");
+                foreach (var itemNews in newListItemsThatHaveEqualProduct)
+                {
+                    itemNew.Quantity = itemNew.Quantity + itemNews.Quantity;
+                    itemNew.Description = itemNew.Description + itemNews.Description;
+                    itemNew.UnitaryValue = itemNew.UnitaryValue + itemNews.UnitaryValue;
+                }
+
+                itemNew.Product = newListItemsThatHaveEqualProduct[0].Product;
+                itemNew.UnitaryValue = (itemNew.UnitaryValue / newListItemsThatHaveEqualProduct.Count);
+                newListItems.Add(itemNew);
+            }
+
+            hasAnyEqual = false;
+        }
+
+        for (int i = 0; i < newListItems.Count; i++)
+        {
+            newListItems[i].Sequence = i + 1;
+        }
+
+        dataTransferAdaptedOrder.Items = newListItems;
+
         await _orderService.ImportOrderAsync(dataTransferAdaptedOrder);
         return true;
     }

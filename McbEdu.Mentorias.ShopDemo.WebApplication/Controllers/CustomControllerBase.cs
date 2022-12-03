@@ -23,7 +23,19 @@ public class CustomControllerBase : ControllerBase
     {
         var response = await useCase.ExecuteAsync(useCaseInput);
 
-        return response ? StatusCode(statusCodeSuccess, CreateResponse()) : StatusCode(statusCodeError, CreateResponse());
+        List<string>? createResponse = CreateResponse();
+
+        if (createResponse is null)
+        {
+            return response ? StatusCode(statusCodeSuccess, null) : StatusCode(statusCodeError, null);
+        }else if (createResponse.Count == 1)
+        {
+            return response ? StatusCode(statusCodeSuccess, createResponse[0]) : StatusCode(statusCodeError, createResponse[0]);
+        }
+        else
+        {
+            return response ? StatusCode(statusCodeSuccess, createResponse) : StatusCode(statusCodeError, createResponse);
+        }
     }
 
     private List<string>? CreateResponse()
