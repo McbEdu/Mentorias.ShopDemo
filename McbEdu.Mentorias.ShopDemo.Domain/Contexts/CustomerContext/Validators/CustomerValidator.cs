@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
-using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.DTO;
-using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.Entities;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.Entities.Base;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.ENUMs;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.ValueObjects;
 
 namespace McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.Validators;
 
-public class CustomerValidator : AbstractValidator<CustomerStandard>
+public class CustomerValidator : AbstractValidator<CustomerBase>
 {
     public CustomerValidator(AbstractValidator<Name> nameValidator, AbstractValidator<Surname> surnameValidator, AbstractValidator<Email> emailValidator, AbstractValidator<BirthDate> birthDateValidator)
     {

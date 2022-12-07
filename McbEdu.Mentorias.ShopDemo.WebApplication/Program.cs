@@ -9,7 +9,7 @@ using McbEdu.Mentorias.General.Infrascructure.Abstractions.Mappings;
 using McbEdu.Mentorias.General.Infrascructure.Abstractions.Repositories;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.DTO;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.Entities;
-using McbEdu.Mentorias.ShopDemo.Domain.DTOs;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.DTO;
 using McbEdu.Mentorias.ShopDemo.Domain.Entities;
 using McbEdu.Mentorias.ShopDemo.Domain.Validators;
 using McbEdu.Mentorias.ShopDemo.Infrascructure.Data;

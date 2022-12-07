@@ -5,12 +5,12 @@ using McbEdu.Mentorias.ShopDemo.Services.Orders.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Orders.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Services.Products.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Services.Customers.Interfaces;
-using McbEdu.Mentorias.ShopDemo.Domain.DTOs;
 using McbEdu.Mentorias.ShopDemo.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.Abstractions;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportOrder.Inputs;
 using System.Security.Cryptography.X509Certificates;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.DTO;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportOrder;
 

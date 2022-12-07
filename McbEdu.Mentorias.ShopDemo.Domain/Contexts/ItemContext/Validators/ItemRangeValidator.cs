@@ -1,11 +1,12 @@
-﻿using FluentValidation;
-using McbEdu.Mentorias.ShopDemo.Domain.Entities;
+﻿
+using FluentValidation;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.Entities.Base;
 
-namespace McbEdu.Mentorias.ShopDemo.Domain.Validators;
+namespace McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.Validators;
 
-public class ItemsValidator : AbstractValidator<List<ItemStandard>>
+public class ItemRangeValidator : AbstractValidator<List<ItemBase>>
 {
-    public ItemsValidator(AbstractValidator<ItemStandard> uniqueItemValidator) 
+    public ItemRangeValidator(AbstractValidator<ItemBase> itemValidator)
     {
         RuleFor(p => p.ToArray()).Custom((information, context) =>
         {
@@ -26,7 +27,7 @@ public class ItemsValidator : AbstractValidator<List<ItemStandard>>
                     }
                 }
 
-                var productValidation = uniqueItemValidator.Validate(information[i]);
+                var productValidation = itemValidator.Validate(information[i]);
                 foreach (var errorItem in productValidation.Errors)
                 {
                     context.AddFailure($"O item de sequencial {information[i].Sequence}. {errorItem.ErrorMessage}");

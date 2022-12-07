@@ -1,6 +1,6 @@
 ﻿using McbEdu.Mentorias.General.Infrascructure.Abstractions.Mappings;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.DTO;
-using McbEdu.Mentorias.ShopDemo.Domain.DTOs;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.DTO;
 using Microsoft.EntityFrameworkCore;
 
 namespace McbEdu.Mentorias.ShopDemo.Infrascructure.Data;

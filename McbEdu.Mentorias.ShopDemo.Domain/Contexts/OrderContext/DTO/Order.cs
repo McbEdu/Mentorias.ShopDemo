@@ -1,6 +1,7 @@
 ﻿using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.DTO;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.DTO;
 
-namespace McbEdu.Mentorias.ShopDemo.Domain.DTOs;
+namespace McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.DTO;
 
 public class Order
 {
