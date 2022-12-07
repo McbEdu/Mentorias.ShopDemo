@@ -1,31 +1,33 @@
 ﻿using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
-using McbEdu.Mentorias.ShopDemo.Domain.DTOs;
-using McbEdu.Mentorias.ShopDemo.Domain.Entities;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.DTO;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.Entities.Base;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ProductContext.DTO;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ProductContext.Entities.Base;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Items.Adapters;
 
-public class AdapterItemStandardToItemDataTransfer : IAdapter<ItemStandard, Item>
+public class AdapterItemStandardToItemDataTransfer : IAdapter<ItemBase, Item>
 {
-    private readonly IAdapter<Product, ProductStandard> _adapterProduct;
+    private readonly IAdapter<Product, ProductBase> _adapterProduct;
 
-    public AdapterItemStandardToItemDataTransfer(IAdapter<Product, ProductStandard> adapterProduct)
+    public AdapterItemStandardToItemDataTransfer(IAdapter<Product, ProductBase> adapterProduct)
     {
         _adapterProduct = adapterProduct;
     }
 
-    public ItemStandard Adapt(Item adapt)
+    public ItemBase Adapt(Item adapt)
     {
         throw new NotImplementedException();
     }
 
-    public Item Adapt(ItemStandard adapter)
+    public Item Adapt(ItemBase adapter)
     {
         return new Item()
         {
             Description = adapter.Description,
             Identifier = adapter.Identifier,
-            Product = _adapterProduct.Adapt(adapter.ProductStandard),
-            Quantity = adapter.Quantity,
+            Product = _adapterProduct.Adapt(adapter.Product),
+            Quantity = adapter.Quantity.GetValue(),
             Sequence = adapter.Sequence,
             UnitaryValue = adapter.UnitaryValue
         };

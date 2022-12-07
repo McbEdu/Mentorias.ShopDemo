@@ -5,12 +5,12 @@ using McbEdu.Mentorias.ShopDemo.Services.Orders.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Orders.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Services.Products.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Services.Customers.Interfaces;
-using McbEdu.Mentorias.ShopDemo.Domain.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.Abstractions;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportOrder.Inputs;
-using System.Security.Cryptography.X509Certificates;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.DTO;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.Entities;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.DTO;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.ValueObjects;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportOrder;
 
@@ -85,7 +85,7 @@ public class ImportOrderUseCase : IUseCase<ImportOrderUseCaseInput>
             {
                 Identifier = p.First().Identifier,
                 Sequence = p.First().Sequence,
-                UnitaryValue = p.Average(ip => ip.UnitaryValue),
+                UnitaryValue = new UnitaryValue(p.Average(ip => ip.UnitaryValue.GetValue())),
                 Description = string.Concat(p.Select(p => p.Description + " ")),
                 Product = p.First().Product,
                 Quantity = p.Sum(ip => ip.Quantity)

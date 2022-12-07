@@ -1,26 +1,29 @@
 ﻿using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
-using McbEdu.Mentorias.ShopDemo.Domain.Entities;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.Entities;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.Entities.Base;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.ValueObjects;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ProductContext.Entities.Base;
 using McbEdu.Mentorias.ShopDemo.Services.Items.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Products.Inputs;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Items.Adapters;
 
-public class AdapterImportItemServiceInputToItemStandard : IAdapter<ImportItemServiceInput, ItemStandard>
+public class AdapterImportItemServiceInputToItemStandard : IAdapter<ImportItemServiceInput, ItemBase>
 {
-    private readonly IAdapter<ImportProductServiceInput, ProductStandard> _adapterProduct;
+    private readonly IAdapter<ImportProductServiceInput, ProductBase> _adapterProduct;
 
-    public AdapterImportItemServiceInputToItemStandard(IAdapter<ImportProductServiceInput, ProductStandard> adapterProduct)
+    public AdapterImportItemServiceInputToItemStandard(IAdapter<ImportProductServiceInput, ProductBase> adapterProduct)
     {
         _adapterProduct = adapterProduct;
     }
 
-    public ImportItemServiceInput Adapt(ItemStandard adapt)
+    public ImportItemServiceInput Adapt(ItemBase adapt)
     {
         throw new NotImplementedException();
     }
 
-    public ItemStandard Adapt(ImportItemServiceInput adapter)
+    public ItemBase Adapt(ImportItemServiceInput adapter)
     {
-        return new ItemStandard(Guid.NewGuid(), adapter.Description, adapter.Sequence, adapter.Quantity, _adapterProduct.Adapt(adapter.Product), adapter.UnitaryValue);
+        return new ItemStandard(Guid.NewGuid(), adapter.Sequence, new Quantity(adapter.Quantity), adapter.Description, new UnitaryValue(adapter.UnitaryValue), _adapterProduct.Adapt(adapter.Product));
     }
 }

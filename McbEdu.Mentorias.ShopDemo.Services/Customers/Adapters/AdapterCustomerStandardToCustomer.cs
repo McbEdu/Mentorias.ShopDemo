@@ -1,7 +1,6 @@
 ﻿using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.DTO;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.Entities;
-using McbEdu.Mentorias.ShopDemo.Domain.Entities;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Customers.Adapters;
 
@@ -17,10 +16,10 @@ public class AdapterCustomerStandardToCustomer : IAdapter<CustomerStandard, Cust
         return new Customer()
         {
             Identifier = adapter.Identifier,
-            BirthDate = adapter.BirthDate,
-            Email = adapter.Email,
-            Name = adapter.Name,
-            Surname = adapter.Surname
+            BirthDate = adapter.BirthDate.GetValue(),
+            Email = adapter.Email.ToString(),
+            Name = adapter.Name.ToString(),
+            Surname = adapter.Surname.ToString()
         };
     }
 }

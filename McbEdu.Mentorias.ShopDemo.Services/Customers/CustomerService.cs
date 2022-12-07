@@ -5,7 +5,6 @@ using McbEdu.Mentorias.DesignPatterns.NotificationPattern;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Publisher;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.DTO;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.Entities;
-using McbEdu.Mentorias.ShopDemo.Domain.Entities;
 using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Services.Customers.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Customers.Interfaces;

@@ -1,4 +1,4 @@
-﻿using McbEdu.Mentorias.ShopDemo.Domain.DTOs;
+﻿using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.DTO;
 
 namespace McbEdu.Mentorias.ShopDemo.Domain.Contexts.ProductContext.DTO;
 

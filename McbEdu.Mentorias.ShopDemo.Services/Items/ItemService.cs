@@ -3,34 +3,34 @@ using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Publisher;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern;
 using McbEdu.Mentorias.General.Infrascructure.Abstractions.Repositories;
-using McbEdu.Mentorias.ShopDemo.Domain.DTOs;
-using McbEdu.Mentorias.ShopDemo.Domain.Entities;
 using McbEdu.Mentorias.ShopDemo.Services.Items.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Items.Interfaces;
 using FluentValidation.Results;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.Entities.Base;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.DTO;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Items;
 
 public class ItemService : IItemService
 {
-    private readonly AbstractValidator<ItemStandard> _itemValidator;
+    private readonly AbstractValidator<ItemBase> _itemValidator;
     private readonly IBaseRepository<Item> _itemRepository;
-    private readonly IAdapter<ImportItemServiceInput, ItemStandard> _adapterItemStandard;
-    private readonly IAdapter<List<ImportItemServiceInput>, List<ItemStandard>> _adapterItemsStandard;
-    private readonly IAdapter<ItemStandard, Item> _adapterItemDataTransfer;
+    private readonly IAdapter<ImportItemServiceInput, ItemBase> _adapterItemStandard;
+    private readonly IAdapter<List<ImportItemServiceInput>, List<ItemBase>> _adapterItemsStandard;
+    private readonly IAdapter<ItemBase, Item> _adapterItemDataTransfer;
     private readonly INotificationPublisher<NotificationItem> _notificationPublisher;
     private readonly IAdapter<List<NotificationItem>, List<ValidationFailure>> _adapterNotifications;
-    private readonly AbstractValidator<List<ItemStandard>> _itemsValidator;
+    private readonly AbstractValidator<List<ItemBase>> _itemsValidator;
 
     public ItemService(
-        AbstractValidator<ItemStandard> itemValidator, 
-        AbstractValidator<List<ItemStandard>> itemsValidator,
+        AbstractValidator<ItemBase> itemValidator, 
+        AbstractValidator<List<ItemBase>> itemsValidator,
         IBaseRepository<Item> itemRepository,
-        IAdapter<ItemStandard, Item> adapterItemDataTransfer,
-        IAdapter<ImportItemServiceInput, ItemStandard> adapterItemStandard,
+        IAdapter<ItemBase, Item> adapterItemDataTransfer,
+        IAdapter<ImportItemServiceInput, ItemBase> adapterItemStandard,
         INotificationPublisher<NotificationItem> notificationPublisher,
         IAdapter<List<NotificationItem>, List<ValidationFailure>> adapterNotifications,
-        IAdapter<List<ImportItemServiceInput>, List<ItemStandard>> adapterItemsStandard)
+        IAdapter<List<ImportItemServiceInput>, List<ItemBase>> adapterItemsStandard)
     {
         _itemValidator = itemValidator;
         _itemRepository = itemRepository;

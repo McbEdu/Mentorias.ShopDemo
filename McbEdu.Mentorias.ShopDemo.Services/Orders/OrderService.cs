@@ -3,11 +3,11 @@ using FluentValidation.Results;
 using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Publisher;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern;
-using McbEdu.Mentorias.ShopDemo.Domain.Entities;
 using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Services.Orders.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Orders.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.DTO;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.Entities;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Orders;
 

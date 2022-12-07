@@ -1,34 +1,36 @@
 ﻿using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.DTO;
-using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.Entities;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.Entities.Base;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.DTO;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.Entities.Base;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.DTO;
-using McbEdu.Mentorias.ShopDemo.Domain.Entities;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.Entities.Base;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Orders.Adapters;
 
-public class AdapterOrderStandardToOrderDataTransfer : IAdapter<OrderStandard, Order>
+public class AdapterOrderStandardToOrderDataTransfer : IAdapter<OrderBase, Order>
 {
-    private readonly IAdapter<CustomerStandard, Customer> _adapterCustomer;
-    private readonly IAdapter<List<ItemStandard>, List<Item>> _adapterItems;
+    private readonly IAdapter<CustomerBase, Customer> _adapterCustomer;
+    private readonly IAdapter<List<ItemBase>, List<Item>> _adapterItems;
 
     public AdapterOrderStandardToOrderDataTransfer(
-        IAdapter<List<ItemStandard>, List<Item>> adapterItems,
-        IAdapter<CustomerStandard, Customer> adapterCustomer)
+        IAdapter<List<ItemBase>, List<Item>> adapterItems,
+        IAdapter<CustomerBase, Customer> adapterCustomer)
     {
         _adapterCustomer = adapterCustomer;
         _adapterItems = adapterItems;
     }
 
-    public OrderStandard Adapt(Order adapt)
+    public OrderBase Adapt(Order adapt)
     {
         throw new NotImplementedException();
     }
 
-    public Order Adapt(OrderStandard adapter)
+    public Order Adapt(OrderBase adapter)
     {
         return new Order()
         {
-            Code = adapter.Code,
+            Code = adapter.Code.ToString(),
             Identifier = adapter.Identifier,
             OrderTime = adapter.OrderTime,
             Customer = _adapterCustomer.Adapt(adapter.Customer),

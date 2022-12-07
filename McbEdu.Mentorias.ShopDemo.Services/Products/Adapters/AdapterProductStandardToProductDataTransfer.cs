@@ -1,22 +1,22 @@
 ﻿using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
-using McbEdu.Mentorias.ShopDemo.Domain.DTOs;
-using McbEdu.Mentorias.ShopDemo.Domain.Entities;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ProductContext.DTO;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ProductContext.Entities.Base;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Products.Adapters;
 
-public class AdapterProductStandardToProductDataTransfer : IAdapter<Product, ProductStandard>
+public class AdapterProductStandardToProductDataTransfer : IAdapter<Product, ProductBase>
 {
-    public Product Adapt(ProductStandard adapt)
+    public Product Adapt(ProductBase adapt)
     {
         return new Product()
         {
             Identifier = adapt.Identifier,
             Description = adapt.Description,
-            Code = adapt.Code
+            Code = adapt.Code.ToString()
         };
     }
 
-    public ProductStandard Adapt(Product adapter)
+    public ProductBase Adapt(Product adapter)
     {
         throw new NotImplementedException();
     }

@@ -5,11 +5,9 @@ using McbEdu.Mentorias.DesignPatterns.NotificationPattern;
 using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Services.Products.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Products.Interfaces;
-using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories;
-using McbEdu.Mentorias.ShopDemo.Domain.Entities;
-using McbEdu.Mentorias.ShopDemo.Domain.DTOs;
-using McbEdu.Mentorias.ShopDemo.Domain.Validators;
 using FluentValidation;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ProductContext.Entities.Base;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ProductContext.DTO;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Products;
 
@@ -18,19 +16,19 @@ public class ProductService : IProductService
     private readonly IExtendsProductRepository _productRepository;
     private readonly INotificationPublisher<NotificationItem> _notificationPublisher;
     private readonly IAdapter<List<NotificationItem>, List<ValidationFailure>> _adapterNotifications;
-    private readonly IAdapter<ImportProductServiceInput, ProductStandard> _adapter;
-    private readonly IAdapter<Product, ProductStandard> _adapterDataTransfer;
-    private readonly AbstractValidator<ProductStandard> _productValidator;
-    private readonly AbstractValidator<List<ProductStandard>> _productRangeValidator;
+    private readonly IAdapter<ImportProductServiceInput, ProductBase> _adapter;
+    private readonly IAdapter<Product, ProductBase> _adapterDataTransfer;
+    private readonly AbstractValidator<ProductBase> _productValidator;
+    private readonly AbstractValidator<List<ProductBase>> _productRangeValidator;
 
     public ProductService(
         IExtendsProductRepository productRepository, 
         INotificationPublisher<NotificationItem> notificationPublisher,
         IAdapter<List<NotificationItem>, List<ValidationFailure>> adapterNotifications,
-        IAdapter<ImportProductServiceInput, ProductStandard> adapter,
-        IAdapter<Product, ProductStandard> adapterDataTransfer,
-        AbstractValidator<ProductStandard> productValidator,
-        AbstractValidator<List<ProductStandard>> productRangeValidator)
+        IAdapter<ImportProductServiceInput, ProductBase> adapter,
+        IAdapter<Product, ProductBase> adapterDataTransfer,
+        AbstractValidator<ProductBase> productValidator,
+        AbstractValidator<List<ProductBase>> productRangeValidator)
     {
         _productRepository = productRepository;
         _notificationPublisher = notificationPublisher;
@@ -77,7 +75,7 @@ public class ProductService : IProductService
 
     public Task<bool> VerifyProductRangeIsValidAsync(List<ImportProductServiceInput> input)
     {
-        var productStandardList = new List<ProductStandard>();
+        var productStandardList = new List<ProductBase>();
 
         foreach (var uniqueProductStandard in input)
         {

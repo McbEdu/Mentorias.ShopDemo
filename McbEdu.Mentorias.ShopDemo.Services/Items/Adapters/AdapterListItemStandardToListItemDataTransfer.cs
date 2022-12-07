@@ -1,37 +1,39 @@
 ﻿using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
-using McbEdu.Mentorias.ShopDemo.Domain.DTOs;
-using McbEdu.Mentorias.ShopDemo.Domain.Entities;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.DTO;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.Entities.Base;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ProductContext.DTO;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ProductContext.Entities.Base;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Items.Adapters;
 
-public class AdapterListItemStandardToListItemDataTransfer : IAdapter<List<ItemStandard>, List<Item>>
+public class AdapterListItemStandardToListItemDataTransfer : IAdapter<List<ItemBase>, List<Item>>
 {
-    private readonly IAdapter<Product, ProductStandard> _adapterProduct;
+    private readonly IAdapter<Product, ProductBase> _adapterProduct;
 
-    public AdapterListItemStandardToListItemDataTransfer(IAdapter<Product, ProductStandard> adapterProduct)
+    public AdapterListItemStandardToListItemDataTransfer(IAdapter<Product, ProductBase> adapterProduct)
     {
         _adapterProduct = adapterProduct;
     }
 
-    public Item Adapt(ItemStandard adapter)
+    public Item Adapt(ItemBase adapter)
     {
         return new Item()
         {
             Description = adapter.Description,
             Identifier = adapter.Identifier,
-            Quantity = adapter.Quantity,
+            Quantity = adapter.Quantity.GetValue(),
             Sequence = adapter.Sequence,
             UnitaryValue = adapter.UnitaryValue,
-            Product = _adapterProduct.Adapt(adapter.ProductStandard)
+            Product = _adapterProduct.Adapt(adapter.Product)
         };
     }
 
-    public List<ItemStandard> Adapt(List<Item> adapt)
+    public List<ItemBase> Adapt(List<Item> adapt)
     {
         throw new NotImplementedException();
     }
 
-    public List<Item> Adapt(List<ItemStandard> adapter)
+    public List<Item> Adapt(List<ItemBase> adapter)
     {
         var items = new List<Item>();
 
@@ -41,10 +43,10 @@ public class AdapterListItemStandardToListItemDataTransfer : IAdapter<List<ItemS
             {
                 Description = itemAdapter.Description,
                 Identifier = itemAdapter.Identifier,
-                Quantity = itemAdapter.Quantity,
+                Quantity = itemAdapter.Quantity.GetValue(),
                 Sequence = itemAdapter.Sequence,
                 UnitaryValue = itemAdapter.UnitaryValue,
-                Product = _adapterProduct.Adapt(itemAdapter.ProductStandard)
+                Product = _adapterProduct.Adapt(itemAdapter.Product)
             });
         }
 

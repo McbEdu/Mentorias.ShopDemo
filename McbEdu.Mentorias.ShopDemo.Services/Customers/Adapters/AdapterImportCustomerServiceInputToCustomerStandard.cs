@@ -1,6 +1,6 @@
 ﻿using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.Entities;
-using McbEdu.Mentorias.ShopDemo.Domain.Entities;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.ValueObjects;
 using McbEdu.Mentorias.ShopDemo.Services.Customers.Inputs;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Customers.Adapters;
@@ -14,6 +14,6 @@ public class AdapterImportCustomerServiceInputToCustomerStandard : IAdapter<Impo
 
     public CustomerStandard Adapt(ImportCustomerServiceInput adapter)
     {
-        return new CustomerStandard(Guid.NewGuid(), adapter.Name, adapter.Surname, adapter.Email, adapter.BirthDate);
+        return new CustomerStandard(Guid.NewGuid(), new Name(adapter.Name), new Surname(adapter.Surname), new Email(adapter.Email), new BirthDate(adapter.BirthDate));
     }
 }
