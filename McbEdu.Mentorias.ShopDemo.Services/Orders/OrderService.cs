@@ -7,24 +7,24 @@ using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Services.Orders.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Orders.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.DTO;
-using McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.Entities;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.Entities.Base;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Orders;
 
 public class OrderService : IOrderService
 {
     private readonly IExtendsOrderRepository _orderRepository;
-    private readonly IAdapter<ImportOrderServiceInput, OrderStandard> _adapterOrderStandard;
-    private readonly IAdapter<OrderStandard, Order> _adapterOrderDataTransfer;
-    private readonly AbstractValidator<OrderStandard> _orderValidator;
+    private readonly IAdapter<ImportOrderServiceInput, OrderBase> _adapterOrderStandard;
+    private readonly IAdapter<OrderBase, Order> _adapterOrderDataTransfer;
+    private readonly AbstractValidator<OrderBase> _orderValidator;
     private readonly INotificationPublisher<NotificationItem> _notificationPublisher;
     private readonly IAdapter<List<NotificationItem>, List<ValidationFailure>> _adapterNotifications;
 
     public OrderService(
         IExtendsOrderRepository orderRepository,
-        IAdapter<ImportOrderServiceInput, OrderStandard> adapterOrderStandard,
-        IAdapter<OrderStandard, Order> adapterOrderDataTransfer,
-        AbstractValidator<OrderStandard> orderValidator,
+        IAdapter<ImportOrderServiceInput, OrderBase> adapterOrderStandard,
+        IAdapter<OrderBase, Order> adapterOrderDataTransfer,
+        AbstractValidator<OrderBase> orderValidator,
         INotificationPublisher<NotificationItem> notificationPublisher,
         IAdapter<List<NotificationItem>, List<ValidationFailure>> adapterNotifications)
     {

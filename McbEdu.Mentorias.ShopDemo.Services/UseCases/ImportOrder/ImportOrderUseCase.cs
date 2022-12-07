@@ -8,9 +8,9 @@ using McbEdu.Mentorias.ShopDemo.Services.Customers.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.Abstractions;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportOrder.Inputs;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.DTO;
-using McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.Entities;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.DTO;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.ValueObjects;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.Entities.Base;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportOrder;
 
@@ -21,12 +21,12 @@ public class ImportOrderUseCase : IUseCase<ImportOrderUseCaseInput>
     private readonly INotificationPublisher<NotificationItem> _notificationPublisher;
     private readonly IProductService _productService;
     private readonly ICustomerService _customerService;
-    private readonly IAdapter<ImportOrderServiceInput, OrderStandard> _adapterOrderStandard;
-    private readonly IAdapter<OrderStandard, Order> _adapterDto;
+    private readonly IAdapter<ImportOrderServiceInput, OrderBase> _adapterOrderStandard;
+    private readonly IAdapter<OrderBase, Order> _adapterDto;
 
     public ImportOrderUseCase(IAdapter<ImportOrderUseCaseInput, ImportOrderServiceInput> adapterOrder, IOrderService orderService,
         INotificationPublisher<NotificationItem> notificationPublisher, IProductService productService, ICustomerService customerService,
-        IAdapter<ImportOrderServiceInput, OrderStandard> adapterOrderStandard, IAdapter<OrderStandard, Order> adapterDto)
+        IAdapter<ImportOrderServiceInput, OrderBase> adapterOrderStandard, IAdapter<OrderBase, Order> adapterDto)
     {
         _adapterOrder = adapterOrder;
         _orderService = orderService;

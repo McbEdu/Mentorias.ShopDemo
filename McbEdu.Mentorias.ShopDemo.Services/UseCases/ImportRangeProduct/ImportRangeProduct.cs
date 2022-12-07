@@ -1,7 +1,6 @@
 ﻿using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Publisher;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern;
 using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
-using McbEdu.Mentorias.ShopDemo.Services.Customers.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Products.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Products.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.Abstractions;

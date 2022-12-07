@@ -78,8 +78,8 @@ public class Program
         
         builder.Services.AddSingleton<IAdapter<ImportCustomerPayload, ImportCustomerUseCaseInput>, AdapterImportCustomerPayloadToUseCase>();
         builder.Services.AddSingleton<IAdapter<ImportCustomerUseCaseInput, ImportCustomerServiceInput>, AdapterImportCustomerUseCaseInputToServiceInput>();
-        builder.Services.AddSingleton<IAdapter<ImportCustomerServiceInput, CustomerStandard>, AdapterImportCustomerServiceInputToCustomerStandard>();
-        builder.Services.AddSingleton<IAdapter<CustomerStandard, Customer>, AdapterCustomerStandardToCustomer>();
+        builder.Services.AddSingleton<IAdapter<ImportCustomerServiceInput, CustomerBase>, AdapterImportCustomerServiceInputToCustomerStandard>();
+        builder.Services.AddSingleton<IAdapter<CustomerBase, Customer>, AdapterCustomerStandardToCustomer>();
 
         builder.Services.AddSingleton<IAdapter<List<NotificationItem>, List<ValidationFailure>>, AdapterValidationFailureToNotificationItem>();
 

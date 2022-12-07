@@ -5,6 +5,7 @@ using McbEdu.Mentorias.DesignPatterns.NotificationPattern;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Publisher;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.DTO;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.Entities;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.Entities.Base;
 using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Services.Customers.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Customers.Interfaces;
@@ -15,16 +16,16 @@ public class CustomerService : ICustomerService
 {
     private readonly IExtendsCustomerRepository _customerRepository;
     private readonly INotificationPublisher<NotificationItem> _notificationPublisher;
-    private readonly IAdapter<ImportCustomerServiceInput, CustomerStandard> _adapter;
-    private readonly AbstractValidator<CustomerStandard> _customerValidator;
-    private readonly AbstractValidator<List<CustomerStandard>> _customerRangeValidator;
+    private readonly IAdapter<ImportCustomerServiceInput, CustomerBase> _adapter;
+    private readonly AbstractValidator<CustomerBase> _customerValidator;
+    private readonly AbstractValidator<List<CustomerBase>> _customerRangeValidator;
     private readonly IAdapter<List<NotificationItem>, List<ValidationFailure>> _adapterNotifications;
-    private readonly IAdapter<CustomerStandard, Customer> _adapterDataTransfer;
+    private readonly IAdapter<CustomerBase, Customer> _adapterDataTransfer;
 
     public CustomerService(IExtendsCustomerRepository customerRepository, INotificationPublisher<NotificationItem> notificationPublisher,
-        IAdapter<ImportCustomerServiceInput, CustomerStandard> adapter, AbstractValidator<CustomerStandard> customerValidator,
-        IAdapter<List<NotificationItem>, List<ValidationFailure>> adapterNotifications, IAdapter<CustomerStandard, Customer> adapterDataTransfer,
-        AbstractValidator<List<CustomerStandard>> customerRangeValidator)
+        IAdapter<ImportCustomerServiceInput, CustomerBase> adapter, AbstractValidator<CustomerBase> customerValidator,
+        IAdapter<List<NotificationItem>, List<ValidationFailure>> adapterNotifications, IAdapter<CustomerBase, Customer> adapterDataTransfer,
+        AbstractValidator<List<CustomerBase>> customerRangeValidator)
     {
         _customerRepository = customerRepository;
         _notificationPublisher = notificationPublisher;
@@ -71,7 +72,7 @@ public class CustomerService : ICustomerService
 
     public Task<bool> VerifyListCustomerIsValid(List<ImportCustomerServiceInput> input)
     {
-        var customerStandardList = new List<CustomerStandard>();
+        var customerStandardList = new List<CustomerBase>();
 
         foreach (var uniqueCustomerStandard in input)
         {

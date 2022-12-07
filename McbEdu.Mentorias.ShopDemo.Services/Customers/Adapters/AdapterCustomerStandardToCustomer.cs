@@ -1,17 +1,17 @@
 ﻿using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.DTO;
-using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.Entities;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.Entities.Base;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Customers.Adapters;
 
-public class AdapterCustomerStandardToCustomer : IAdapter<CustomerStandard, Customer>
+public class AdapterCustomerStandardToCustomer : IAdapter<CustomerBase, Customer>
 {
-    public CustomerStandard Adapt(Customer adapt)
+    public CustomerBase Adapt(Customer adapt)
     {
         throw new NotImplementedException();
     }
 
-    public Customer Adapt(CustomerStandard adapter)
+    public Customer Adapt(CustomerBase adapter)
     {
         return new Customer()
         {
