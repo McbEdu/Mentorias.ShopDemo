@@ -1,5 +1,5 @@
 ﻿using McbEdu.Mentorias.General.Infrascructure.Abstractions.Repositories;
-using McbEdu.Mentorias.ShopDemo.Domain.DTOs;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.DTO;
 
 namespace McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Interfaces;
 

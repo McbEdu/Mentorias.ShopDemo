@@ -1,6 +1,6 @@
 ﻿using McbEdu.Mentorias.DesignPatterns.NotificationPattern;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Consumer;
-using McbEdu.Mentorias.ShopDemo.Application.UseCases.Abstractions;
+using McbEdu.Mentorias.ShopDemo.Services.UseCases.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace McbEdu.Mentorias.ShopDemo.WebApi.Controllers;

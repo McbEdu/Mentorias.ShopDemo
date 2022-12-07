@@ -1,4 +1,6 @@
-﻿namespace McbEdu.Mentorias.ShopDemo.Domain.Entities;
+﻿using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.Entities;
+
+namespace McbEdu.Mentorias.ShopDemo.Domain.Entities;
 
 public class OrderStandard
 {

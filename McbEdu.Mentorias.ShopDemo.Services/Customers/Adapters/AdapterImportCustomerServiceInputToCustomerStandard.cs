@@ -1,4 +1,5 @@
 ﻿using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.Entities;
 using McbEdu.Mentorias.ShopDemo.Domain.Entities;
 using McbEdu.Mentorias.ShopDemo.Services.Customers.Inputs;
 

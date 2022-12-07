@@ -1,5 +1,5 @@
 ﻿using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
-using McbEdu.Mentorias.ShopDemo.Application.UseCases.ImportProduct.Inputs;
+using McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportProduct.Inputs;
 using McbEdu.Mentorias.ShopDemo.WebApi.Controllers.Payloads;
 
 namespace McbEdu.Mentorias.ShopDemo.WebApi.Controllers.Adapters;

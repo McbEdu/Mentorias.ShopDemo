@@ -1,4 +1,4 @@
-﻿using McbEdu.Mentorias.ShopDemo.Domain.DTOs;
+﻿using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.DTO;
 using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 

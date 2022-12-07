@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.Entities;
 using McbEdu.Mentorias.ShopDemo.Domain.Entities;
 
 namespace McbEdu.Mentorias.ShopDemo.Domain.Validators;
