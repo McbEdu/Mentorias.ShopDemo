@@ -16,19 +16,21 @@ public class CustomerRepository : IExtendsCustomerRepository
     public async Task AddAsync(Customer entity)
     {
         await _dataContext.Customers.AddAsync(entity);
-        _dataContext.SaveChanges();
     }
 
     public async Task AddRangeAsync(Customer entity)
     {
         await _dataContext.Customers.AddRangeAsync(entity);
-        _dataContext.SaveChanges();
+    }
+
+    public Task CommitChanges()
+    {
+        return Task.FromResult(_dataContext.SaveChanges());
     }
 
     public void Delete(Customer entity)
     {
         _dataContext.Customers.Remove(entity);
-        _dataContext.SaveChanges();
     }
 
     public List<Customer> GetAll()
@@ -49,13 +51,11 @@ public class CustomerRepository : IExtendsCustomerRepository
     public void Update(Customer entity)
     {
         _dataContext.Customers.Update(entity);
-        _dataContext.SaveChanges();
     }
 
     public void UpdateRange(List<Customer> entities)
     {
         _dataContext.Customers.UpdateRange(entities);
-        _dataContext.SaveChanges();
     }
 
     public Task<bool> VerifyEntityExistsAsync(string email)
