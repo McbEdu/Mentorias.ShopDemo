@@ -8,6 +8,8 @@ using McbEdu.Mentorias.ShopDemo.Services.Orders.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Orders.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.DTO;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.Entities.Base;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.DTO;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.ValueObjects;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Orders;
 
@@ -36,24 +38,7 @@ public class OrderService : IOrderService
         _adapterNotifications = adapterNotifications;
     }
 
-    public Task<bool> ImportOrderAsync(ImportOrderServiceInput input)
-    {
-        _orderRepository.AddAsync(_adapterOrderDataTransfer.Adapt(_adapterOrderStandard.Adapt(input)));
-
-        return Task.FromResult(true);
-    }
-
-    public async Task ImportOrderAsync(Order input)
-    {
-        await _orderRepository.AddAsync(input);
-    }
-
-    public async Task<bool> VerifyOrderIsRegisteredAsync(ImportOrderServiceInput input)
-    {
-        return await _orderRepository.VerifyOrderIsRegisteredByCode(input.Code);
-    }
-
-    public Task<bool> VerifyOrderIsValidAsync(ImportOrderServiceInput input)
+    public async Task<bool> ImportOrderAsync(ImportOrderServiceInput input)
     {
         var orderStandard = _adapterOrderStandard.Adapt(input);
 
@@ -62,9 +47,35 @@ public class OrderService : IOrderService
         if (validationResult.IsValid == false)
         {
             _notificationPublisher.AddNotifications(_adapterNotifications.Adapt(validationResult.Errors));
-            return Task.FromResult(false);
+            return false;
         }
 
-        return Task.FromResult(true);
+        if (await _orderRepository.VerifyOrderIsRegisteredByCode(input.Code))
+        {
+            _notificationPublisher.AddNotification(new NotificationItem("O pedido já foi importado!"));
+            return false;
+        }
+
+        var dataTransferAdaptedOrder = _adapterOrderDataTransfer.Adapt(_adapterOrderStandard.Adapt(input));
+        dataTransferAdaptedOrder.Items = dataTransferAdaptedOrder.Items
+            .GroupBy(i => i.Product.Code)
+            .Select(p => new Item()
+            {
+                Identifier = p.First().Identifier,
+                Sequence = p.First().Sequence,
+                UnitaryValue = p.Average(ip => ip.UnitaryValue),
+                Description = string.Concat(p.Select(p => p.Description + " ")),
+                Product = p.First().Product,
+                Quantity = p.Sum(ip => ip.Quantity)
+            }).ToList();
+
+        for (int i = 0; i < dataTransferAdaptedOrder.Items.Count; i++)
+        {
+            dataTransferAdaptedOrder.Items[i].Sequence = i + 1;
+        }
+
+        await _orderRepository.AddAsync(dataTransferAdaptedOrder);
+
+        return true;
     }
 }

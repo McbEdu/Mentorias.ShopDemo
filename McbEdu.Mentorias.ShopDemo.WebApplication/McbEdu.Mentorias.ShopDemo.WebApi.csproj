@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\libraries\McbEdu.Mentorias.DesignPatterns.NotificationPattern\McbEdu.Mentorias.DesignPatterns.NotificationPattern.csproj" />
+    <ProjectReference Include="..\McbEdu.Mentorias.ShopDemo.Infrascructure.Data.UnitOfWork\McbEdu.Mentorias.ShopDemo.Infrascructure.Data.UnitOfWork.csproj" />
     <ProjectReference Include="..\McbEdu.Mentorias.ShopDemo.Services\McbEdu.Mentorias.ShopDemo.Services.csproj" />
   </ItemGroup>
 

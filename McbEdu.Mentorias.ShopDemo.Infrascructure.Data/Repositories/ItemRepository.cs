@@ -12,15 +12,19 @@ public class ItemRepository : IBaseRepository<Item>
         _dataContext = dataContext;
     }
 
-    public async Task AddAsync(Item entity)
+    public Task AddAsync(Item entity)
     {
-        await _dataContext.Items.AddAsync(entity);  
-        _dataContext.SaveChanges();
+        return Task.FromResult(_dataContext.Items.Add(entity));  
     }
 
     public Task AddRangeAsync(Item entity)
     {
         throw new NotImplementedException();
+    }
+
+    public Task CommitChanges()
+    {
+        return Task.FromResult(_dataContext.SaveChanges());
     }
 
     public void Delete(Item entity)

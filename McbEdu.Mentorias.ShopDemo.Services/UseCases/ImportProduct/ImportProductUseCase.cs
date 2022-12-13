@@ -1,44 +1,31 @@
-﻿using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Publisher;
-using McbEdu.Mentorias.DesignPatterns.NotificationPattern;
-using McbEdu.Mentorias.ShopDemo.Services.Products.Interfaces;
+﻿using McbEdu.Mentorias.ShopDemo.Services.Products.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Services.Products.Inputs;
 using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.Abstractions;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportProduct.Inputs;
+using McbEdu.Mentorias.ShopDemo.DesignPatterns.UnitOfWork.Abstractions;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportProduct;
 
 public class ImportProductUseCase : IUseCase<ImportProductUseCaseInput>
 {
-    private readonly INotificationPublisher<NotificationItem> _notificationPublisher;
     private readonly IProductService _productService;
     private readonly IAdapter<ImportProductUseCaseInput, ImportProductServiceInput> _adapter;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public ImportProductUseCase(INotificationPublisher<NotificationItem> notificationPublisher, IProductService productService,
-        IAdapter<ImportProductUseCaseInput, ImportProductServiceInput> adapter)
+    public ImportProductUseCase(IProductService productService,
+        IAdapter<ImportProductUseCaseInput, ImportProductServiceInput> adapter, IUnitOfWork unitOfWork)
     {
-        _notificationPublisher = notificationPublisher;
         _productService = productService;
         _adapter = adapter;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<bool> ExecuteAsync(ImportProductUseCaseInput useCaseInput)
     {
-        var adapted = _adapter.Adapt(useCaseInput);
-
-        if (await _productService.VerifyProductIsRegisteredAsync(adapted) == false)
+        return await _unitOfWork.ExecuteAsync((async () => 
         {
-            if (await _productService.VerifyProductIsValidAsync(adapted) == true)
-            {
-                return await _productService.ImportProductAsync(adapted);
-            }
-
-            return false;
-        }
-        else
-        {
-            _notificationPublisher.AddNotification(new NotificationItem("O produto já possui uma importação!"));
-            return false;
-        }
+            return await _productService.ImportProductAsync(_adapter.Adapt(useCaseInput)); 
+        }));
     }
 }

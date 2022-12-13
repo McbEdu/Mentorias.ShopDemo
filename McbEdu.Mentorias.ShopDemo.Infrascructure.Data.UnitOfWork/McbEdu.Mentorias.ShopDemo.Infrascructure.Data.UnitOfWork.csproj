@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\libraries\McbEdu.Mentorias.ShopDemo.DesignPatterns.UnitOfWork.Abstractions\McbEdu.Mentorias.ShopDemo.DesignPatterns.UnitOfWork.Abstractions.csproj" />
+    <ProjectReference Include="..\McbEdu.Mentorias.ShopDemo.Infrascructure.Data\McbEdu.Mentorias.ShopDemo.Infrascructure.Data.csproj" />
+  </ItemGroup>
+
 </Project>

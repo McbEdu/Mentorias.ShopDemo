@@ -7,6 +7,7 @@ using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Container
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Publisher;
 using McbEdu.Mentorias.General.Infrascructure.Abstractions.Mappings;
 using McbEdu.Mentorias.General.Infrascructure.Abstractions.Repositories;
+using McbEdu.Mentorias.ShopDemo.DesignPatterns.UnitOfWork.Abstractions;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.DTO;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.Entities;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.Entities.Base;
@@ -31,6 +32,7 @@ using McbEdu.Mentorias.ShopDemo.Infrascructure.Data;
 using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Mappings;
 using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories;
 using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Interfaces;
+using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.UnitOfWork;
 using McbEdu.Mentorias.ShopDemo.Services.Customers;
 using McbEdu.Mentorias.ShopDemo.Services.Customers.Adapters;
 using McbEdu.Mentorias.ShopDemo.Services.Customers.Inputs;
@@ -131,6 +133,8 @@ public class Program
         builder.Services.AddScoped<IProductService, ProductService>();
         builder.Services.AddScoped<IItemService, ItemService>();
         builder.Services.AddScoped<IOrderService, OrderService>();
+
+        builder.Services.AddScoped<IUnitOfWork, DefaultUnitOfWork>();
 
         builder.Services.AddScoped<IUseCase<ImportProductUseCaseInput>, ImportProductUseCase>();
         builder.Services.AddScoped<IUseCase<List<ImportProductUseCaseInput>>, ImportRangeProductUseCase>();

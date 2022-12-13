@@ -29,7 +29,7 @@ public class AdapterItemStandardToItemDataTransfer : IAdapter<ItemBase, Item>
             Product = _adapterProduct.Adapt(adapter.Product),
             Quantity = adapter.Quantity.GetValue(),
             Sequence = adapter.Sequence,
-            UnitaryValue = adapter.UnitaryValue
+            UnitaryValue = adapter.UnitaryValue.GetValue(),
         };
     }
 }

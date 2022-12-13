@@ -15,12 +15,16 @@ public class OrderRepository : IExtendsOrderRepository
     public async Task AddAsync(Order entity)
     {
         await _dataContext.Orders.AddAsync(entity);
-        _dataContext.SaveChanges();
     }
 
     public Task AddRangeAsync(Order entity)
     {
         throw new NotImplementedException();
+    }
+
+    public Task CommitChanges()
+    {
+        return Task.FromResult(_dataContext.SaveChanges());
     }
 
     public void Delete(Order entity)

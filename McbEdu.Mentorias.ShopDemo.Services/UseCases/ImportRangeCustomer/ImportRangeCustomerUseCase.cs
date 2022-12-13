@@ -1,10 +1,9 @@
 ﻿using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
-using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Publisher;
-using McbEdu.Mentorias.DesignPatterns.NotificationPattern;
 using McbEdu.Mentorias.ShopDemo.Services.Customers.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Customers.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.Abstractions;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportCustomer.Inputs;
+using McbEdu.Mentorias.ShopDemo.DesignPatterns.UnitOfWork.Abstractions;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportRangeCustomer;
 
@@ -12,59 +11,29 @@ public class ImportRangeCustomerUseCase : IUseCase<List<ImportCustomerUseCaseInp
 {
     private readonly ICustomerService _customerService;
     private readonly IAdapter<ImportCustomerUseCaseInput, ImportCustomerServiceInput> _adapter;
-    private readonly INotificationPublisher<NotificationItem> _notificationPublisher;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public ImportRangeCustomerUseCase(ICustomerService customerService, IAdapter<ImportCustomerUseCaseInput, ImportCustomerServiceInput> adapter,
-        INotificationPublisher<NotificationItem> notificationPublisher)
+    public ImportRangeCustomerUseCase(ICustomerService customerService, IAdapter<ImportCustomerUseCaseInput, ImportCustomerServiceInput> adapter, IUnitOfWork unitOfWork)
     {
         _customerService = customerService;
         _adapter = adapter;
-        _notificationPublisher = notificationPublisher;
+
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<bool> ExecuteAsync(List<ImportCustomerUseCaseInput> useCaseInput)
     {
-        bool allNotRegisteredInDatabase = true;
-        foreach (var eachUseCaseInput in useCaseInput)
+        return await _unitOfWork.ExecuteAsync((async () =>
         {
-            if (await _customerService.VerifyCustomerIsRegistered(_adapter.Adapt(eachUseCaseInput)) == true)
+            foreach (var eachCustomerInUseCaseInput in useCaseInput)
             {
-                allNotRegisteredInDatabase = false;
-            }
-            break;
-        }
-
-        if (allNotRegisteredInDatabase == true)
-        {
-            var customerServiceListInput = new List<ImportCustomerServiceInput>();
-            foreach (var uniqueUseCaseInput in useCaseInput)
-            {
-                customerServiceListInput.Add(_adapter.Adapt(uniqueUseCaseInput));
-            }
-
-            if (await _customerService.VerifyListCustomerIsValid(customerServiceListInput) == true)
-            {
-                foreach (var eachUseCaseInput in useCaseInput)
+                if(await _customerService.ImportCustomerAsync(_adapter.Adapt(eachCustomerInUseCaseInput)) is false)
                 {
-                    await _customerService.ImportCustomerAsync(_adapter.Adapt(eachUseCaseInput));
+                    return false;
                 }
-                return true;
             }
 
-            return false;
-        }
-        else
-        {
-            _notificationPublisher.AddNotification(new NotificationItem("Os clientes já possuem importação!"));
-
-            var customerServiceListInput = new List<ImportCustomerServiceInput>();
-            foreach (var uniqueUseCaseInput in useCaseInput)
-            {
-                customerServiceListInput.Add(_adapter.Adapt(uniqueUseCaseInput));
-            }
-
-            await _customerService.VerifyListCustomerIsValid(customerServiceListInput);
-            return false;
-        }
+            return true;
+        }));
     }
 }

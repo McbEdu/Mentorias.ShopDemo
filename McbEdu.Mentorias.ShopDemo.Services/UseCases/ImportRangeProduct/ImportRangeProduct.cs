@@ -5,67 +5,39 @@ using McbEdu.Mentorias.ShopDemo.Services.Products.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Products.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.Abstractions;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportProduct.Inputs;
+using McbEdu.Mentorias.ShopDemo.DesignPatterns.UnitOfWork.Abstractions;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportRangeProduct;
 
 public class ImportRangeProductUseCase : IUseCase<List<ImportProductUseCaseInput>>
 {
-    private readonly INotificationPublisher<NotificationItem> _notificationPublisher;
     private readonly IProductService _productService;
     private readonly IAdapter<ImportProductUseCaseInput, ImportProductServiceInput> _adapter;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public ImportRangeProductUseCase(INotificationPublisher<NotificationItem> notificationPublisher,
-        IProductService productService, IAdapter<ImportProductUseCaseInput, ImportProductServiceInput> adapter)
+    public ImportRangeProductUseCase(IProductService productService, IAdapter<ImportProductUseCaseInput, 
+        ImportProductServiceInput> adapter, IUnitOfWork unitOfWork)
     {
-        _notificationPublisher = notificationPublisher;
         _productService = productService;
         _adapter = adapter;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<bool> ExecuteAsync(List<ImportProductUseCaseInput> useCaseInput)
     {
-        bool allNotRegisteredInDatabase = true;
-        foreach (var eachUseCaseInput in useCaseInput)
+        return await _unitOfWork.ExecuteAsync(( async () => 
         {
-            if (await _productService.VerifyProductIsRegisteredAsync(_adapter.Adapt(eachUseCaseInput)) == true)
+            foreach (var eachProductUseCaseInput in useCaseInput)
             {
-                allNotRegisteredInDatabase = false;
-            }
-            break;
-        }
-
-        if (allNotRegisteredInDatabase == true)
-        {
-            var productServiceInputList = new List<ImportProductServiceInput>();
-            foreach (var uniqueUseCaseInput in useCaseInput)
-            {
-                productServiceInputList.Add(_adapter.Adapt(uniqueUseCaseInput));
-            }
-
-            if (await _productService.VerifyProductRangeIsValidAsync(productServiceInputList) == true)
-            {
-                foreach (var eachUseCaseInput in useCaseInput)
+                var importProductResult = await _productService.ImportProductAsync(_adapter.Adapt(eachProductUseCaseInput));
+                if (importProductResult == false)
                 {
-                    await _productService.ImportProductAsync(_adapter.Adapt(eachUseCaseInput));
+                    return false;
                 }
-                return true;
             }
 
-            return false;
-        }
-        else
-        {
-            _notificationPublisher.AddNotification(new NotificationItem("Os produtos já possuem importação!"));
+            return true;
 
-            var productServiceInputList = new List<ImportProductServiceInput>();
-            foreach (var uniqueUseCaseInput in useCaseInput)
-            {
-                productServiceInputList.Add(_adapter.Adapt(uniqueUseCaseInput));
-            }
-
-            await _productService.VerifyProductRangeIsValidAsync(productServiceInputList);
-
-            return false;
-        }
+        }));
     }
 }

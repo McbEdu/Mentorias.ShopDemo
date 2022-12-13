@@ -23,7 +23,7 @@ public class AdapterListItemStandardToListItemDataTransfer : IAdapter<List<ItemB
             Identifier = adapter.Identifier,
             Quantity = adapter.Quantity.GetValue(),
             Sequence = adapter.Sequence,
-            UnitaryValue = adapter.UnitaryValue,
+            UnitaryValue = adapter.UnitaryValue.GetValue(),
             Product = _adapterProduct.Adapt(adapter.Product)
         };
     }
@@ -45,7 +45,7 @@ public class AdapterListItemStandardToListItemDataTransfer : IAdapter<List<ItemB
                 Identifier = itemAdapter.Identifier,
                 Quantity = itemAdapter.Quantity.GetValue(),
                 Sequence = itemAdapter.Sequence,
-                UnitaryValue = itemAdapter.UnitaryValue,
+                UnitaryValue = itemAdapter.UnitaryValue.GetValue(),
                 Product = _adapterProduct.Adapt(itemAdapter.Product)
             });
         }

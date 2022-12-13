@@ -12,17 +12,17 @@ public class DefaultUnitOfWork : IUnitOfWork
         _dataContext = dataContext;
     }
 
-    public async Task<bool> ExecuteAsync(Func<bool, Task<bool>> handler, bool openTransaction)
+    public async Task<bool> ExecuteAsync(Func<Task<bool>> handler)
     {
-        if(await handler(openTransaction) == true)
+        if(await handler() == true)
         {
             _dataContext.SaveChanges();
             return true;
         }
         else
         {
-            _dataContext.Dispose();
             return false;
         }
     }
 }
+

@@ -45,48 +45,22 @@ public class CustomerService : ICustomerService
     {
         var customerStandard = _adapter.Adapt(input);
 
-        await _customerRepository.AddAsync(_adapterDataTransfer.Adapt(customerStandard));
-        
-        return true;
-    }
-
-    public Task<bool> VerifyCustomerIsRegistered(ImportCustomerServiceInput input)
-    {
-        return _customerRepository.VerifyEntityExistsAsync(input.Email);
-    }
-
-    public Task<bool> VerifyCustomerIsValid(ImportCustomerServiceInput input)
-    {
-        var customerStandard = _adapter.Adapt(input);
-
         var validationResult = _customerValidator.Validate(customerStandard);
 
         if (validationResult.IsValid == false)
         {
             _notificationPublisher.AddNotifications(_adapterNotifications.Adapt(validationResult.Errors));
-            return Task.FromResult(false);
+            return false;
         }
 
-        return Task.FromResult(true);
-    }
-
-    public Task<bool> VerifyListCustomerIsValid(List<ImportCustomerServiceInput> input)
-    {
-        var customerStandardList = new List<CustomerBase>();
-
-        foreach (var uniqueCustomerStandard in input)
+        if (await _customerRepository.VerifyEntityExistsAsync(input.Email))
         {
-            customerStandardList.Add(_adapter.Adapt(uniqueCustomerStandard));
+            _notificationPublisher.AddNotification(new NotificationItem($"O cliente de email {input.Email} já possui cadastro."));
+            return false;
         }
 
-        var validationResult = _customerRangeValidator.Validate(customerStandardList);
-
-        if (validationResult.IsValid == false)
-        {
-            _notificationPublisher.AddNotifications(_adapterNotifications.Adapt(validationResult.Errors));
-            return Task.FromResult(false);
-        }
-
-        return Task.FromResult(true);
+        await _customerRepository.AddAsync(_adapterDataTransfer.Adapt(customerStandard));
+        
+        return true;
     }
 }

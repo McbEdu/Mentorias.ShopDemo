@@ -39,57 +39,29 @@ public class ProductService : IProductService
         _productRangeValidator = productRangeValidator;
     }
 
-    public async Task<Product> GetProductByCodeAsync(string code)
-    {
-        return await _productRepository.GetByCode(code);
-    }
-
     public async Task<bool> ImportProductAsync(ImportProductServiceInput input)
-    {
-        var productStandard = _adapter.Adapt(input);
-
-        await _productRepository.AddAsync(_adapterDataTransfer.Adapt(productStandard));
-
-        return true;
-    }
-
-    public Task<bool> VerifyProductIsRegisteredAsync(ImportProductServiceInput input)
-    {
-        return _productRepository.VerifyEntityExistsAsync(input.Code);
-    }
-
-    public Task<bool> VerifyProductIsValidAsync(ImportProductServiceInput input)
     {
         var productStandard = _adapter.Adapt(input);
 
         var validationResult = _productValidator.Validate(productStandard);
 
+        // Validações da regra de negócios
         if (validationResult.IsValid == false)
         {
             _notificationPublisher.AddNotifications(_adapterNotifications.Adapt(validationResult.Errors));
-            return Task.FromResult(false);
+            return false;
         }
-
-        return Task.FromResult(true);
-    }
-
-    public Task<bool> VerifyProductRangeIsValidAsync(List<ImportProductServiceInput> input)
-    {
-        var productStandardList = new List<ProductBase>();
-
-        foreach (var uniqueProductStandard in input)
+            
+        // Verifica se existe no banco de dados
+        if (await _productRepository.VerifyEntityExistsAsync(input.Code) == true)
         {
-            productStandardList.Add(_adapter.Adapt(uniqueProductStandard));
+            _notificationPublisher.AddNotification(new NotificationItem("O produto já está importado."));
+            return false;
         }
 
-        var validationResult = _productRangeValidator.Validate(productStandardList);
+        // Põe em memória, esperando salvamento de mudanças pelo banco de dados.
+        await _productRepository.AddAsync(_adapterDataTransfer.Adapt(productStandard));
 
-        if (validationResult.IsValid == false)
-        {
-            _notificationPublisher.AddNotifications(_adapterNotifications.Adapt(validationResult.Errors));
-            return Task.FromResult(false);
-        }
-
-        return Task.FromResult(true);
+        return true;
     }
 }

@@ -2,5 +2,5 @@
 
 public interface IUnitOfWork
 {
-    Task<bool> ExecuteAsync(Func<bool, Task<bool>> handler, bool openTransaction);
+    Task<bool> ExecuteAsync(Func<Task<bool>> handler);
 }

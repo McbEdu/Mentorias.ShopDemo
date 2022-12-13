@@ -1,6 +1,5 @@
 ﻿using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ProductContext.DTO;
 using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories;
 
@@ -13,15 +12,19 @@ public class ProductRepository : IExtendsProductRepository
         _dataContext = dataContext;
     }
 
-    public async Task AddAsync(Product entity)
+    public Task AddAsync(Product entity)
     {
-        await _dataContext.Products.AddAsync(entity);   
-        _dataContext.SaveChanges();
+        return Task.FromResult(_dataContext.Products.Add(entity));   
     }
 
     public Task AddRangeAsync(Product entity)
     {
         throw new NotImplementedException();
+    }
+
+    public Task CommitChanges()
+    {
+        return Task.FromResult(_dataContext.SaveChanges());
     }
 
     public void Delete(Product entity)
@@ -34,9 +37,9 @@ public class ProductRepository : IExtendsProductRepository
         throw new NotImplementedException();
     }
 
-    public async Task<Product> GetByCode(string code)
+    public Task<Product?> GetByCode(string code)
     {
-        return await _dataContext.Products.Where(p => p.Code == code)!.FirstOrDefaultAsync();
+        return Task.FromResult(_dataContext.Products.Where(p => p.Code == code).FirstOrDefault());
     }
 
     public Product? GetByIdentifier(Guid identifier)
@@ -54,8 +57,8 @@ public class ProductRepository : IExtendsProductRepository
         throw new NotImplementedException();
     }
 
-    public async Task<bool> VerifyEntityExistsAsync(string code)
+    public Task<bool> VerifyEntityExistsAsync(string code)
     {
-        return await _dataContext.Products.Where(p => p.Code == code).AnyAsync();
+        return Task.FromResult(_dataContext.Products.Where(p => p.Code == code).Any());
     }
 }
