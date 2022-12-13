@@ -28,12 +28,17 @@ public class AdapterOrderStandardToOrderDataTransfer : IAdapter<OrderBase, Order
 
     public Order Adapt(OrderBase adapter)
     {
+        var adaptedCustomer = _adapterCustomer.Adapt(adapter.Customer);
         return new Order()
         {
             Code = adapter.Code.ToString(),
             Identifier = adapter.Identifier,
             OrderTime = adapter.OrderTime,
-            Customer = _adapterCustomer.Adapt(adapter.Customer),
+            CustomerBirthdate = adaptedCustomer.BirthDate,
+            CustomerEmail = adaptedCustomer.Email,
+            CustomerIdentifier = adaptedCustomer.Identifier,
+            CustomerName = adaptedCustomer.Name,
+            CustomerSurname = adaptedCustomer.Surname,
             Items = _adapterItems.Adapt(adapter.Items)
         };
     }

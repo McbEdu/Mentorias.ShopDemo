@@ -11,13 +11,14 @@ public class Item
     public int Quantity { get; set; }
     public string Description { get; set; }
     public decimal UnitaryValue { get; set; }
-    public Product Product { get; set; }
+    public Guid ProductIdentifier { get; set; }
+    public string ProductCode { get;set; }
+    public string ProductDescription { get; set; }
     public Order Order { get; set; }
 
     public Item()
     {
         Order = new Order();
-        Description = string.Empty;
-        Product = new Product();
+        Description = ProductCode = ProductDescription = string.Empty;
     }
 }

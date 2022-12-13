@@ -22,11 +22,14 @@ public class AdapterItemStandardToItemDataTransfer : IAdapter<ItemBase, Item>
 
     public Item Adapt(ItemBase adapter)
     {
+        var adaptedProduct = _adapterProduct.Adapt(adapter.Product);
         return new Item()
         {
             Description = adapter.Description,
             Identifier = adapter.Identifier,
-            Product = _adapterProduct.Adapt(adapter.Product),
+            ProductCode = adaptedProduct.Code,
+            ProductDescription = adaptedProduct.Description,
+            ProductIdentifier = adaptedProduct.Identifier,
             Quantity = adapter.Quantity.GetValue(),
             Sequence = adapter.Sequence,
             UnitaryValue = adapter.UnitaryValue.GetValue(),

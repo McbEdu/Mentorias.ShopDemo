@@ -17,6 +17,7 @@ public class AdapterListItemStandardToListItemDataTransfer : IAdapter<List<ItemB
 
     public Item Adapt(ItemBase adapter)
     {
+        var adaptedProduct = _adapterProduct.Adapt(adapter.Product);
         return new Item()
         {
             Description = adapter.Description,
@@ -24,7 +25,8 @@ public class AdapterListItemStandardToListItemDataTransfer : IAdapter<List<ItemB
             Quantity = adapter.Quantity.GetValue(),
             Sequence = adapter.Sequence,
             UnitaryValue = adapter.UnitaryValue.GetValue(),
-            Product = _adapterProduct.Adapt(adapter.Product)
+            ProductCode = adaptedProduct.Code,
+            ProductDescription = adaptedProduct.Description
         };
     }
 
@@ -39,6 +41,7 @@ public class AdapterListItemStandardToListItemDataTransfer : IAdapter<List<ItemB
 
         foreach (var itemAdapter in adapter)
         {
+            var adaptedProduct = _adapterProduct.Adapt(itemAdapter.Product);
             items.Add(new Item()
             {
                 Description = itemAdapter.Description,
@@ -46,7 +49,9 @@ public class AdapterListItemStandardToListItemDataTransfer : IAdapter<List<ItemB
                 Quantity = itemAdapter.Quantity.GetValue(),
                 Sequence = itemAdapter.Sequence,
                 UnitaryValue = itemAdapter.UnitaryValue.GetValue(),
-                Product = _adapterProduct.Adapt(itemAdapter.Product)
+                ProductCode = adaptedProduct.Code,
+                ProductDescription = adaptedProduct.Description,
+                ProductIdentifier = adaptedProduct.Identifier,
             });
         }
 

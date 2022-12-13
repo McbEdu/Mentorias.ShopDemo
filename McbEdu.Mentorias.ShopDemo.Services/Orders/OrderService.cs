@@ -58,14 +58,15 @@ public class OrderService : IOrderService
 
         var dataTransferAdaptedOrder = _adapterOrderDataTransfer.Adapt(_adapterOrderStandard.Adapt(input));
         dataTransferAdaptedOrder.Items = dataTransferAdaptedOrder.Items
-            .GroupBy(i => i.Product.Code)
+            .GroupBy(i => i.ProductCode)
             .Select(p => new Item()
             {
                 Identifier = p.First().Identifier,
                 Sequence = p.First().Sequence,
                 UnitaryValue = p.Average(ip => ip.UnitaryValue),
                 Description = string.Concat(p.Select(p => p.Description + " ")),
-                Product = p.First().Product,
+                ProductCode = p.First().ProductCode,
+                ProductDescription = p.First().ProductDescription,
                 Quantity = p.Sum(ip => ip.Quantity)
             }).ToList();
 

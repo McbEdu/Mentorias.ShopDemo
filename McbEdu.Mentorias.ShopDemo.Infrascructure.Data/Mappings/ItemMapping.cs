@@ -10,8 +10,6 @@ public class ItemMapping : BaseMapping<Item>
     {
         entity.HasKey(p => p.Identifier);
 
-        entity.HasOne(p => p.Product).WithMany(p => p.Items);
-
         entity.HasOne(p => p.Order).WithMany(p => p.Items);
     }
 }
