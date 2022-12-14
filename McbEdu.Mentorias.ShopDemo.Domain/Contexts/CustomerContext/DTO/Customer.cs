@@ -9,11 +9,9 @@ public class Customer
     public string Surname { get; set; }
     public string Email { get; set; }
     public DateTime BirthDate { get; set; }
-    public List<Order> Orders { get; set; }
 
     public Customer()
     {
-        Orders = new List<Order>();
         Name = Email = Surname = string.Empty;
     }
 }

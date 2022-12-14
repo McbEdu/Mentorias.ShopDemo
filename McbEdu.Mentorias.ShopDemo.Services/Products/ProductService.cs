@@ -1,11 +1,11 @@
-﻿using FluentValidation.Results;
+﻿using FluentValidation;
+using FluentValidation.Results;
 using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Publisher;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern;
 using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Services.Products.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Products.Interfaces;
-using FluentValidation;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ProductContext.Entities.Base;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ProductContext.DTO;
 
