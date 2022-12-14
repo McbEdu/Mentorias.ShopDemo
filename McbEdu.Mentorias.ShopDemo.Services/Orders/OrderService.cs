@@ -9,7 +9,6 @@ using McbEdu.Mentorias.ShopDemo.Services.Orders.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.DTO;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.Entities.Base;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.DTO;
-using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.ValueObjects;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.DTO;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ProductContext.DTO;
 
@@ -76,6 +75,7 @@ public class OrderService : IOrderService
                 Sequence = p.First().Sequence,
                 UnitaryValue = p.Average(ip => ip.UnitaryValue),
                 Description = string.Concat(p.Select(p => p.Description + " ")),
+                ProductIdentifier = p.First().ProductIdentifier,
                 ProductCode = p.First().ProductCode,
                 ProductDescription = p.First().ProductDescription,
                 Quantity = p.Sum(ip => ip.Quantity)

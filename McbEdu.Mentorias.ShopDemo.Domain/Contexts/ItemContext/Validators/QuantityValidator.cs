@@ -7,6 +7,6 @@ public class QuantityValidator : AbstractValidator<Quantity>
 {
     public QuantityValidator()
     {
-        RuleFor(p => p.GetValue()).LessThan(Quantity.MinOrEqualValue).WithMessage($"É necessária que a quantidade seja maior ou igual a {Quantity.MinOrEqualValue} unidade(s)");
+        RuleFor(p => p.GetValue()).GreaterThanOrEqualTo(Quantity.MinOrEqualValue).WithMessage($"É necessária que a quantidade seja maior ou igual a {Quantity.MinOrEqualValue} unidade(s)");
     }
 }

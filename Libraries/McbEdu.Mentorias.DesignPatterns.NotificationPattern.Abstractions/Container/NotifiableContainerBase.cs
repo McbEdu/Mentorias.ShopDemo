@@ -26,4 +26,9 @@ public abstract class NotifiableContainerBase<T> : INotifiableContainer<T>
     {
         return NotificationsItems;
     }
+
+    public void RemoveAllNotifications()
+    {
+        NotificationsItems = new List<T>();
+    }
 }

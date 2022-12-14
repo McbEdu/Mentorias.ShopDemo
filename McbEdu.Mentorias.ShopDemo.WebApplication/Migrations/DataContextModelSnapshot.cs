@@ -17,7 +17,7 @@ namespace McbEdu.Mentorias.ShopDemo.WebApi.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
 
-            modelBuilder.Entity("McbEdu.Mentorias.ShopDemo.Domain.DTOs.Customer", b =>
+            modelBuilder.Entity("McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.DTO.Customer", b =>
                 {
                     b.Property<Guid>("Identifier")
                         .ValueGeneratedOnAdd()
@@ -43,7 +43,7 @@ namespace McbEdu.Mentorias.ShopDemo.WebApi.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("McbEdu.Mentorias.ShopDemo.Domain.DTOs.Item", b =>
+            modelBuilder.Entity("McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.DTO.Item", b =>
                 {
                     b.Property<Guid>("Identifier")
                         .ValueGeneratedOnAdd()
@@ -54,6 +54,14 @@ namespace McbEdu.Mentorias.ShopDemo.WebApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("OrderIdentifier")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProductCode")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProductDescription")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("ProductIdentifier")
@@ -72,12 +80,10 @@ namespace McbEdu.Mentorias.ShopDemo.WebApi.Migrations
 
                     b.HasIndex("OrderIdentifier");
 
-                    b.HasIndex("ProductIdentifier");
-
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("McbEdu.Mentorias.ShopDemo.Domain.DTOs.Order", b =>
+            modelBuilder.Entity("McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.DTO.Order", b =>
                 {
                     b.Property<Guid>("Identifier")
                         .ValueGeneratedOnAdd()
@@ -87,7 +93,22 @@ namespace McbEdu.Mentorias.ShopDemo.WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("CustomerBirthdate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CustomerEmail")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<Guid>("CustomerIdentifier")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CustomerSurname")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("OrderTime")
@@ -95,12 +116,10 @@ namespace McbEdu.Mentorias.ShopDemo.WebApi.Migrations
 
                     b.HasKey("Identifier");
 
-                    b.HasIndex("CustomerIdentifier");
-
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("McbEdu.Mentorias.ShopDemo.Domain.DTOs.Product", b =>
+            modelBuilder.Entity("McbEdu.Mentorias.ShopDemo.Domain.Contexts.ProductContext.DTO.Product", b =>
                 {
                     b.Property<Guid>("Identifier")
                         .ValueGeneratedOnAdd()
@@ -119,47 +138,18 @@ namespace McbEdu.Mentorias.ShopDemo.WebApi.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("McbEdu.Mentorias.ShopDemo.Domain.DTOs.Item", b =>
+            modelBuilder.Entity("McbEdu.Mentorias.ShopDemo.Domain.Contexts.ItemContext.DTO.Item", b =>
                 {
-                    b.HasOne("McbEdu.Mentorias.ShopDemo.Domain.DTOs.Order", "Order")
+                    b.HasOne("McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.DTO.Order", "Order")
                         .WithMany("Items")
                         .HasForeignKey("OrderIdentifier")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("McbEdu.Mentorias.ShopDemo.Domain.DTOs.Product", "Product")
-                        .WithMany("Items")
-                        .HasForeignKey("ProductIdentifier")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Order");
-
-                    b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("McbEdu.Mentorias.ShopDemo.Domain.DTOs.Order", b =>
-                {
-                    b.HasOne("McbEdu.Mentorias.ShopDemo.Domain.DTOs.Customer", "Customer")
-                        .WithMany("Orders")
-                        .HasForeignKey("CustomerIdentifier")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("McbEdu.Mentorias.ShopDemo.Domain.DTOs.Customer", b =>
-                {
-                    b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("McbEdu.Mentorias.ShopDemo.Domain.DTOs.Order", b =>
-                {
-                    b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("McbEdu.Mentorias.ShopDemo.Domain.DTOs.Product", b =>
+            modelBuilder.Entity("McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.DTO.Order", b =>
                 {
                     b.Navigation("Items");
                 });

@@ -36,31 +36,27 @@ public class CustomerService : ICustomerService
         _customerRangeValidator = customerRangeValidator;
     }
 
-    public async Task<Customer> GetCustomerAsync(ImportCustomerServiceInput input)
+    public async Task<(bool, List<NotificationItem>)> ImportCustomerAsync(ImportCustomerServiceInput input)
     {
-        return await _customerRepository.GetByEmail(input.Email);
-    }
-
-    public async Task<bool> ImportCustomerAsync(ImportCustomerServiceInput input)
-    {
+        var notifications = new List<NotificationItem>();
         var customerStandard = _adapter.Adapt(input);
 
         var validationResult = _customerValidator.Validate(customerStandard);
 
         if (validationResult.IsValid == false)
         {
-            _notificationPublisher.AddNotifications(_adapterNotifications.Adapt(validationResult.Errors));
-            return false;
+            notifications.AddRange(_adapterNotifications.Adapt(validationResult.Errors));
+            return (false, notifications);
         }
 
         if (await _customerRepository.VerifyEntityExistsAsync(input.Email))
         {
-            _notificationPublisher.AddNotification(new NotificationItem($"O cliente de email {input.Email} já possui cadastro."));
-            return false;
+            notifications.Add(new NotificationItem($"O cliente de email {input.Email} já possui cadastro."));
+            return (false, notifications);
         }
 
         await _customerRepository.AddAsync(_adapterDataTransfer.Adapt(customerStandard));
         
-        return true;
+        return (true, notifications);
     }
 }

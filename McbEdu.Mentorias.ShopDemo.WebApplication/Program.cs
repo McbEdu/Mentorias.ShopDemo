@@ -5,6 +5,7 @@ using McbEdu.Mentorias.DesignPatterns.NotificationPattern;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Consumer;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Container;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Publisher;
+using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Updater;
 using McbEdu.Mentorias.General.Infrascructure.Abstractions.Mappings;
 using McbEdu.Mentorias.General.Infrascructure.Abstractions.Repositories;
 using McbEdu.Mentorias.ShopDemo.DesignPatterns.UnitOfWork.Abstractions;
@@ -121,8 +122,9 @@ public class Program
         builder.Services.AddSingleton<AbstractValidator<OrderBase>, OrderValidator>();
 
         builder.Services.AddScoped<NotifiableContainerBase<NotificationItem>, NotifiableContainer>();
-        builder.Services.AddTransient<INotificationConsumer<NotificationItem>, NotificationConsumer>();
-        builder.Services.AddTransient<INotificationPublisher<NotificationItem>, NotificationPublisher>();
+        builder.Services.AddSingleton<INotificationConsumer<NotificationItem>, NotificationConsumer>();
+        builder.Services.AddSingleton<INotificationPublisher<NotificationItem>, NotificationPublisher>();
+        builder.Services.AddSingleton<INotificationUpdater, NotificationUpdater>();
 
         builder.Services.AddScoped<IExtendsOrderRepository, OrderRepository>();
         builder.Services.AddScoped<IBaseRepository<Item>, ItemRepository>();
