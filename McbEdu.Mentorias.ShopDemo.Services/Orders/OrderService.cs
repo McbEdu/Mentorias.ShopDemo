@@ -119,13 +119,15 @@ public class OrderService : IOrderService
          * importação deve ser feita, porém, um aviso de que o produto existe com outros 
          * dados deve ser retornado.
          */
+        bool hasInDatabaseOne = false;
         for (int i = 0; i < dataTransferAdaptedOrder.Items.Count; i++)
         {
             Product? product = await _productRepository.GetByCode(dataTransferAdaptedOrder.Items[i].ProductCode);
 
-            if (product is not null && product.Description != dataTransferAdaptedOrder.Items[i].ProductDescription)
+            if (product is not null && product.Description != dataTransferAdaptedOrder.Items[i].ProductDescription && hasInDatabaseOne == false)
             {
                 _notificationPublisher.AddNotification(new NotificationItem("Alguns produtos já existem no banco de dados, no entanto, com dados diferentes."));
+                hasInDatabaseOne = true;
             }
             else
             {

@@ -122,9 +122,9 @@ public class Program
         builder.Services.AddSingleton<AbstractValidator<OrderBase>, OrderValidator>();
 
         builder.Services.AddScoped<NotifiableContainerBase<NotificationItem>, NotifiableContainer>();
-        builder.Services.AddSingleton<INotificationConsumer<NotificationItem>, NotificationConsumer>();
-        builder.Services.AddSingleton<INotificationPublisher<NotificationItem>, NotificationPublisher>();
-        builder.Services.AddSingleton<INotificationUpdater, NotificationUpdater>();
+        builder.Services.AddTransient<INotificationConsumer<NotificationItem>, NotificationConsumer>();
+        builder.Services.AddTransient<INotificationPublisher<NotificationItem>, NotificationPublisher>();
+        builder.Services.AddTransient<INotificationUpdater, NotificationUpdater>();
 
         builder.Services.AddScoped<IExtendsOrderRepository, OrderRepository>();
         builder.Services.AddScoped<IBaseRepository<Item>, ItemRepository>();

@@ -38,7 +38,7 @@ public class ImportRangeCustomerUseCase : IUseCase<List<ImportCustomerUseCaseInp
 
                     foreach (var notificationItem in response.Item2)
                     {
-                        newValidationResultNotifications.Add(new NotificationItem($"O cliente de indexador {(i + 1)} {notificationItem.Message}."));
+                        newValidationResultNotifications.Add(new NotificationItem($"Cliente de indexador {(i + 1)}. {notificationItem.Message}"));
                     }
 
                     _notificationPublisher.AddNotifications(newValidationResultNotifications);

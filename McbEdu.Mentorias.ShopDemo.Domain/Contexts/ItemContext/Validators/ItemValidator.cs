@@ -10,8 +10,8 @@ public class ItemValidator : AbstractValidator<ItemBase>
 
     public ItemValidator(AbstractValidator<UnitaryValue> unitaryValueValidator, AbstractValidator<Quantity> quantityValidator)
     {
-        RuleFor(p => p.Description).NotEmpty().NotNull().WithMessage("A descrição do item não pode ser nula.");
-        RuleFor(p => p.Description.Length).LessThanOrEqualTo(MaxLengthDescription).WithMessage($"A descrição deve possuir até {MaxLengthDescription} caracteres.");
+        RuleFor(p => p.Description).NotEmpty().NotNull().WithMessage("A descrição do item não pode ser nula");
+        RuleFor(p => p.Description.Length).LessThanOrEqualTo(MaxLengthDescription).WithMessage($"A descrição deve possuir até {MaxLengthDescription} caracteres");
 
         RuleFor(p => p.Quantity).SetValidator(quantityValidator);
 

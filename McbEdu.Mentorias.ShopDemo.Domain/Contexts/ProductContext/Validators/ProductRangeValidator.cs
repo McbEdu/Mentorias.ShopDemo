@@ -25,7 +25,7 @@ public class ProductRangeValidator : AbstractValidator<List<ProductBase>>
                 {
                     if (information[i].Code.ToString() == information[j].Code.ToString())
                     {
-                        custom.AddFailure(new FluentValidation.Results.ValidationFailure("Produto", $"Os produtos de indexador {i + 1} e {j + 1} possuem mesmo código {information[i].Code}. Não foi possível realizar a importação."));
+                        custom.AddFailure(new FluentValidation.Results.ValidationFailure("Produto", $"Os produtos de indexador {i + 1} e {j + 1} possuem mesmo código {information[i].Code}. Não foi possível realizar a importação"));
                     }
                 }
             }

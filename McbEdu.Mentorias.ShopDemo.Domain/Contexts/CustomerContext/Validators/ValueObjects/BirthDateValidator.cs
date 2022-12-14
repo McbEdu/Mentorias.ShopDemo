@@ -7,6 +7,6 @@ public class BirthDateValidator : AbstractValidator<BirthDate>
 {
     public BirthDateValidator()
     {
-        RuleFor(p => p.GetValue()).LessThan(BirthDate.MinimumBirthdate).WithMessage("A data de nascimento precisa ser menor que o horário atual.");
+        RuleFor(p => p.GetValue()).LessThan(BirthDate.MinimumBirthdate).WithMessage("A data de nascimento precisa ser menor que o horário atual");
     }
 }

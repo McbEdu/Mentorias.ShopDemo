@@ -42,8 +42,8 @@ public class CustomerRangeValidator : AbstractValidator<List<CustomerBase>>
                 {
                     if (customersRange[i].Email.ToString() == customersRange[j].Email.ToString())
                     {
-                        custom.AddFailure(new FluentValidation.Results.ValidationFailure("Cliente", $"Os clientes com email igual a {customersRange[j].Email} de indexadores {i + 1} e {j + 1} não pode ter mesmas credenciais."));
-                        custom.AddFailure(new FluentValidation.Results.ValidationFailure("Cliente", $"A lista de clientes é inválida! Não é possível que dois clientes tenham o mesmo email."));
+                        custom.AddFailure(new FluentValidation.Results.ValidationFailure("Cliente", $"Os clientes com email igual a {customersRange[j].Email} de indexadores {i + 1} e {j + 1} não pode ter mesmas credenciais"));
+                        custom.AddFailure(new FluentValidation.Results.ValidationFailure("Cliente", $"A lista de clientes é inválida! Não é possível que dois clientes tenham o mesmo email"));
                     }
                 }
             }
