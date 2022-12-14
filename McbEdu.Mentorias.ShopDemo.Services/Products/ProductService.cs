@@ -23,15 +23,13 @@ public class ProductService : IProductService
         IAdapter<List<NotificationItem>, List<ValidationFailure>> adapterNotifications,
         IAdapter<ImportProductServiceInput, ProductBase> adapter,
         IAdapter<Product, ProductBase> adapterDataTransfer,
-        AbstractValidator<ProductBase> productValidator,
-        AbstractValidator<List<ProductBase>> productRangeValidator)
+        AbstractValidator<ProductBase> productValidator)
     {
         _productRepository = productRepository;
         _adapterNotifications = adapterNotifications;
         _adapter = adapter;
         _adapterDataTransfer = adapterDataTransfer;
         _productValidator = productValidator;
-        _productRangeValidator = productRangeValidator;
     }
 
     public async Task<(bool, List<NotificationItem>)> ImportProductAsync(ImportProductServiceInput input)
