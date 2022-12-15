@@ -1,21 +1,21 @@
 package com.mcbmentorias.shopdemo.domain.entities.customer;
 
 import com.mcbmentorias.shopdemo.core.interfaces.IAggregateRoot;
+import com.mcbmentorias.shopdemo.domain.entities.base.BaseEntity;
 import com.mcbmentorias.shopdemo.domain.entities.customer.inputs.CreateNewCustomerInput;
 import com.mcbmentorias.shopdemo.domain.entities.customer.validations.CreateNewCustomerInputValidation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
 @Getter
 @NoArgsConstructor
-public class Customer implements IAggregateRoot {
-
-    private UUID id;
+public class Customer extends BaseEntity implements IAggregateRoot {
 
     private String name;
 
@@ -25,14 +25,16 @@ public class Customer implements IAggregateRoot {
 
     private String email;
 
+    @Transient
     private CreateNewCustomerInputValidation validation;
 
-    public void create(
+    public void importCustomer(
         final CreateNewCustomerInput input
     ) {
         this.validation.validate(input);
 
-        this.id = UUID.randomUUID();
+        this.createNewEntity("import");
+
         this.name = input.getName();
         this.lastName = input.getLastName();
         this.birthDate = input.getBirthDate();
@@ -46,7 +48,8 @@ public class Customer implements IAggregateRoot {
             final LocalDate birthDate,
             final String email
     ) {
-        this.id = id;
+        this.fillBase(id);
+
         this.name = name;
         this.lastName = lastName;
         this.birthDate = birthDate;

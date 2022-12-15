@@ -1,20 +1,22 @@
-package com.mcbmentorias.shopdemo.application.usecases;
+package com.mcbmentorias.shopdemo.application.usecases.customer;
 
 import com.mcbmentorias.shopdemo.application.dtos.inputmodel.ImportCustomerInputModel;
 import com.mcbmentorias.shopdemo.core.usecases.BaseUseCaseWithParams;
-import com.mcbmentorias.shopdemo.domain.factories.CreateNewCustomerInputFactory;
+import com.mcbmentorias.shopdemo.domain.factories.CreateImportCustomerInputFactory;
 import com.mcbmentorias.shopdemo.domain.services.interfaces.ICustomerService;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
-public class ImportCustomerBatchsUseCase extends BaseUseCaseWithParams<Collection<ImportCustomerInputModel>, Void> {
+@Service
+public class ImportCustomerBatchesUseCase extends BaseUseCaseWithParams<Collection<ImportCustomerInputModel>, Void> {
 
     private final ICustomerService service;
-    private final CreateNewCustomerInputFactory factory;
+    private final CreateImportCustomerInputFactory factory;
 
-    public ImportCustomerBatchsUseCase(
+    public ImportCustomerBatchesUseCase(
             final ICustomerService service,
-            final CreateNewCustomerInputFactory factory
+            final CreateImportCustomerInputFactory factory
     ) {
         this.service = service;
         this.factory = factory;

@@ -20,7 +20,7 @@ public class CustomerService implements ICustomerService {
             final CreateNewCustomerInput input
     ) {
         final var entity = new Customer();
-        entity.create(input);
+        entity.importCustomer(input);
         return entity;
     }
 }

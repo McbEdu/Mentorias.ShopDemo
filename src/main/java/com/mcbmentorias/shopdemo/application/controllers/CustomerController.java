@@ -1,8 +1,8 @@
 package com.mcbmentorias.shopdemo.application.controllers;
 
 import com.mcbmentorias.shopdemo.application.dtos.inputmodel.ImportCustomerInputModel;
-import com.mcbmentorias.shopdemo.application.usecases.ImportCustomerBatchsUseCase;
-import com.mcbmentorias.shopdemo.application.usecases.ImportCustomerUseCase;
+import com.mcbmentorias.shopdemo.application.usecases.customer.ImportCustomerBatchesUseCase;
+import com.mcbmentorias.shopdemo.application.usecases.customer.ImportCustomerUseCase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,17 +13,17 @@ import java.util.Collection;
 
 @RestController
 @RequestMapping(value = "/api/v1/users")
-public class UserController {
+public class CustomerController {
 
     private final ImportCustomerUseCase importUsersUseCase;
-    private final ImportCustomerBatchsUseCase importCustomerBatchUseCase;
+    private final ImportCustomerBatchesUseCase importCustomerBatchUseCase;
 
-    public UserController(
+    public CustomerController(
             final ImportCustomerUseCase importUsersUseCase,
-            final ImportCustomerBatchsUseCase importCustomerBatchsUseCase
+            final ImportCustomerBatchesUseCase importCustomerBatchesUseCase
     ) {
         this.importUsersUseCase = importUsersUseCase;
-        this.importCustomerBatchUseCase = importCustomerBatchsUseCase;
+        this.importCustomerBatchUseCase = importCustomerBatchesUseCase;
     }
 
 

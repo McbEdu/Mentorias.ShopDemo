@@ -6,7 +6,7 @@ import com.mcbmentorias.shopdemo.domain.entities.customer.inputs.CreateNewCustom
 import org.springframework.stereotype.Component;
 
 @Component
-public class CreateNewCustomerInputFactory extends BaseFactoryWithParams<ImportCustomerInputModel, CreateNewCustomerInput> {
+public class CreateImportCustomerInputFactory extends BaseFactoryWithParams<ImportCustomerInputModel, CreateNewCustomerInput> {
 
     @Override
     public CreateNewCustomerInput create(final ImportCustomerInputModel inputModel) {
