@@ -53,6 +53,13 @@ public class ProductService : IProductService
             return (false, notifications);
         }
 
+        // Verifica se dois produtos ou mais estão na fila
+        if (await _productRepository.VerifyEntityExistsLocalAsync(input.Code) == true)
+        {
+            notifications.Add(new NotificationItem("Não é possível importar dois produtos com mesmo código."));
+            return (false, notifications);
+        }
+
         // Põe em memória, esperando salvamento de mudanças pelo banco de dados.
         await _productRepository.AddAsync(_adapterDataTransfer.Adapt(productStandard));
 

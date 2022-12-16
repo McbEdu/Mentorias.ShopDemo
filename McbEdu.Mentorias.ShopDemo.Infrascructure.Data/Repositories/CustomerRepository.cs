@@ -58,8 +58,13 @@ public class CustomerRepository : IExtendsCustomerRepository
         _dataContext.Customers.UpdateRange(entities);
     }
 
-    public Task<bool> VerifyEntityExistsAsync(string email)
+    public async Task<bool> VerifyEntityExistsAsync(string email)
     {
-        return Task.FromResult(_dataContext.Customers.Where(p => p.Email == email).Any());
+        return await _dataContext.Customers.Where(p => p.Email == email).AnyAsync();
+    }
+
+    public Task<bool> VerifyEntityExistsLocalAsync(string email)
+    {
+        return _dataContext.Set<Customer>().Local.Where(p => p.Email == email).First().Any();
     }
 }

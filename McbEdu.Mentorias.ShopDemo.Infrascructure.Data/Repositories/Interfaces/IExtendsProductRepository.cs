@@ -6,5 +6,6 @@ namespace McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Interfaces;
 public interface IExtendsProductRepository : IBaseRepository<Product>
 {
     Task<bool> VerifyEntityExistsAsync(string code);
+    Task<bool> VerifyEntityExistsLocalAsync(string code);
     Task<Product?> GetByCode(string code);
 }

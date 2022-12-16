@@ -61,4 +61,9 @@ public class ProductRepository : IExtendsProductRepository
     {
         return Task.FromResult(_dataContext.Products.Where(p => p.Code == code).Any());
     }
+
+    public Task<bool> VerifyEntityExistsLocalAsync(string code)
+    {
+        return _dataContext.Set<Product>().Local.Where(p => p.Code == code).First().Any();
+    }
 }

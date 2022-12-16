@@ -55,6 +55,12 @@ public class CustomerService : ICustomerService
             return (false, notifications);
         }
 
+        if (await _customerRepository.VerifyEntityExistsLocalAsync(input.Email))
+        {
+            notifications.Add(new NotificationItem($"Não é possível importar clientes com mesmo email."));
+            return (false, notifications);
+        }
+
         await _customerRepository.AddAsync(_adapterDataTransfer.Adapt(customerStandard));
         
         return (true, notifications);
