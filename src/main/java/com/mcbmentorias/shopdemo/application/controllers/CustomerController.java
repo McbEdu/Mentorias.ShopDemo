@@ -50,7 +50,7 @@ public class CustomerController extends BaseController {
         final var result = this.importCustomerBatchUseCase.execute(input);
 
         if(!result) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(this.getDomainNotifications());
         }
 
         return ResponseEntity.ok().build();

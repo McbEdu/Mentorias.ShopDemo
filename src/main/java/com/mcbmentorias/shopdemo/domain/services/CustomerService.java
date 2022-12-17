@@ -1,6 +1,8 @@
 package com.mcbmentorias.shopdemo.domain.services;
 
 import com.mcbmentorias.shopdemo.core.patterns.notification.interfaces.INotificationPublisher;
+import com.mcbmentorias.shopdemo.core.patterns.notification.models.Notification;
+import com.mcbmentorias.shopdemo.core.patterns.validator.enums.ValidationTypeMessage;
 import com.mcbmentorias.shopdemo.domain.entities.customer.factories.CreateNewCustomerFactory;
 import com.mcbmentorias.shopdemo.domain.entities.customer.inputs.ImportNewCustomerInput;
 import com.mcbmentorias.shopdemo.domain.services.base.BaseService;
@@ -28,7 +30,22 @@ public class CustomerService extends BaseService implements ICustomerService {
     public Boolean importCustomer(
             final ImportNewCustomerInput input
     ) {
+        if(this.repository.checkIfCustomerEmailExists(input.getEmail())) {
+            this.notificationPublisher.publisherNotification(
+                    new Notification(
+                            "email",
+                            "10",
+                            "email already exists",
+                            input.getEmail(),
+                            ValidationTypeMessage.Error.name()
+                    )
+            );
+
+            return Boolean.FALSE;
+        }
+
         final var entity = this.createNewCustomerFactory.create();
+
         entity.importCustomer(input);
 
         if(!this.validateDomainEntityAndNotification(entity)) {

@@ -6,7 +6,7 @@ import com.mcbmentorias.shopdemo.domain.entities.customer.Customer;
 
 public abstract class BaseService {
 
-    private final INotificationPublisher notificationPublisher;
+    protected final INotificationPublisher notificationPublisher;
 
     public BaseService(final INotificationPublisher notificationPublisher) {
         this.notificationPublisher = notificationPublisher;

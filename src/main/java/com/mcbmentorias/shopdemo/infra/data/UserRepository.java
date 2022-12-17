@@ -18,4 +18,9 @@ public class UserRepository implements ICustomerRepository {
     public Customer save(final Customer entity) {
         return this.adapter.save(entity);
     }
+
+    @Override
+    public Boolean checkIfCustomerEmailExists(final String email) {
+        return this.adapter.checkIfCustomerEmailExists(email);
+    }
 }
