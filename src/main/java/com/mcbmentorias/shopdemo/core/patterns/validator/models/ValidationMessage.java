@@ -8,8 +8,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ValidationMessage {
 
-    private ValidationTypeMessage validationTypeMessage;
-    private Object attemptValue;
-    private String code;
-    private String description;
+    private final ValidationTypeMessage validationTypeMessage;
+    private final String field;
+    private final Object attemptValue;
+    private final String code;
+    private final String description;
 }

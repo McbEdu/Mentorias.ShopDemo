@@ -15,6 +15,7 @@ public class ValidationResultFactory extends BaseFactoryWithParams<br.com.fluent
                 .stream().map(errors -> {
                     return new ValidationMessage(
                             ValidationTypeMessage.Error,
+                            errors.getField(),
                             errors.getAttemptedValue(),
                             errors.getCode(),
                             errors.getMessage()

@@ -9,17 +9,18 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class ImportCustomerInputModel {
 
-    private String nome;
+    private final String name;
 
-    private String lastName;
+    private final String lastName;
 
-    private LocalDate birthDate;
+    private final LocalDate birthDate;
 
-    private String email;
+    private final String email;
 
     public ImportCustomerInputModel() {
-        this.nome = "";
+        this.name = "";
         this.lastName = "";
         this.email = "";
+        this.birthDate = null;
     }
 }

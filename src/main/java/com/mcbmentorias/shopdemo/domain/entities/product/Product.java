@@ -54,10 +54,4 @@ public class Product extends BaseEntity implements IAggregateRoot {
         return this;
     }
 
-    private Boolean validate(final Supplier<ValidationResult> func) {
-        func.get();
-        return Boolean.FALSE;
-    }
-
-
 }

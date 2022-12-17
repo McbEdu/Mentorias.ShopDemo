@@ -8,14 +8,14 @@ import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
-public class CreateNewCustomerInput {
+public class ImportNewCustomerInput {
 
     private final String name;
     private final String lastName;
     private final LocalDate birthDate;
     private final String email;
 
-    public CreateNewCustomerInput() {
+    public ImportNewCustomerInput() {
         this.name = "";
         this.lastName = "";
         this.email = "";

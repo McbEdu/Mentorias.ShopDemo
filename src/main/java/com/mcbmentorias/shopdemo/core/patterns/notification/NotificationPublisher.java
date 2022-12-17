@@ -3,6 +3,7 @@ package com.mcbmentorias.shopdemo.core.patterns.notification;
 import com.mcbmentorias.shopdemo.core.patterns.notification.interfaces.INotification;
 import com.mcbmentorias.shopdemo.core.patterns.notification.interfaces.INotificationPublisher;
 import com.mcbmentorias.shopdemo.core.patterns.notification.interfaces.INotificationSubscriber;
+import com.mcbmentorias.shopdemo.core.patterns.notification.models.Notification;
 import com.mcbmentorias.shopdemo.core.patterns.observer.BasePublisher;
 import com.mcbmentorias.shopdemo.core.patterns.observer.intefaces.ISubscriber;
 import org.springframework.context.ApplicationContext;
@@ -24,7 +25,7 @@ public class NotificationPublisher extends BasePublisher implements INotificatio
     public void subscriber(final Class<INotificationSubscriber> subscriber) {
         this.subscriber(
             subscriber,
-            INotification.class
+            Notification.class
         );
     }
 

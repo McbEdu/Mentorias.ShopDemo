@@ -9,12 +9,16 @@ import lombok.Getter;
 public class Notification implements INotification {
 
     private final String field;
+    private final String code;
     private final String message;
     private final Object attemptValue;
+    private final String typeMessage;
 
     public Notification() {
         this.field = "";
+        this.code = "";
         this.message = "";
         this.attemptValue = null;
+        this.typeMessage = "";
     }
 }

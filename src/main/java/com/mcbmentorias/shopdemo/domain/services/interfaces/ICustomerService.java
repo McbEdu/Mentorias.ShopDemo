@@ -1,11 +1,9 @@
 package com.mcbmentorias.shopdemo.domain.services.interfaces;
 
 import com.mcbmentorias.shopdemo.domain.entities.customer.Customer;
-import com.mcbmentorias.shopdemo.domain.entities.customer.inputs.CreateNewCustomerInput;
-
-import java.time.LocalDate;
+import com.mcbmentorias.shopdemo.domain.entities.customer.inputs.ImportNewCustomerInput;
 
 public interface ICustomerService extends IService<Customer> {
 
-    Customer create(final CreateNewCustomerInput input);
+    Boolean importCustomer(final ImportNewCustomerInput input);
 }

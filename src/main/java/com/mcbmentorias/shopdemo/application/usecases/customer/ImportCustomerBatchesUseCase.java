@@ -1,7 +1,8 @@
 package com.mcbmentorias.shopdemo.application.usecases.customer;
 
 import com.mcbmentorias.shopdemo.application.dtos.inputmodel.ImportCustomerInputModel;
-import com.mcbmentorias.shopdemo.core.usecases.BaseUseCaseWithParams;
+import com.mcbmentorias.shopdemo.core.patterns.notification.interfaces.INotificationSubscriber;
+import com.mcbmentorias.shopdemo.core.usecases.BaseUseCase;
 import com.mcbmentorias.shopdemo.domain.factories.CreateImportCustomerInputFactory;
 import com.mcbmentorias.shopdemo.domain.services.interfaces.ICustomerService;
 import org.springframework.stereotype.Service;
@@ -9,27 +10,31 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 
 @Service
-public class ImportCustomerBatchesUseCase extends BaseUseCaseWithParams<Collection<ImportCustomerInputModel>, Void> {
+public class ImportCustomerBatchesUseCase extends BaseUseCase<Collection<ImportCustomerInputModel>, Boolean> {
 
     private final ICustomerService service;
     private final CreateImportCustomerInputFactory factory;
 
     public ImportCustomerBatchesUseCase(
+            final INotificationSubscriber notificationSubscriber,
             final ICustomerService service,
             final CreateImportCustomerInputFactory factory
     ) {
+        super(notificationSubscriber);
         this.service = service;
         this.factory = factory;
     }
 
     @Override
-    public Void execute(final Collection<ImportCustomerInputModel> inputs) {
+    public Boolean execute(final Collection<ImportCustomerInputModel> inputs) {
 
         inputs.forEach(input -> {
             final var domainInput = this.factory.create(input);
-            this.service.create(domainInput);
+            this.service.importCustomer(domainInput);
         });
 
-        return null;
+        if(!this.hasNotification()) return Boolean.TRUE;
+
+        return Boolean.FALSE;
     }
 }

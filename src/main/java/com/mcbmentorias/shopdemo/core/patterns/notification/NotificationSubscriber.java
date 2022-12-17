@@ -4,12 +4,14 @@ import com.mcbmentorias.shopdemo.core.patterns.notification.interfaces.INotifica
 import com.mcbmentorias.shopdemo.core.patterns.notification.interfaces.INotificationSubscriber;
 import com.mcbmentorias.shopdemo.core.patterns.observer.BaseSubscriber;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Component
+@RequestScope
 public class NotificationSubscriber extends BaseSubscriber<INotification> implements INotificationSubscriber {
 
     protected final Collection<INotification> notifications;

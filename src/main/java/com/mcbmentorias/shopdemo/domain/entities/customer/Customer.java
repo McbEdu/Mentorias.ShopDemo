@@ -2,8 +2,8 @@ package com.mcbmentorias.shopdemo.domain.entities.customer;
 
 import com.mcbmentorias.shopdemo.core.interfaces.IAggregateRoot;
 import com.mcbmentorias.shopdemo.domain.entities.base.BaseEntity;
-import com.mcbmentorias.shopdemo.domain.entities.customer.inputs.CreateNewCustomerInput;
-import com.mcbmentorias.shopdemo.domain.entities.customer.validations.CreateNewCustomerInputValidation;
+import com.mcbmentorias.shopdemo.domain.entities.customer.inputs.ImportNewCustomerInput;
+import com.mcbmentorias.shopdemo.domain.entities.customer.validations.ImportNewCustomerInputValidation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,19 +26,48 @@ public class Customer extends BaseEntity implements IAggregateRoot {
     private String email;
 
     @Transient
-    private CreateNewCustomerInputValidation validation;
+    private ImportNewCustomerInputValidation importNewCustomerInputValidation;
+
+    public Customer(
+            final ImportNewCustomerInputValidation importNewCustomerInputValidation
+    ) {
+        this.importNewCustomerInputValidation = importNewCustomerInputValidation;
+    }
 
     public void importCustomer(
-        final CreateNewCustomerInput input
+        final ImportNewCustomerInput input
     ) {
-        this.validation.validate(input);
+        if(!this.validate(() -> this.importNewCustomerInputValidation.validate(input))) {
+            return;
+        }
 
         this.createNewEntity("import");
 
-        this.name = input.getName();
-        this.lastName = input.getLastName();
-        this.birthDate = input.getBirthDate();
-        this.email = input.getEmail();
+        this.setName(input.getName())
+            .setLastName(input.getLastName())
+            .setBirthDate(input.getBirthDate())
+            .setEmail(input.getEmail());
+    }
+
+    //Private Method
+    private Customer setEmail(final String email) {
+        this.email = email;
+        return this;
+    }
+
+    private Customer setBirthDate(final LocalDate birthDate) {
+        this.birthDate = birthDate;
+        return this;
+    }
+
+    private Customer setLastName(final String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    private Customer setName(final String name) {
+        this.name = name;
+        return this;
     }
 
     public void fill(

@@ -11,15 +11,25 @@ public abstract class BaseValidator<T> implements IValidator<T> {
 
     private FluentValidatorWrapper<T> wrapper;
 
+    public BaseValidator() {
+        this.wrapper = new FluentValidatorWrapper();
+    }
+
     protected abstract void configureConcreteValidator(final FluentValidatorWrapper<T> wrapper);
+
+    private void checkIfWrapperIsConfigured() {
+        if(hasValidatorFluentValidatorWrapperInitialized) {
+            return;
+        }
+
+        this.configureConcreteValidator(this.wrapper);
+
+        this.hasValidatorFluentValidatorWrapperInitialized = Boolean.TRUE;
+    }
 
     @Override
     public ValidationResult validate(final T instance) {
-
-        if(!hasValidatorFluentValidatorWrapperInitialized) {
-            return null;
-        }
-
+        this.checkIfWrapperIsConfigured();
         return this.createValidationResults(this.wrapper.validate(instance));
     }
 
@@ -27,8 +37,11 @@ public abstract class BaseValidator<T> implements IValidator<T> {
         return new ValidationResultFactory().create(validate);
     }
 
-    public abstract class FluentValidatorWrapper<T> extends AbstractValidator<T> {
+    public class FluentValidatorWrapper<T> extends AbstractValidator<T> {
+        @Override
+        public void rules() {
 
+        }
     }
 
 }
