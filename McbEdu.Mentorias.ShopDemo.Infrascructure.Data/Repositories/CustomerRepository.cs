@@ -65,6 +65,6 @@ public class CustomerRepository : IExtendsCustomerRepository
 
     public Task<bool> VerifyEntityExistsLocalAsync(string email)
     {
-        return _dataContext.Set<Customer>().Local.Where(p => p.Email == email).First().Any();
+        return Task.FromResult(_dataContext.Set<Customer>().Local.Where(p => p.Email == email).Any());
     }
 }

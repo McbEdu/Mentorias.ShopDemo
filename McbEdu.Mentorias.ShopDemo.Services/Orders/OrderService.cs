@@ -99,7 +99,7 @@ public class OrderService : IOrderService
                 customerInDatabase.Surname != input.Customer.Surname ||
                 customerInDatabase.BirthDate != input.Customer.BirthDate)
             {
-                _notificationPublisher.AddNotification(new NotificationItem("O cliente já está presente no banco de dados, no entanto, com credenciais incorretas."));
+                _notificationPublisher.AddNotification(new NotificationItem("O cliente já está presente no banco de dados, no entanto, com dados diferentes."));
             }
         }
         else
@@ -124,10 +124,13 @@ public class OrderService : IOrderService
         {
             Product? product = await _productRepository.GetByCode(dataTransferAdaptedOrder.Items[i].ProductCode);
 
-            if (product is not null && product.Description != dataTransferAdaptedOrder.Items[i].ProductDescription && hasInDatabaseOne == false)
+            if (product is not null)
             {
-                _notificationPublisher.AddNotification(new NotificationItem("Alguns produtos já existem no banco de dados, no entanto, com dados diferentes."));
-                hasInDatabaseOne = true;
+                if (product.Description != dataTransferAdaptedOrder.Items[i].ProductDescription && hasInDatabaseOne == false)
+                {
+                    _notificationPublisher.AddNotification(new NotificationItem($"O produto de código {dataTransferAdaptedOrder.Items[i].ProductCode} está presente no banco de dados, no entanto com dados diferentes."));
+                    hasInDatabaseOne = true;
+                }
             }
             else
             {
