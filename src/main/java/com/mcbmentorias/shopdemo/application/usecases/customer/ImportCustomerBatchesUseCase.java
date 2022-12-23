@@ -2,12 +2,12 @@ package com.mcbmentorias.shopdemo.application.usecases.customer;
 
 import com.mcbmentorias.shopdemo.application.dtos.inputmodel.ImportCustomerInputModel;
 import com.mcbmentorias.shopdemo.core.patterns.notification.interfaces.INotificationSubscriber;
+import com.mcbmentorias.shopdemo.core.persistence.unitofwork.UnitOfWorkFactory;
 import com.mcbmentorias.shopdemo.core.usecases.BaseUseCase;
 import com.mcbmentorias.shopdemo.domain.factories.CreateImportCustomerInputFactory;
 import com.mcbmentorias.shopdemo.domain.services.interfaces.ICustomerService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.util.Collection;
 
@@ -16,34 +16,41 @@ public class ImportCustomerBatchesUseCase extends BaseUseCase<Collection<ImportC
 
     private final ICustomerService service;
     private final CreateImportCustomerInputFactory factory;
-    private final PlatformTransactionManager transactionManager;
 
     public ImportCustomerBatchesUseCase(
             final INotificationSubscriber notificationSubscriber,
             final ICustomerService service,
             final CreateImportCustomerInputFactory factory,
-            final PlatformTransactionManager transactionManager
+            final PlatformTransactionManager transactionManager,
+            final UnitOfWorkFactory unitOfWorkFactory
     ) {
-        super(notificationSubscriber);
+        super(notificationSubscriber, unitOfWorkFactory);
         this.service = service;
         this.factory = factory;
-        this.transactionManager = transactionManager;
     }
 
     @Override
     public Boolean execute(final Collection<ImportCustomerInputModel> inputs) {
-        final var transaction = new DefaultTransactionDefinition();
-        final var status = this.transactionManager.getTransaction(transaction);
+        final var unitOfWork = this.getUnitOfWork();
 
-        inputs.forEach(input -> {
-            final var domainInput = this.factory.create(input);
-            this.service.importCustomer(domainInput);
-        });
+        try {
+            unitOfWork.begin();
 
-        this.transactionManager.commit(status);
+            inputs.forEach(input -> {
+                final var domainInput = this.factory.create(input);
+                this.service.importCustomer(domainInput);
+            });
 
-        if(!this.hasNotification()) return Boolean.TRUE;
+            if (this.hasNotification()) {
+                unitOfWork.rollback();
+                return Boolean.FALSE;
+            }
 
-        return Boolean.FALSE;
+            unitOfWork.commit();
+            return Boolean.TRUE;
+        } catch (final Exception e) {
+            unitOfWork.rollback();
+            throw e;
+        }
     }
 }

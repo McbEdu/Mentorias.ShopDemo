@@ -2,6 +2,7 @@ package com.mcbmentorias.shopdemo.application.usecases.product;
 
 import com.mcbmentorias.shopdemo.application.dtos.inputmodel.ImportProductInputModel;
 import com.mcbmentorias.shopdemo.core.patterns.notification.interfaces.INotificationSubscriber;
+import com.mcbmentorias.shopdemo.core.persistence.unitofwork.UnitOfWorkFactory;
 import com.mcbmentorias.shopdemo.core.usecases.BaseUseCase;
 import com.mcbmentorias.shopdemo.domain.factories.CreateImportNewProductInputFactory;
 import com.mcbmentorias.shopdemo.domain.services.interfaces.IProductService;
@@ -16,9 +17,10 @@ public class ImportProductUseCase extends BaseUseCase<ImportProductInputModel, B
     public ImportProductUseCase(
             final INotificationSubscriber notificationSubscriber,
             final IProductService service,
-            final CreateImportNewProductInputFactory factory
+            final CreateImportNewProductInputFactory factory,
+            final UnitOfWorkFactory unitOfWorkFactory
     ) {
-        super(notificationSubscriber);
+        super(notificationSubscriber, unitOfWorkFactory);
         this.service = service;
         this.factory = factory;
     }

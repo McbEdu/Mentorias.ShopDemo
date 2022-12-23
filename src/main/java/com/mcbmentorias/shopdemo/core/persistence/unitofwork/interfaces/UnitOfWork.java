@@ -31,7 +31,7 @@ public class UnitOfWork implements IUnitOfWork {
     }
 
     private Boolean isTransactionActive() {
-        return Objects.isNull(this.transaction);
+        return !Objects.isNull(this.transaction);
     }
 
     @Override
