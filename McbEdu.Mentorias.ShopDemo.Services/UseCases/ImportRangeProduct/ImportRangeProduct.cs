@@ -6,6 +6,7 @@ using McbEdu.Mentorias.ShopDemo.Services.Products.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.Abstractions;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportProduct.Inputs;
 using McbEdu.Mentorias.ShopDemo.DesignPatterns.UnitOfWork.Abstractions;
+using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Item;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportRangeProduct;
 
@@ -39,7 +40,20 @@ public class ImportRangeProductUseCase : IUseCase<List<ImportProductUseCaseInput
 
                     foreach (var validationResult in importProductResult.Item2)
                     {
-                        newResultValidation.Add(new NotificationItem($"Produto de indexador {(i + 1)}. {validationResult.Message}"));
+                        if (validationResult.Message == "Não é possível importar clientes com mesmo email.")
+                        {
+                            for (int j = 0; j < useCaseInput.Count; j++)
+                            {
+                                if (useCaseInput[j].Code == useCaseInput[i].Code && j != i)
+                                {
+                                    newResultValidation.Add(new NotificationItem($"Produto de indexador {(i + 1)} possui dados iguais ao produto de indexador {(j + 1)}"));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            newResultValidation.Add(new NotificationItem($"Produto de indexador {(i + 1)}. {validationResult.Message}"));
+                        }
                     }
 
                     _notificationPublisher.AddNotifications(newResultValidation);

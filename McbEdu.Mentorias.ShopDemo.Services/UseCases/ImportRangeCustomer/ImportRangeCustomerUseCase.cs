@@ -6,6 +6,7 @@ using McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportCustomer.Inputs;
 using McbEdu.Mentorias.ShopDemo.DesignPatterns.UnitOfWork.Abstractions;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Publisher;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.ValueObjects;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportRangeCustomer;
 
@@ -38,7 +39,20 @@ public class ImportRangeCustomerUseCase : IUseCase<List<ImportCustomerUseCaseInp
 
                     foreach (var notificationItem in response.Item2)
                     {
-                        newValidationResultNotifications.Add(new NotificationItem($"Cliente de indexador {(i + 1)}. {notificationItem.Message}"));
+                        if (notificationItem.Message == "Não é possível importar clientes com mesmo email.")
+                        {
+                            for (int j = 0; j < useCaseInput.Count; j++)
+                            {
+                                if (useCaseInput[j].Email == useCaseInput[i].Email && j != i)
+                                {
+                                    newValidationResultNotifications.Add(new NotificationItem($"Cliente de indexador {(i + 1)} possui credenciais iguais ao cliente de indexador {(j + 1)}"));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            newValidationResultNotifications.Add(new NotificationItem($"Cliente de indexador {(i + 1)}. {notificationItem.Message}"));
+                        }
                     }
 
                     _notificationPublisher.AddNotifications(newValidationResultNotifications);
