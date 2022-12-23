@@ -18,4 +18,10 @@ public class ProductRepository implements IProductRepository {
     public Product save(final Product product) {
         return this.adapter.save(product);
     }
+
+    @Override
+    public Boolean checkIfProductExists(final String productCode) {
+        return this.adapter.checkIfProductExists(productCode);
+
+    }
 }

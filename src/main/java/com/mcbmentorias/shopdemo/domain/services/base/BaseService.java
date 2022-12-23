@@ -2,7 +2,7 @@ package com.mcbmentorias.shopdemo.domain.services.base;
 
 import com.mcbmentorias.shopdemo.core.patterns.notification.interfaces.INotificationPublisher;
 import com.mcbmentorias.shopdemo.core.patterns.notification.models.Notification;
-import com.mcbmentorias.shopdemo.domain.entities.customer.Customer;
+import com.mcbmentorias.shopdemo.domain.entities.base.BaseEntity;
 
 public abstract class BaseService {
 
@@ -12,7 +12,7 @@ public abstract class BaseService {
         this.notificationPublisher = notificationPublisher;
     }
 
-    protected Boolean validateDomainEntityAndNotification(final Customer entity) {
+    protected Boolean validateDomainEntityAndNotification(final BaseEntity entity) {
         if(entity.isValid())
             return Boolean.TRUE;
 

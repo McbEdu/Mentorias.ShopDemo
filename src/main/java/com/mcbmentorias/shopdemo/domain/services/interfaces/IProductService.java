@@ -4,7 +4,7 @@ import com.mcbmentorias.shopdemo.domain.entities.product.inputs.CreateNewProduct
 
 public interface IProductService {
 
-    void importProduct(
+    Boolean importProduct(
             final CreateNewProductInput input
     );
 }

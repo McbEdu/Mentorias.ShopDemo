@@ -16,4 +16,8 @@ public class ProductRepositoryAdapter {
     public Product save(final Product product) {
         return this.to.save(product);
     }
+
+    public Boolean checkIfProductExists(final String productCode) {
+        return this.to.existsByCode(productCode);
+    }
 }

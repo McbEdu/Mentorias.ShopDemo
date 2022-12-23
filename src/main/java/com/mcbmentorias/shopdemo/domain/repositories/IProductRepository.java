@@ -6,4 +6,6 @@ import com.mcbmentorias.shopdemo.infra.data.interfaces.IRepository;
 public interface IProductRepository extends IRepository<Product> {
 
     Product save(final Product product);
+
+    Boolean checkIfProductExists(final String productCode);
 }
