@@ -11,7 +11,7 @@ public class ImportCustomerUseCaseInput
     public DateTime BirthDate
     {
         get { return birthDate; }
-        set { birthDate = DateTime.SpecifyKind(value, DateTimeKind.Utc); }
+        set { birthDate = DateTime.SpecifyKind(value.Date, DateTimeKind.Utc); }
     }
 
     public ImportCustomerUseCaseInput(string name, string surname, string email, DateTime birthDate)

@@ -99,6 +99,7 @@ public class OrderService : IOrderService
                 customerInDatabase.Surname != input.Customer.Surname ||
                 customerInDatabase.BirthDate != input.Customer.BirthDate)
             {
+                dataTransferAdaptedOrder.CustomerIdentifier = customerInDatabase.Identifier;
                 _notificationPublisher.AddNotification(new NotificationItem("O cliente já está presente no banco de dados, no entanto, com dados diferentes."));
             }
         }
@@ -128,6 +129,7 @@ public class OrderService : IOrderService
             {
                 if (product.Description != dataTransferAdaptedOrder.Items[i].ProductDescription && hasInDatabaseOne == false)
                 {
+                    dataTransferAdaptedOrder.Items[i].ProductIdentifier = product.Identifier;
                     _notificationPublisher.AddNotification(new NotificationItem($"O produto de código {dataTransferAdaptedOrder.Items[i].ProductCode} está presente no banco de dados, no entanto com dados diferentes."));
                     hasInDatabaseOne = true;
                 }
