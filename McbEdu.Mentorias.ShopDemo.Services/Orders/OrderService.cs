@@ -106,7 +106,7 @@ public class OrderService : IOrderService
         {
             await _customerRepository.AddAsync(new Customer()
             {
-                Identifier = Guid.NewGuid(),
+                Identifier = dataTransferAdaptedOrder.CustomerIdentifier,
                 Name = input.Customer.Name,
                 Surname = input.Customer.Surname,
                 BirthDate = input.Customer.BirthDate,
@@ -136,7 +136,7 @@ public class OrderService : IOrderService
             {
                 await _productRepository.AddAsync(new Product()
                 {
-                    Identifier = Guid.NewGuid(),
+                    Identifier = dataTransferAdaptedOrder.Items[i].ProductIdentifier,
                     Description = dataTransferAdaptedOrder.Items[i].ProductDescription,
                     Code = dataTransferAdaptedOrder.Items[i].ProductCode
                 });
