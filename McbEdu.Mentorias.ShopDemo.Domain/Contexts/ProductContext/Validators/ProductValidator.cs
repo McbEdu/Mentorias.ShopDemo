@@ -10,7 +10,7 @@ public class ProductValidator : AbstractValidator<ProductBase>
     public ProductValidator(AbstractValidator<Code> codeValidator)
     {
         RuleFor(p => p.Code).SetValidator(codeValidator);
-        RuleFor(p => p.Description.Length).NotEqual(0).WithMessage("A descrição não pode ser nula ou vazia");
+        RuleFor(p => p.Description.Length).NotEqual(0).WithMessage("A descrição do produto não pode ser nula ou vazia");
         RuleFor(p => p.Description.ToString()).Custom((information, context) =>
         {
             if (information.Length > 0)
@@ -26,10 +26,10 @@ public class ProductValidator : AbstractValidator<ProductBase>
 
                 if (hasLetterDifferentOfWhiteSpace == false)
                 {
-                    context.AddFailure(new ValidationFailure("", "A descrição não pode conter apenas espaços em branco"));
+                    context.AddFailure(new ValidationFailure("", "A descrição do produto não pode conter apenas espaços em branco"));
                 }
             }
         });
-        RuleFor(p => p.Description.Length).LessThanOrEqualTo(500).WithMessage("A descrição pode conter até 500 caracteres");
+        RuleFor(p => p.Description.Length).LessThanOrEqualTo(500).WithMessage("A descrição do produto pode conter até 500 caracteres");
     }
 }
