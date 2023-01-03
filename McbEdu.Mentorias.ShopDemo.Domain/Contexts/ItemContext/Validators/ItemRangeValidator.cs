@@ -16,7 +16,7 @@ public class ItemRangeValidator : AbstractValidator<List<ItemBase>>
                 return;
             }
 
-            (bool, int) isNotValid = (false, -1);
+            bool isNotValid = false;
             bool hasErrorMessageWithNotValidSequencialValue = false;
             for (int i = 0; i < information.Length; i++)
             {
@@ -25,7 +25,7 @@ public class ItemRangeValidator : AbstractValidator<List<ItemBase>>
                     if (information.Where(p => p.Sequence == (i + 1)).Any() == false && hasErrorMessageWithNotValidSequencialValue == false)
                     {
                         context.AddFailure($"Os itens não possuem valor sequenciais válidos");
-                        isNotValid = (true, i);
+                        isNotValid = true;
                         hasErrorMessageWithNotValidSequencialValue = true;
                     }
                 }
@@ -36,11 +36,11 @@ public class ItemRangeValidator : AbstractValidator<List<ItemBase>>
                     if (information.Length > 1)
                     {
                         context.AddFailure($"O item de sequencial {information[i].Sequence}. {errorItem.ErrorMessage}");
-                        isNotValid = (true, i);
+                        isNotValid = true;
                     }
                 }
 
-                if (isNotValid.Item1 == true && isNotValid.Item2 == i)
+                if (isNotValid == true)
                 {
                     break;
                 }

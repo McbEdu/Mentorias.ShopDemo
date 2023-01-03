@@ -94,12 +94,11 @@ public class OrderService : IOrderService
         if (await _customerRepository.VerifyEntityExistsAsync(input.Customer.Email) == true)
         {
             var customerInDatabase = await _customerRepository.GetByEmail(input.Customer.Email);
-
+            dataTransferAdaptedOrder.CustomerIdentifier = customerInDatabase.Identifier;
             if (customerInDatabase.Name != input.Customer.Name ||
                 customerInDatabase.Surname != input.Customer.Surname ||
                 customerInDatabase.BirthDate != input.Customer.BirthDate)
             {
-                dataTransferAdaptedOrder.CustomerIdentifier = customerInDatabase.Identifier;
                 _notificationPublisher.AddNotification(new NotificationItem("O cliente já está presente no banco de dados, no entanto, com dados diferentes."));
             }
         }

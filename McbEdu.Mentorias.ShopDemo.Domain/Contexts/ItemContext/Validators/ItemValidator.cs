@@ -9,7 +9,10 @@ public class ItemValidator : AbstractValidator<ItemBase>
 {
     private static int MaxLengthDescription = 150;
 
-    public ItemValidator(AbstractValidator<UnitaryValue> unitaryValueValidator, AbstractValidator<Quantity> quantityValidator, AbstractValidator<ProductBase> productValidator)
+    public ItemValidator(
+        AbstractValidator<UnitaryValue> unitaryValueValidator, 
+        AbstractValidator<Quantity> quantityValidator, 
+        AbstractValidator<ProductBase> productValidator)
     {
         RuleFor(p => p.Description).NotEmpty().NotNull().WithMessage("A descrição do item não pode ser nula");
         RuleFor(p => p.Description.Length).LessThanOrEqualTo(MaxLengthDescription).WithMessage($"A descrição deve possuir até {MaxLengthDescription} caracteres");

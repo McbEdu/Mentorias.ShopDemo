@@ -7,6 +7,9 @@ using McbEdu.Mentorias.ShopDemo.Services.Products.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Products.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ProductContext.Entities.Base;
 using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ProductContext.DTO;
+using McbEdu.Mentorias.ShopDemo.Services.Customers.Inputs;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.DTO;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.ProductContext.Entities;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.Products;
 
@@ -30,6 +33,45 @@ public class ProductService : IProductService
         _adapter = adapter;
         _adapterDataTransfer = adapterDataTransfer;
         _productValidator = productValidator;
+    }
+
+    public async Task<(bool HasExecuted, List<NotificationItem> Notifications, List<Product> Products)> GetProductsAsync(GetProductServiceInput input)
+    {
+        var notifications = new List<NotificationItem>();
+        var products = new List<Product>();
+
+        if (input.Page < 1)
+        {
+            notifications.Add(new NotificationItem("A página precisa ser maior ou igual que 1"));
+            return (false, notifications, products);
+        }
+
+        if (input.Offset > 30)
+        {
+            notifications.Add(new NotificationItem("A quantidade de clientes por paginação a ser retornada por cliente tem que ser menor que 30."));
+            return (false, notifications, products);
+        }
+
+        var indexCalculation = (input.Page - 1) * input.Offset;
+
+        if (input.Type == TypeGetProductService.NoFilter)
+        {
+            products = await _productRepository.GetProductByPaginationOrderringByDescription(indexCalculation, input.Offset);
+        }
+        else if (input.Type == TypeGetProductService.FilteredByCode)
+        {
+            products = await _productRepository.GetProductByPaginationFilteredByCode(indexCalculation, input.Offset);
+        }
+        else if (input.Type == TypeGetProductService.FilteredByDescription)
+        {
+            products = await _productRepository.GetProductByPaginationFilteredByDescription(indexCalculation, input.Offset);
+        }
+        else
+        {
+            throw new Exception("Não existe nenhum caracterizado por esse valor inteiro.");
+        }
+
+        return (true, notifications, products);
     }
 
     public async Task<(bool, List<NotificationItem>)> ImportProductAsync(ImportProductServiceInput input)

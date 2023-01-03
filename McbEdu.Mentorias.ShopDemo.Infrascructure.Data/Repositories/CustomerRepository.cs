@@ -48,6 +48,26 @@ public class CustomerRepository : IExtendsCustomerRepository
         return _dataContext.Customers.Where(p => p.Identifier == identifier).FirstOrDefault();
     }
 
+    public Task<List<Customer>> GetCustomerByPaginationFilteredByEmail(int index, int offset)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<Customer>> GetCustomerByPaginationFilteredByNameOrSurname(int index, int offset)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<Customer>> GetCustomerByPaginationFilteredByRangeBirthDate(int index, int offset)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<List<Customer>> GetCustomerByPaginationOrderringByNameAndSurnameAsync(int index, int offset)
+    {
+        return await _dataContext.Customers.AsNoTracking().Skip(index*offset).Take(offset).OrderBy(p => p.Name).OrderBy(p => p.Surname).ToListAsync();
+    }
+
     public void Update(Customer entity)
     {
         _dataContext.Customers.Update(entity);

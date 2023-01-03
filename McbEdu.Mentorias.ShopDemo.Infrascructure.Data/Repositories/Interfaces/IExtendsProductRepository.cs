@@ -8,4 +8,7 @@ public interface IExtendsProductRepository : IBaseRepository<Product>
     Task<bool> VerifyEntityExistsAsync(string code);
     Task<bool> VerifyEntityExistsLocalAsync(string code);
     Task<Product?> GetByCode(string code);
+    Task<List<Product>> GetProductByPaginationOrderringByDescription(int index, int offset);
+    Task<List<Product>> GetProductByPaginationFilteredByCode(int index, int offset);
+    Task<List<Product>> GetProductByPaginationFilteredByDescription(int index, int offset);
 }

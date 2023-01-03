@@ -1,7 +1,9 @@
 using McbEdu.Mentorias.DesignPatterns.AdapterPattern.Abstractions;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern;
 using McbEdu.Mentorias.DesignPatterns.NotificationPattern.Abstractions.Consumer;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.DTO;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.Abstractions;
+using McbEdu.Mentorias.ShopDemo.Services.UseCases.GetAllCustomer.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportCustomer.Inputs;
 using McbEdu.Mentorias.ShopDemo.WebApi.Controllers.Payloads;
 using Microsoft.AspNetCore.Mvc;
@@ -43,5 +45,37 @@ public class CustomerController : CustomControllerBase
         }
 
         return RunUseCaseAsync<List<ImportCustomerUseCaseInput>>(useCase, inputs, 201, 422);
+    }
+
+    [HttpGet]
+    [Route("Get")]
+    public async Task<IActionResult> GetAsync(
+        [FromServices] IGetUseCase<GetAllCustomerUseCaseInput, List<Customer>> getUseCase,
+        [FromQuery] int page,
+        [FromQuery] int offset)
+    {
+
+        return await RunGetUseCaseAsync(getUseCase, new GetAllCustomerUseCaseInput(page, offset));
+    }
+
+    [HttpGet]
+    [Route("GetByEmail")]
+    public async Task<IActionResult> GetByEmail()
+    {
+        return StatusCode(501);
+    }
+
+    [HttpGet]
+    [Route("GetByNameOrSurname")]
+    public async Task<IActionResult> GetByNameOrSurname()
+    {
+        return StatusCode(501);
+    }
+
+    [HttpGet]
+    [Route("GetByBirthDate")]
+    public async Task<IActionResult> GetByBirthdate()
+    {
+        return StatusCode(501);
     }
 }

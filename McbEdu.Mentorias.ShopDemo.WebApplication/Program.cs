@@ -52,6 +52,8 @@ using McbEdu.Mentorias.ShopDemo.Services.Products.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.Products.Interfaces;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.Abstractions;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.Adapters;
+using McbEdu.Mentorias.ShopDemo.Services.UseCases.GetAllCustomer;
+using McbEdu.Mentorias.ShopDemo.Services.UseCases.GetAllCustomer.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportCustomer;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportCustomer.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportOrder;
@@ -138,11 +140,15 @@ public class Program
 
         builder.Services.AddScoped<IUnitOfWork, DefaultUnitOfWork>();
 
+        // POSTUSECASES
         builder.Services.AddScoped<IUseCase<ImportProductUseCaseInput>, ImportProductUseCase>();
         builder.Services.AddScoped<IUseCase<List<ImportProductUseCaseInput>>, ImportRangeProductUseCase>();
         builder.Services.AddScoped<IUseCase<ImportCustomerUseCaseInput>, ImportCustomerUseCase>();
         builder.Services.AddScoped<IUseCase<List<ImportCustomerUseCaseInput>>, ImportRangeCustomerUseCase>();
         builder.Services.AddScoped<IUseCase<ImportOrderUseCaseInput>, ImportOrderUseCase>();
+
+        // GETUSECASES
+        builder.Services.AddScoped<IGetUseCase<GetAllCustomerUseCaseInput, List<Customer>>, GetAllCustomerUseCase>();
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();

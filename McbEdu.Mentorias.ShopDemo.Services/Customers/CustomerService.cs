@@ -36,7 +36,7 @@ public class CustomerService : ICustomerService
         _customerRangeValidator = customerRangeValidator;
     }
 
-    public async Task<(bool, List<NotificationItem>)> ImportCustomerAsync(ImportCustomerServiceInput input)
+    public async Task<(bool HasExecuted, List<NotificationItem> Notifications)> ImportCustomerAsync(ImportCustomerServiceInput input)
     {
         var notifications = new List<NotificationItem>();
         var customerStandard = _adapter.Adapt(input);
@@ -64,5 +64,48 @@ public class CustomerService : ICustomerService
         await _customerRepository.AddAsync(_adapterDataTransfer.Adapt(customerStandard));
         
         return (true, notifications);
+    }
+
+    public async Task<(bool HasExecuted, List<NotificationItem> Notifications, List<Customer> Customers)> GetCustomerAsync(GetCustomerServiceInput input)
+    {
+        var notifications = new List<NotificationItem>();
+        var customers = new List<Customer>();
+
+        if (input.Page < 1)
+        {
+            notifications.Add(new NotificationItem("A página precisa ser maior ou igual que 1"));
+            return (false, notifications, customers);
+        }
+
+        if (input.Offset > 30)
+        {
+            notifications.Add(new NotificationItem("A quantidade de clientes por paginação a ser retornada por cliente tem que ser menor que 30."));
+            return (false, notifications, customers);
+        }
+
+        var indexCalculation = (input.Page - 1) * input.Offset;
+        
+        if (input.Type == TypeGetCustomerService.NoFilter)
+        {
+            customers = await _customerRepository.GetCustomerByPaginationOrderringByNameAndSurnameAsync(indexCalculation, input.Offset);
+        }
+        else if (input.Type == TypeGetCustomerService.ByEmail)
+        {
+            customers = await _customerRepository.GetCustomerByPaginationFilteredByEmail(indexCalculation, input.Offset);
+        }
+        else if (input.Type == TypeGetCustomerService.Name)
+        {
+            customers = await _customerRepository.GetCustomerByPaginationFilteredByNameOrSurname(indexCalculation, input.Offset);
+        }
+        else if (input.Type == TypeGetCustomerService.BirthDate)
+        {
+            customers = await _customerRepository.GetCustomerByPaginationFilteredByRangeBirthDate(indexCalculation, input.Offset);
+        }
+        else
+        {
+            throw new Exception("Não existe nenhum caracterizado por esse valor inteiro.");
+        }
+
+        return (true, notifications, customers);
     }
 }

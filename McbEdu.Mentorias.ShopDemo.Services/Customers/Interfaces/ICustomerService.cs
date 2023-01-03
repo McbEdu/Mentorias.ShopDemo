@@ -6,5 +6,6 @@ namespace McbEdu.Mentorias.ShopDemo.Services.Customers.Interfaces;
 
 public interface ICustomerService
 {
-    Task<(bool, List<NotificationItem>)> ImportCustomerAsync(ImportCustomerServiceInput input);
+    Task<(bool HasExecuted, List<NotificationItem> Notifications)> ImportCustomerAsync(ImportCustomerServiceInput input);
+    Task<(bool HasExecuted, List<NotificationItem> Notifications, List<Customer> Customers)> GetCustomerAsync(GetCustomerServiceInput input);
 }

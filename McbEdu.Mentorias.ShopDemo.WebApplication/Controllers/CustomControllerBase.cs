@@ -38,10 +38,31 @@ public class CustomControllerBase : ControllerBase
         }
     }
 
+    protected async Task<IActionResult> RunGetUseCaseAsync<TUseCaseInput, TUseCaseOutput>(
+        IGetUseCase<TUseCaseInput, IList<TUseCaseOutput>> useCase,
+        TUseCaseInput useCaseInput)
+        where TUseCaseInput : class
+        where TUseCaseOutput : IList<TUseCaseOutput>
+    {
+        var response = await useCase.GetExecutionAsync(useCaseInput);
+
+        if (response.HasDone == false)
+        {
+            return BadRequest(CreateResponse());
+        }
+        else
+        {
+            if (response.Output.Count < 1)
+            {
+                return Ok();
+            }
+
+            return Ok(response.Output);
+        }
+    }
+
     private List<string>? CreateResponse()
     {
-
-
         var messages = new List<string>();
 
         var notifications = _notificationConsumer.GetNotificationItems();
