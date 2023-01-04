@@ -46,4 +46,25 @@ public class ProductController : CustomControllerBase
 
         return RunUseCaseAsync<List<ImportProductUseCaseInput>>(useCase, inputs, 201, 422);
     }
+
+    [HttpGet]
+    [Route("GetByPagination")]
+    public async Task<IActionResult> GetByPaginationAsync()
+    {
+        return StatusCode(501);
+    }
+
+    [HttpGet]
+    [Route("GetFilteredByCode")]
+    public async Task<IActionResult> GetByCodeAsync()
+    {
+        return StatusCode(501);
+    }
+
+    [HttpGet]
+    [Route("GetFilteredByDescription")]
+    public async Task<IActionResult> GetByDescriptionAsync()
+    {
+        return StatusCode(501);
+    }
 }

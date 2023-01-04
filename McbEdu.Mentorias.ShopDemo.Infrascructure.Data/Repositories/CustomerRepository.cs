@@ -1,6 +1,8 @@
 ﻿using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.DTO;
+using McbEdu.Mentorias.ShopDemo.Domain.Contexts.CustomerContext.ValueObjects;
 using McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 
 namespace McbEdu.Mentorias.ShopDemo.Infrascructure.Data.Repositories;
 
@@ -48,19 +50,19 @@ public class CustomerRepository : IExtendsCustomerRepository
         return _dataContext.Customers.Where(p => p.Identifier == identifier).FirstOrDefault();
     }
 
-    public Task<List<Customer>> GetCustomerByPaginationFilteredByEmail(int index, int offset)
+    public Task<List<Customer>> GetCustomerByPaginationFilteredByEmail(string email, int index, int offset)
     {
-        throw new NotImplementedException();
+        return _dataContext.Customers.AsNoTracking().Skip(index * offset).Take(offset).Where(p => p.Email.Contains(email)).ToListAsync();
     }
 
-    public Task<List<Customer>> GetCustomerByPaginationFilteredByNameOrSurname(int index, int offset)
+    public Task<List<Customer>> GetCustomerByPaginationFilteredByNameOrSurname(string name, string surname, int index, int offset)
     {
-        throw new NotImplementedException();
+        return _dataContext.Customers.AsNoTracking().Skip(index * offset).Take(offset).Where(p => p.Name.Contains(name) || p.Surname.Contains(surname)).ToListAsync();
     }
 
-    public Task<List<Customer>> GetCustomerByPaginationFilteredByRangeBirthDate(int index, int offset)
+    public Task<List<Customer>> GetCustomerByPaginationFilteredByRangeBirthDate(DateTime startIn, DateTime startFinal, int index, int offset)
     {
-        throw new NotImplementedException();
+        return _dataContext.Customers.AsNoTracking().Skip(index * offset).Take(offset).Where(p => p.BirthDate.Date >= startIn.Date && p.BirthDate.Date <= startFinal.Date).ToListAsync();
     }
 
     public async Task<List<Customer>> GetCustomerByPaginationOrderringByNameAndSurnameAsync(int index, int offset)

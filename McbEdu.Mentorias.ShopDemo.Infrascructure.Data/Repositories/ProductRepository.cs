@@ -47,6 +47,21 @@ public class ProductRepository : IExtendsProductRepository
         throw new NotImplementedException();
     }
 
+    public Task<List<Product>> GetProductByPaginationFilteredByCode(int index, int offset)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<Product>> GetProductByPaginationFilteredByDescription(int index, int offset)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<Product>> GetProductByPaginationOrderringByDescription(int index, int offset)
+    {
+        throw new NotImplementedException();
+    }
+
     public void Update(Product entity)
     {
         throw new NotImplementedException();

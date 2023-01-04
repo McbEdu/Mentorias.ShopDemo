@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace McbEdu.Mentorias.ShopDemo.WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221214151751_BaseMigration")]
+    [Migration("20230104150040_BaseMigration")]
     partial class BaseMigration
     {
         /// <inheritdoc />
@@ -26,22 +26,32 @@ namespace McbEdu.Mentorias.ShopDemo.WebApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("BirthDate")
+                    b.Property<string>("BirthDate")
+                        .IsRequired()
                         .HasColumnType("DATE");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(256)
+                        .HasColumnType("VARCHAR");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(50)
+                        .HasColumnType("VARCHAR");
 
                     b.Property<string>("Surname")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(150)
+                        .HasColumnType("VARCHAR");
 
                     b.HasKey("Identifier");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Identifier")
+                        .IsUnique();
 
                     b.ToTable("Customers");
                 });
@@ -54,21 +64,24 @@ namespace McbEdu.Mentorias.ShopDemo.WebApi.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(150)
+                        .HasColumnType("VARCHAR");
 
                     b.Property<Guid>("OrderIdentifier")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProductCode")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(150)
+                        .HasColumnType("VARCHAR");
 
                     b.Property<string>("ProductDescription")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(500)
+                        .HasColumnType("VARCHAR");
 
                     b.Property<Guid>("ProductIdentifier")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("VARCHAR");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("INTEGER");
@@ -77,13 +90,16 @@ namespace McbEdu.Mentorias.ShopDemo.WebApi.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("UnitaryValue")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("DECIMAL");
 
                     b.HasKey("Identifier");
 
+                    b.HasIndex("Identifier")
+                        .IsUnique();
+
                     b.HasIndex("OrderIdentifier");
 
-                    b.ToTable("Items");
+                    b.ToTable("OrderItem", (string)null);
                 });
 
             modelBuilder.Entity("McbEdu.Mentorias.ShopDemo.Domain.Contexts.OrderContext.DTO.Order", b =>
@@ -94,30 +110,42 @@ namespace McbEdu.Mentorias.ShopDemo.WebApi.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(150)
+                        .HasColumnType("VARCHAR");
 
-                    b.Property<DateTime>("CustomerBirthdate")
-                        .HasColumnType("TEXT");
+                    b.Property<string>("CustomerBirthdate")
+                        .IsRequired()
+                        .HasColumnType("DATE");
 
                     b.Property<string>("CustomerEmail")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(256)
+                        .HasColumnType("VARCHAR");
 
                     b.Property<Guid>("CustomerIdentifier")
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(36)
+                        .HasColumnType("VARCHAR");
 
                     b.Property<string>("CustomerName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(50)
+                        .HasColumnType("VARCHAR");
 
                     b.Property<string>("CustomerSurname")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(150)
+                        .HasColumnType("VARCHAR");
 
                     b.Property<DateTime>("OrderTime")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("DATETIME");
 
                     b.HasKey("Identifier");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.HasIndex("Identifier")
+                        .IsUnique();
 
                     b.ToTable("Orders");
                 });
@@ -130,13 +158,21 @@ namespace McbEdu.Mentorias.ShopDemo.WebApi.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(150)
+                        .HasColumnType("VARCHAR");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(500)
+                        .HasColumnType("VARCHAR");
 
                     b.HasKey("Identifier");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.HasIndex("Identifier")
+                        .IsUnique();
 
                     b.ToTable("Products");
                 });

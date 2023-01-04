@@ -1,4 +1,6 @@
-﻿namespace McbEdu.Mentorias.ShopDemo.Services.UseCases.GetAllCustomer.Inputs;
+﻿using McbEdu.Mentorias.ShopDemo.Services.Customers.Inputs;
+
+namespace McbEdu.Mentorias.ShopDemo.Services.UseCases.GetAllCustomer.Inputs;
 
 public class GetAllCustomerUseCaseInput
 {

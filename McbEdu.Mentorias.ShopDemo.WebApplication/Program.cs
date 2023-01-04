@@ -54,6 +54,12 @@ using McbEdu.Mentorias.ShopDemo.Services.UseCases.Abstractions;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.Adapters;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.GetAllCustomer;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.GetAllCustomer.Inputs;
+using McbEdu.Mentorias.ShopDemo.Services.UseCases.GetCustomerByEmail;
+using McbEdu.Mentorias.ShopDemo.Services.UseCases.GetCustomerByEmail.Inputs;
+using McbEdu.Mentorias.ShopDemo.Services.UseCases.GetCustomerByNameOrSurname;
+using McbEdu.Mentorias.ShopDemo.Services.UseCases.GetCustomerByNameOrSurname.Inputs;
+using McbEdu.Mentorias.ShopDemo.Services.UseCases.GetCustomerByRangeBirthDate;
+using McbEdu.Mentorias.ShopDemo.Services.UseCases.GetCustomerByRangeBirthDate.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportCustomer;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportCustomer.Inputs;
 using McbEdu.Mentorias.ShopDemo.Services.UseCases.ImportOrder;
@@ -149,6 +155,9 @@ public class Program
 
         // GETUSECASES
         builder.Services.AddScoped<IGetUseCase<GetAllCustomerUseCaseInput, List<Customer>>, GetAllCustomerUseCase>();
+        builder.Services.AddScoped<IGetUseCase<GetCustomerByEmailUseCaseInput, List<Customer>>, GetCustomerByEmailUseCase>();
+        builder.Services.AddScoped<IGetUseCase<GetCustomerByNameOrSurnameUseCaseInput, List<Customer>>, GetCustomerByNameOrSurnameUseCase>();
+        builder.Services.AddScoped<IGetUseCase<GetCustomerByRangeBirthDateUseCaseInput, List<Customer>>, GetCustomerByBirthDateUseCase>();
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();

@@ -39,10 +39,10 @@ public class CustomControllerBase : ControllerBase
     }
 
     protected async Task<IActionResult> RunGetUseCaseAsync<TUseCaseInput, TUseCaseOutput>(
-        IGetUseCase<TUseCaseInput, IList<TUseCaseOutput>> useCase,
+        IGetUseCase<TUseCaseInput, TUseCaseOutput> useCase,
         TUseCaseInput useCaseInput)
         where TUseCaseInput : class
-        where TUseCaseOutput : IList<TUseCaseOutput>
+        where TUseCaseOutput : class
     {
         var response = await useCase.GetExecutionAsync(useCaseInput);
 
@@ -52,11 +52,6 @@ public class CustomControllerBase : ControllerBase
         }
         else
         {
-            if (response.Output.Count < 1)
-            {
-                return Ok();
-            }
-
             return Ok(response.Output);
         }
     }

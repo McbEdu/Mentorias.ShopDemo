@@ -8,7 +8,7 @@ using McbEdu.Mentorias.ShopDemo.Services.UseCases.GetAllCustomer.Inputs;
 
 namespace McbEdu.Mentorias.ShopDemo.Services.UseCases.GetAllCustomer;
 
-public class GetAllCustomerUseCase : IGetUseCase<GetAllCustomerUseCaseInput, List<Customer>>
+public sealed class GetAllCustomerUseCase : IGetUseCase<GetAllCustomerUseCaseInput, List<Customer>>
 {
     private readonly ICustomerService _customerService;
     private readonly INotificationPublisher<NotificationItem> _notificationPublisher;
@@ -21,7 +21,7 @@ public class GetAllCustomerUseCase : IGetUseCase<GetAllCustomerUseCaseInput, Lis
 
     public async Task<(bool HasDone, List<Customer> Output)> GetExecutionAsync(GetAllCustomerUseCaseInput input)
     {
-        var getCustomerServiceResponse = await _customerService.GetCustomerAsync(new GetCustomerServiceInput(input.Page, input.Offset, TypeGetCustomerService.NoFilter));
+        var getCustomerServiceResponse = await _customerService.GetCustomerNoFilterAsync(new GetCustomerServiceInput(input.Page, input.Offset));
 
         if (getCustomerServiceResponse.HasExecuted == false)
         {
