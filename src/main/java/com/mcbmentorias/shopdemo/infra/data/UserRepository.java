@@ -23,4 +23,9 @@ public class UserRepository implements ICustomerRepository {
     public Boolean checkIfCustomerEmailExists(final String email) {
         return this.adapter.checkIfCustomerEmailExists(email);
     }
+
+    @Override
+    public Customer getByEmail(final String email) {
+        return this.adapter.getByEmail(email);
+    }
 }

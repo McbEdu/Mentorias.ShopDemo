@@ -3,12 +3,15 @@ package com.mcbmentorias.shopdemo.domain.services;
 import com.mcbmentorias.shopdemo.core.patterns.notification.interfaces.INotificationPublisher;
 import com.mcbmentorias.shopdemo.core.patterns.notification.models.Notification;
 import com.mcbmentorias.shopdemo.core.patterns.validator.enums.ValidationTypeMessage;
+import com.mcbmentorias.shopdemo.domain.entities.customer.Customer;
 import com.mcbmentorias.shopdemo.domain.entities.customer.factories.CreateNewCustomerFactory;
 import com.mcbmentorias.shopdemo.domain.entities.customer.inputs.ImportNewCustomerInput;
 import com.mcbmentorias.shopdemo.domain.services.base.BaseService;
 import com.mcbmentorias.shopdemo.domain.services.interfaces.ICustomerService;
 import com.mcbmentorias.shopdemo.infra.data.interfaces.ICustomerRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class CustomerService extends BaseService implements ICustomerService {
@@ -30,7 +33,7 @@ public class CustomerService extends BaseService implements ICustomerService {
     public Boolean importCustomer(
             final ImportNewCustomerInput input
     ) {
-        if(this.repository.checkIfCustomerEmailExists(input.getEmail())) {
+        if(this.checkIfCustomerExistsByEmail(input.getEmail())) {
             this.notificationPublisher.publisherNotification(
                     new Notification(
                             "email",
@@ -55,5 +58,61 @@ public class CustomerService extends BaseService implements ICustomerService {
         this.repository.save(entity);
 
         return Boolean.TRUE;
+    }
+
+    @Override
+    public Boolean checkIfCustomerExistsByEmail(final String email) {
+        return this.repository.checkIfCustomerEmailExists(email);
+    }
+
+    @Override
+    public Customer getByEmail(final String email) {
+        return this.repository.getByEmail(email);
+    }
+
+    @Override
+    public Boolean createImportCustomerOrNotifyDifferences(final ImportNewCustomerInput input) {
+        final var customer = this.getByEmail(input.getEmail());
+        if(Objects.isNull(customer)) {
+            return this.importCustomer(input);
+        }
+
+        if( !Objects.equals(customer.getBirthDate(), input.getBirthDate())) {
+            this.notificationPublisher.publisherNotification(
+                    new Notification(
+                            "birthdate",
+                            "11",
+                            "Customer already registered buts with distinct birthdate",
+                            input.getBirthDate(),
+                            ValidationTypeMessage.Warning.name()
+                    )
+            );
+        }
+
+        if( !Objects.equals(customer.getLastName(), input.getLastName())) {
+            this.notificationPublisher.publisherNotification(
+                    new Notification(
+                            "lastName",
+                            "12",
+                            "Customer already registered buts with distinct last name.",
+                            input.getLastName(),
+                            ValidationTypeMessage.Warning.name()
+                    )
+            );
+        }
+
+        if(!Objects.equals(customer.getName(), input.getName())) {
+            this.notificationPublisher.publisherNotification(
+                    new Notification(
+                            "name",
+                            "13",
+                            "Customer already registered buts with distinct name.",
+                            input.getName(),
+                            ValidationTypeMessage.Warning.name()
+                    )
+            );
+        }
+
+        return Boolean.FALSE;
     }
 }

@@ -20,4 +20,8 @@ public class ProductRepositoryAdapter {
     public Boolean checkIfProductExists(final String productCode) {
         return this.to.existsByCode(productCode);
     }
+
+    public Product getByCode(final String code) {
+        return this.to.getByCode(code);
+    }
 }

@@ -6,4 +6,10 @@ import com.mcbmentorias.shopdemo.domain.entities.customer.inputs.ImportNewCustom
 public interface ICustomerService extends IService<Customer> {
 
     Boolean importCustomer(final ImportNewCustomerInput input);
+
+    Boolean checkIfCustomerExistsByEmail(final String email);
+
+    Customer getByEmail(final String email);
+
+    Boolean createImportCustomerOrNotifyDifferences(final ImportNewCustomerInput inputModel);
 }

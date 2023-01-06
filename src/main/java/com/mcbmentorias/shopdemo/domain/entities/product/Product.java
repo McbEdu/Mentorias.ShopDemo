@@ -2,7 +2,7 @@ package com.mcbmentorias.shopdemo.domain.entities.product;
 
 import com.mcbmentorias.shopdemo.core.interfaces.IAggregateRoot;
 import com.mcbmentorias.shopdemo.domain.entities.base.BaseEntity;
-import com.mcbmentorias.shopdemo.domain.entities.product.inputs.CreateNewProductInput;
+import com.mcbmentorias.shopdemo.domain.entities.product.inputs.CreateNewImportProductInput;
 import com.mcbmentorias.shopdemo.domain.entities.product.validations.CreateNewProductInputValidation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +32,7 @@ public class Product extends BaseEntity implements IAggregateRoot {
     }
 
     public void importProduct(
-            final CreateNewProductInput input
+            final CreateNewImportProductInput input
     ) {
         if(!this.validate(() -> this.createNewProductInputValidation.validate(input))) {
             return;

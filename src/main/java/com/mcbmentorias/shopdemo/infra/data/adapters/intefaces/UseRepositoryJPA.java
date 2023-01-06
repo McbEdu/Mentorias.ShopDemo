@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface UseRepositoryJPA extends JpaRepository<Customer, Long>, JpaSpecificationExecutor<Customer> {
     Boolean existsByEmail(final String email);
+
+    Customer getByEmail(final String email);
 }

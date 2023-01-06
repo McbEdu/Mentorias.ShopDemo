@@ -5,12 +5,12 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CreateNewProductInput {
+public class CreateNewImportProductInput {
 
     private String code;
     private String description;
 
-    public CreateNewProductInput() {
+    public CreateNewImportProductInput() {
         this.code = "";
         this.description = "";
     }

@@ -21,4 +21,8 @@ public class UserRepositoryAdapter {
     public Boolean checkIfCustomerEmailExists(final String email) {
         return this.jpa.existsByEmail(email);
     }
+
+    public Customer getByEmail(final String email) {
+        return this.jpa.getByEmail(email);
+    }
 }

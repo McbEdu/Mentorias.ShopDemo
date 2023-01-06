@@ -8,4 +8,6 @@ public interface IProductRepository extends IRepository<Product> {
     Product save(final Product product);
 
     Boolean checkIfProductExists(final String productCode);
+
+    Product getByCode(final String code);
 }

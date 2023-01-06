@@ -9,4 +9,6 @@ import java.util.UUID;
 @Repository
 public interface ProductRepositoryJPA extends JpaRepository<Product, UUID> {
     Boolean existsByCode(final String productCode);
+
+    Product getByCode(final String code);
 }

@@ -24,4 +24,9 @@ public class ProductRepository implements IProductRepository {
         return this.adapter.checkIfProductExists(productCode);
 
     }
+
+    @Override
+    public Product getByCode(final String code) {
+        return this.adapter.getByCode(code);
+    }
 }
